@@ -26,7 +26,7 @@ public class DateBox extends JPanel {
 
 	public void paint(Graphics g) {
 		g.fillRect(0, 0, width, height);
-		g.setColor(Color.yellow);
+		g.setColor(Color.white);
 		g.drawString(day, 10, 20);
 	}
 

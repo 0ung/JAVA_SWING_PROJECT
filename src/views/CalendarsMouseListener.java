@@ -5,31 +5,32 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
-public class CalendarsMounListener implements MouseListener{
+public class CalendarsMouseListener implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		JOptionPane.showConfirmDialog(null, "클릭");
+		Notice notice = new Notice();
+		notice.setVisible(true);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 }

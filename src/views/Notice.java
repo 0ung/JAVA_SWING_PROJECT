@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
@@ -13,7 +14,7 @@ public class Notice extends JDialog {
 	public Notice() {
 		setTitle("공지사항");
 		add(new JScrollPane(getTable()));
-		setSize(new Dimension(800,800));
+		setSize(new Dimension(800, 800));
 	}
 
 	public JTable getTable() {
@@ -24,7 +25,9 @@ public class Notice extends JDialog {
 			tableModel.addColumn("제목");
 			tableModel.addColumn("글쓴이");
 			tableModel.addColumn("등록일자");
-			
+			String[] arr = { "테스트1", "테스트", "김영웅", "0204" };
+			tableModel.addRow(arr);
+			noticeTable.addMouseListener(null);;
 		}
 		return noticeTable;
 	}

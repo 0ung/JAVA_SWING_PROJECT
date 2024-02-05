@@ -76,14 +76,14 @@ public class Calendars extends JFrame {
 	public void createDay() {
 		for (int i = 0; i < 7; i++) {
 			DateBox dayBox = new DateBox(dayAr[i], Color.gray, 100, 70);
-			pCenter.add(dayBox);	
+			pCenter.add(dayBox);
 		}
 	}
 
 	// 날짜 생성
 	public void createDate() {
 		for (int i = 0; i < dayAr.length * 6; i++) {
-			DateBox dateBox = new DateBox("", Color.LIGHT_GRAY, 100, 100);
+			DateBox dateBox = new DateBox("", Color.blue, 100, 100);
 			pCenter.add(dateBox);
 			dateBoxAr[i] = dateBox;
 		}
@@ -110,7 +110,7 @@ public class Calendars extends JFrame {
 				dateBoxAr[i].setDay(Integer.toString(n));
 				dateBoxAr[i].repaint();
 				n++;
-				dateBoxAr[i].addMouseListener(new CalendarsMounListener());
+				dateBoxAr[i].addMouseListener(new CalendarsMouseListener());
 			} else {
 				dateBoxAr[i].setDay("");
 				dateBoxAr[i].repaint();
