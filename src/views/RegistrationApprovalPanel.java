@@ -1,5 +1,7 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
@@ -26,10 +28,16 @@ public class RegistrationApprovalPanel extends JPanel {
 
 	private void drawUI() {
 		this.setSize(new Dimension(400, 500));
-		this.setLayout(new FlowLayout());
-		add(new JScrollPane(getStudent()));
-		add(getApproval());
-		CommonSetting.locationCenter(this);
+		this.setLayout(new BorderLayout());
+		//this.add(new JScrollPane(getStudent()));
+		JPanel tablePanel = new JPanel();
+		tablePanel.add(new JScrollPane(getStudent()));
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(getApproval());
+		
+		this.add(tablePanel,BorderLayout.NORTH);
+		this.add(buttonPanel,BorderLayout.SOUTH);
+		//CommonSetting.locationCenter(this);
 	}
 
 	private JTable getStudent() {
@@ -41,6 +49,7 @@ public class RegistrationApprovalPanel extends JPanel {
 					return column == 4;
 				}
 			};
+			student.getTableHeader().setPreferredSize(new Dimension(30,30));
 			model.addColumn("번호");
 			model.addColumn("아이디");
 			model.addColumn("이름");
@@ -69,7 +78,14 @@ public class RegistrationApprovalPanel extends JPanel {
 
 	private JButton getApproval() {
 		if (approval == null) {
+			JPanel jp = new JPanel();
 			approval = new JButton("전체승인");
+			approval.setPreferredSize(new Dimension(100,50));
+			jp.setOpaque(false);
+			
+			jp.add(approval);
+			//jp.add(approval, BorderLayout.);
+			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e -> {
 				JOptionPane.showConfirmDialog(this, "승인");
 			});
