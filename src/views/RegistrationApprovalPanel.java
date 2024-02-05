@@ -1,9 +1,12 @@
 package views;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -39,6 +43,7 @@ public class RegistrationApprovalPanel extends JPanel {
 		this.add(buttonPanel,BorderLayout.SOUTH);
 		//CommonSetting.locationCenter(this);
 	}
+
 
 	private JTable getStudent() {
 		if (student == null) {
@@ -81,6 +86,7 @@ public class RegistrationApprovalPanel extends JPanel {
 			JPanel jp = new JPanel();
 			approval = new JButton("전체승인");
 			approval.setPreferredSize(new Dimension(100,50));
+			approval.setBorder(new RoundedBorder(20));
 			jp.setOpaque(false);
 			
 			jp.add(approval);
