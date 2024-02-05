@@ -1,4 +1,4 @@
-package View;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,15 +31,9 @@ public class LoginScreen extends JFrame {
 		// title 컨테이너에 들어갈 컴포넌트를 만들어 보자.
 		JLabel login = new JLabel("로그인 화면");
 
-		// Color color = new Color(5, 0, 153)
-
 		login.setForeground(new Color(5, 0, 153));
-
-		// Font font = new Font("휴먼편지체", Font.BOLD, 25);
-
 		login.setFont(new Font("휴먼편지체", Font.BOLD, 25));
 
-		// 컴포넌트를 title 컨테이너에 올려 주자.
 		title.add(login);
 
 		JPanel jp1 = new JPanel();
@@ -91,7 +85,6 @@ public class LoginScreen extends JFrame {
 		add(title, BorderLayout.NORTH);
 		add(jp2, BorderLayout.CENTER);
 
-		// setBounds(200, 200, 300, 250);
 		setSize(300, 250);
 		locationCenter();
 
@@ -118,7 +111,8 @@ public class LoginScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new JoinScreen();
+				JoinScreen j = new JoinScreen();
+				j.setVisible(true);
 				dispose(); // 현재의 frame을 종료시키는 메서드.
 
 			}
@@ -135,6 +129,7 @@ public class LoginScreen extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new LoginScreen();
+		LoginScreen loginScreen = new LoginScreen();
+		loginScreen.setVisible(true);
 	}
 }
