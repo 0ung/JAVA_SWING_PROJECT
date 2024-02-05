@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class StudentManage extends JPanel {
@@ -22,7 +23,7 @@ public class StudentManage extends JPanel {
 	private void drawUI() {
 		this.setSize(new Dimension(400, 500));
 		add(new JScrollPane(getStudent()));
-		CommonSetting.locationCenter(this);
+		//CommonSetting.locationCenter(this);
 	}
 
 	private JTable getStudent() {
@@ -33,12 +34,17 @@ public class StudentManage extends JPanel {
 				public boolean isCellEditable(int row, int column) {
 					return false;
 				}
+				
 			};
+			DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
+			
+			student.getTableHeader().setPreferredSize(new Dimension(30,30));
 			model.addColumn("번호");
 			model.addColumn("이름");
 
 			// 데이터 가져올 부분
 			String[] studentdumpData = { "1", "asd" };
+			
 			model.addRow(studentdumpData);
 			student.setModel(model);
 			student.getTableHeader().setReorderingAllowed(false);
@@ -60,6 +66,8 @@ public class StudentManage extends JPanel {
 
         // 메인 패널에 GridLayout 설정
         JPanel mainPanel = new JPanel(new GridLayout(1, 3)); // 1행 3열
+        
+        mainPanel.setPreferredSize(new Dimension(10,10));
 
         // 각 컴포넌트(패널) 생성 및 메인 패널에 추가
         mainPanel.add(new StudentManage());
