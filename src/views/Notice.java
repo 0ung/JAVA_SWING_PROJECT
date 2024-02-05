@@ -5,18 +5,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Notice extends JDialog {
+public class Notice extends JPanel {
 	private JTable noticeTable;
+	private JDialog dialog;
 
-	public Notice(String name) {
-		setTitle(name);
+	public Notice(JDialog dialog) {
 		add(new JScrollPane(getTable()));
 		setSize(new Dimension(800, 800));
 		CommonSetting.locationCenter(this);
+		this.dialog = dialog;
 	}
 
 	public JTable getTable() {
@@ -42,7 +44,7 @@ public class Notice extends JDialog {
 			noticeTable.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					DetailNotice detailNotice = new DetailNotice();
+					DetailNotice detailNotice = new DetailNotice(dialog);
 					detailNotice.setVisible(true);
 				}
 			});
@@ -50,8 +52,4 @@ public class Notice extends JDialog {
 		return noticeTable;
 	}
 
-	public static void main(String[] args) {
-		Notice notice = new Notice("공지사항");
-		notice.setVisible(true);
-	}
 }

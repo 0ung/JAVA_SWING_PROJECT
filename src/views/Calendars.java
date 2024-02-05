@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Calendars extends JFrame {
+public class Calendars extends JPanel {
 	private static final Calendar cal = Calendar.getInstance();
 	String[] dayAr = { "일", "월", "화", "수", "목", "금", "토" };
 	DateBox[] dateBoxAr = new DateBox[dayAr.length * 6];
@@ -29,21 +29,24 @@ public class Calendars extends JFrame {
 	private int keyMonth;
 	private int startDay;
 	private int lastDay;
+	private Calendars calendars = this;
+	private JFrame frame;
 
-	public Calendars() {
+	public Calendars(JFrame jFrame) {
+		this.frame = jFrame;
+		setLayout(new BorderLayout()); // 패널의 레이아웃을 BorderLayout으로 설정
 		pNorth = new JPanel();
 		btPrev = new JButton("이전");
 		lbTittle = new JLabel("년도올예정", SwingConstants.CENTER);
 		btNext = new JButton("다음");
-		pCenter = new JPanel();
+		pCenter = new JPanel(new GridLayout(7, 7, 5, 5)); // pCenter에 GridLayout 설정
 
 		lbTittle.setPreferredSize(new Dimension(300, 30));
-
 		pNorth.add(btPrev);
 		pNorth.add(lbTittle);
 		pNorth.add(btNext);
-		add(pNorth, BorderLayout.NORTH);
-		add(pCenter);
+		add(pNorth, BorderLayout.NORTH); // pNorth를 상단에 배치
+		add(pCenter, BorderLayout.CENTER); // pCenter를 중앙에 배치
 
 		btPrev.addActionListener(new ActionListener() {
 			@Override
@@ -61,8 +64,8 @@ public class Calendars extends JFrame {
 		setDateTitle();
 		createDay();
 		createDate();
-		printDate();
-		setBounds(0, 0, 750, 780);
+		printDate(jFrame);
+		setPreferredSize(new Dimension(600, 600)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
 		CommonSetting.locationCenter(this);
 	}
 
@@ -105,7 +108,7 @@ public class Calendars extends JFrame {
 	}
 
 	// 날짜 박스에 날짜 출력하기
-	public void printDate() {
+	public void printDate(JFrame frame) {
 		int n = 1;
 		for (int i = 0; i < dateBoxAr.length; i++) {
 			if (i >= startDay && n <= lastDay) {
@@ -119,8 +122,7 @@ public class Calendars extends JFrame {
 				dateBoxAr[i].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						Notice notice = new Notice("공지사항");
-						notice.setVisible(true);
+						NoticeFactory.createNoticeDialog(frame).setVisible(true);
 					}
 				});
 			} else {
@@ -142,7 +144,7 @@ public class Calendars extends JFrame {
 		// 캘린더 객체에 들어있는 날짜를 기준으로 월 정보를 바꿔준다.
 		cal.set(Calendar.MONTH, keyMonth + data);
 		getDateInfo();
-		printDate();
+		printDate(frame);
 		setDateTitle();
 	}
 
@@ -155,8 +157,4 @@ public class Calendars extends JFrame {
 		}
 	}
 
-	public static void main(String[] args) {
-		Calendars calendars = new Calendars();
-		calendars.setVisible(true);
-	}
 }

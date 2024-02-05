@@ -20,7 +20,7 @@ public class CalendarTest {
 
 	@Test
 	void table() {
-		Notice notice = new Notice();
+		Notice notice = new Notice("ㅎㅇ");
 		DefaultTableModel model = (DefaultTableModel) notice.getTable().getModel();
 		String[] arr = { "테스트1", "테스트", "김영웅", "0204" };
 		model.addRow(arr);

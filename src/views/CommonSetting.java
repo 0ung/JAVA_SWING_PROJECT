@@ -13,3 +13,4 @@ public class CommonSetting {
 		component.setLocation(leftTopX, leftTopY);
 	}
 }
+
