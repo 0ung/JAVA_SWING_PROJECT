@@ -55,10 +55,4 @@ public class Logs extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-        	Logs attendanceSystem = new Logs();
-            attendanceSystem.setVisible(true);
-        });
-    }
 }

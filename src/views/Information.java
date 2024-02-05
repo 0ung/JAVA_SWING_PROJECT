@@ -1,17 +1,14 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 
-public class Information extends JFrame{
+public class Information extends JPanel{
 	private JPanel pClassName, pUserName, pTeacherName, pRoomNum, pProgress;
 	private JLabel className, userName, teacherName, roomNum, progress;
 	private JTextField txtClassName, txtUserName, txtTeacherName, txtRoomNum, txtProgress;
@@ -19,17 +16,14 @@ public class Information extends JFrame{
 	
 	
 	public Information() {
-		this.setSize(500,600);
-		this.setTitle("개인 정보");
-		this.setLayout(new FlowLayout());
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
-		this.getContentPane().add(getPuserName(),BorderLayout.CENTER);
-		this.getContentPane().add(getPclassName(),BorderLayout.CENTER);
-		this.getContentPane().add(getPprogress(),BorderLayout.CENTER);
-		this.getContentPane().add(getProomNum(),BorderLayout.CENTER);
-		this.getContentPane().add(getPteacherName(),BorderLayout.CENTER);
-		
+        this.setPreferredSize(new Dimension(500, 600));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 세로로 정렬
+
+        this.add(getPuserName());
+        this.add(getPclassName());
+        this.add(getPprogress());
+        this.add(getProomNum());
+        this.add(getPteacherName());
 		
 	}
 	
@@ -119,16 +113,6 @@ public class Information extends JFrame{
 		}
 		return pTeacherName;
 	}
-	
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Information info = new Information();
-				info.setVisible(true);
-			}
-		});
-
-	}
 
 }
