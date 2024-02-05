@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -11,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import constant.Editable;
 
 public class ClassManage extends JPanel {
 	private JButton create, delete;
@@ -31,14 +34,15 @@ public class ClassManage extends JPanel {
 		if (createClass == null) {
 			createClass = new JPanel();
 			create = new JButton("생성");
-			create.addActionListener(e->{
-				ClassForm classForm = new ClassForm();
+			create.addActionListener(e -> {
+				ClassForm classForm = new ClassForm(Editable.CREATE);
 				classForm.setVisible(true);
 			});
-			
+
 			createClass.setLayout(new FlowLayout(FlowLayout.CENTER));
 			createClass.add(new JLabel("반 생성"));
 			createClass.add(create);
+
 		}
 		return createClass;
 	}
@@ -52,6 +56,7 @@ public class ClassManage extends JPanel {
 			deleteClass.setLayout(new FlowLayout(FlowLayout.CENTER));
 			deleteClass.add(comboBox);
 			deleteClass.add(delete);
+
 		}
 		return deleteClass;
 	}
@@ -66,6 +71,7 @@ public class ClassManage extends JPanel {
 			updateClass.add(new JLabel("반 수정"));
 			updateClass.add(comboBox);
 			updateClass.add(create);
+
 		}
 		return updateClass;
 	}
@@ -74,7 +80,7 @@ public class ClassManage extends JPanel {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(new ClassManage());
 		frame.setVisible(true);
-		frame.setSize(new Dimension(800, 800));
+		frame.setSize(new Dimension(500, 500));
 	}
 
 }

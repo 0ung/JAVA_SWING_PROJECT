@@ -22,7 +22,7 @@ public class StudentManage extends JPanel {
 	private void drawUI() {
 		this.setSize(new Dimension(400, 500));
 		add(new JScrollPane(getStudent()));
-		CommonSetting.locationCenter(this);
+//		CommonSetting.locationCenter(this);
 	}
 
 	private JTable getStudent() {
