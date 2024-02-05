@@ -2,6 +2,8 @@ package views;
 
 import java.awt.BorderLayout;
 
+import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -36,19 +38,21 @@ public class ClassManage extends JPanel {
 		if (createClass == null) {
 			createClass = new JPanel();
 			create = new JButton("생성");
+
 			create.setPreferredSize(new Dimension(80,60));
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			create.addActionListener(e->{
 				ClassForm classForm = new ClassForm(Editable.CREATE);
 				classForm.setVisible(true);
 			});
-			
+
 			createClass.setLayout(new FlowLayout(FlowLayout.CENTER));
 			JLabel classCreate = new JLabel("반 생성");
 			classCreate.setFont(new Font("맑은 고딕", Font.PLAIN, 40));
 			createClass.add(classCreate);
 			
 			createClass.add(create);
+
 		}
 		return createClass;
 	}
@@ -66,6 +70,7 @@ public class ClassManage extends JPanel {
 			deleteClass.setLayout(new FlowLayout(FlowLayout.CENTER));
 			deleteClass.add(comboBox);
 			deleteClass.add(delete);
+
 		}
 		return deleteClass;
 	}
@@ -88,6 +93,7 @@ public class ClassManage extends JPanel {
 			
 			updateClass.add(comboBox);
 			updateClass.add(create);
+
 		}
 		return updateClass;
 	}
@@ -96,7 +102,7 @@ public class ClassManage extends JPanel {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(new ClassManage());
 		frame.setVisible(true);
-		frame.setSize(new Dimension(800, 800));
+		frame.setSize(new Dimension(500, 500));
 	}
 
 }

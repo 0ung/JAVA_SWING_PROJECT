@@ -24,6 +24,7 @@ public class StudentManage extends JPanel {
 		this.setSize(new Dimension(400, 500));
 		add(new JScrollPane(getStudent()));
 		//CommonSetting.locationCenter(this);
+
 	}
 
 	private JTable getStudent() {
