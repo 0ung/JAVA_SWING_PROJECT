@@ -19,7 +19,7 @@ public class TeacherMainPage extends JFrame{
 		this.setResizable(false);
 		this.setTitle("강사 메인 페이지");
 		
-		this.setLayout(new GridLayout(1,3,0,10));
+		this.setLayout(new GridLayout(1,3));
 		
 		
 		panel1 = new JPanel();
