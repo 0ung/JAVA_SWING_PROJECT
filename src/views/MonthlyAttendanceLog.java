@@ -1,9 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -34,13 +32,7 @@ public class MonthlyAttendanceLog extends JPanel {
 		// 버튼을 담은 패널 생성
 		JPanel buttonPanel = new JPanel();
 		JButton before = new JButton("이전");
-		before.setBorder(new RoundedBorder(20));
-		before.setBackground(Color.WHITE);
-		before.setPreferredSize(new Dimension(80,50));
 		JButton next = new JButton("다음");
-		next.setBorder(new RoundedBorder(20));
-		next.setBackground(Color.WHITE);
-		next.setPreferredSize(new Dimension(80,50));
 		buttonPanel.add(before);
 		buttonPanel.add(next);
 

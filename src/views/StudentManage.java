@@ -40,7 +40,6 @@ public class StudentManage extends JPanel {
 			DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
 			
 			student.getTableHeader().setPreferredSize(new Dimension(30,30));
-			student.getRowHeight(20);
 			model.addColumn("번호");
 			model.addColumn("이름");
 

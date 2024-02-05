@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -80,8 +79,6 @@ public class StudentAttendanceManagement extends JPanel {
 		if(approval == null) {
 			approval = new JButton("출결 승인");
 			approval.setPreferredSize(new Dimension(100,50));
-			approval.setBorder(new RoundedBorder(20));
-			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e->{
 				JOptionPane.showConfirmDialog(this, "승인");
 			});
