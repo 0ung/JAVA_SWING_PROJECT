@@ -3,6 +3,7 @@ package models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import models.dao.AttendanceCheckDAOImpl;
 
 @Data
 @AllArgsConstructor
@@ -17,4 +18,5 @@ public class AttendanceStatusDTO {
 	private int absentCnt;
 	private String startTime;
 	private String endTime;
+
 }
