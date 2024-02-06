@@ -9,8 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class StudentManage extends JPanel {
 
@@ -37,10 +39,9 @@ public class StudentManage extends JPanel {
 				}
 				
 			};
-			DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
 			
 			student.getTableHeader().setPreferredSize(new Dimension(30,30));
-			student.getRowHeight(20);
+			student.setRowHeight(25);
 			model.addColumn("번호");
 			model.addColumn("이름");
 
@@ -49,6 +50,13 @@ public class StudentManage extends JPanel {
 			
 			model.addRow(studentdumpData);
 			student.setModel(model);
+			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+			dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+			TableColumnModel tcm = student.getColumnModel();
+			
+			for(int i=0; i<tcm.getColumnCount(); i++) {
+				tcm.getColumn(i).setCellRenderer(dtcr);
+			}
 			student.getTableHeader().setReorderingAllowed(false);
 			student.getTableHeader().setResizingAllowed(false);
 			student.addMouseListener(new MouseAdapter() {

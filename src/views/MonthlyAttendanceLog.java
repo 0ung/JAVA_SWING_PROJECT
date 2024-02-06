@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -67,6 +68,7 @@ public class MonthlyAttendanceLog extends JPanel {
 					return c;
 				}
 			};
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
 			// 각 셀에 Renderer 설정
 			for (int i = 0; i < jTable.getColumnCount(); i++) {
@@ -78,7 +80,8 @@ public class MonthlyAttendanceLog extends JPanel {
 
 			// 헤더에 테두리 추가
 			jTable.getTableHeader().setBorder(eborder);
-			jTable.setBorder(eborder);
+			//jTable.setBorder(eborder);
+			jTable.setRowHeight(25);
 
 			((DefaultTableCellRenderer) jTable.getTableHeader().getDefaultRenderer())
 					.setHorizontalAlignment(JLabel.CENTER);
