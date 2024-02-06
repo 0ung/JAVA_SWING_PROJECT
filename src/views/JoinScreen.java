@@ -19,14 +19,31 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import constant.Member;
+import exception.InvalidIdPasswordExecption;
+import exception.MisMatchTypeExecption;
+import models.service.UserService;
+
 public class JoinScreen extends JFrame {
 	String choice = null;
+	private JTextField id;
+	private JPasswordField password;
+	private JPasswordField checkPassword;
+	private JTextField userName;
+	private JTextField className;
+	private JTextField id1;
+	private JPasswordField password1;
+	private JPasswordField checkPassword1;
+	private JTextField userName1;
+	private JTextField className1;
+	private String inId = null, inPassword = null, inPassword2 = null, inUserName = null, inClassName = null;
+	private UserService joinService = new UserService();
 
 	public JoinScreen() {
 		initializeUI();
 	}
 
-	private JPanel jPanel() {
+	private JPanel createStudentPanel() {
 		setTitle("회원가입 화면");
 		// setSize(400, 800);
 		setLocationRelativeTo(null);
@@ -40,13 +57,18 @@ public class JoinScreen extends JFrame {
 		title.setFont(new Font("휴먼편지체", Font.BOLD, 30));
 		signUpPanel.add(title, BorderLayout.NORTH);
 
+		id = new JTextField(11);
+		password = new JPasswordField(11);
+		checkPassword = new JPasswordField(11);
+		userName = new JTextField(11);
+		className = new JTextField(11);
 		// 폼 패널
 		JPanel formPanel = new JPanel(new GridLayout(5, 1, 10, 10));
-		formPanel.add(createInputPanel("아이디 :", new JTextField(11)));
-		formPanel.add(createInputPanel("비밀번호 :", new JPasswordField(11)));
-		formPanel.add(createInputPanel("비밀번호 확인:", new JPasswordField(11)));
-		formPanel.add(createInputPanel("이름 :", new JTextField(11)));
-		formPanel.add(createInputPanel("반 :", new JTextField(11)));
+		formPanel.add(createInputPanel("아이디 :", id));
+		formPanel.add(createInputPanel("비밀번호 :", password));
+		formPanel.add(createInputPanel("비밀번호 확인:", checkPassword));
+		formPanel.add(createInputPanel("이름 :", userName));
+		formPanel.add(createInputPanel("반 :", className));
 		signUpPanel.add(formPanel, BorderLayout.CENTER);
 
 		// 버튼 패널
@@ -58,12 +80,12 @@ public class JoinScreen extends JFrame {
 		signUpPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		// 이벤트 처리
-		join.addActionListener(e -> handleJoin());
+		join.addActionListener(e -> handleJoin(Member.Student));
 		cancel.addActionListener(e -> dispose());
 		return signUpPanel;
 	}
 
-	private JPanel jPanel2() {
+	private JPanel createTeacherPanel() {
 		setTitle("회원가입 화면");
 		// setSize(400, 800);
 		setLocationRelativeTo(null);
@@ -76,15 +98,18 @@ public class JoinScreen extends JFrame {
 		title.setForeground(new Color(5, 0, 153));
 		title.setFont(new Font("휴먼편지체", Font.BOLD, 30));
 		signUpPanel.add(title, BorderLayout.NORTH);
-
+		id1 = new JTextField(11);
+		password1 = new JPasswordField(11);
+		checkPassword1 = new JPasswordField(11);
+		userName1 = new JTextField(11);
+		className1 = new JTextField(11);
 		// 폼 패널
-		JPanel formPanel = new JPanel(new GridLayout(6, 1, 10, 10));
-		formPanel.add(createInputPanel("아이디 :", new JTextField(11)));
-		formPanel.add(createInputPanel("비밀번호 :", new JPasswordField(11)));
-		formPanel.add(createInputPanel("비밀번호 확인:", new JPasswordField(11)));
-		formPanel.add(createInputPanel("이름 :", new JTextField(11)));
-		formPanel.add(createInputPanel("반 :", new JTextField(11)));
-		formPanel.add(createInputPanel("강사코드 :", new JTextField(11)));
+		JPanel formPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+		formPanel.add(createInputPanel("아이디 :", id1));
+		formPanel.add(createInputPanel("비밀번호 :", password1));
+		formPanel.add(createInputPanel("비밀번호 확인:", checkPassword1));
+		formPanel.add(createInputPanel("이름 :", userName1));
+		formPanel.add(createInputPanel("반 :", className1));
 		signUpPanel.add(formPanel, BorderLayout.CENTER);
 
 		// 버튼 패널
@@ -96,7 +121,7 @@ public class JoinScreen extends JFrame {
 		signUpPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		// 이벤트 처리
-		join.addActionListener(e -> handleJoin());
+		join.addActionListener(e -> handleJoin(Member.Teacher));
 		cancel.addActionListener(e -> dispose());
 		return signUpPanel;
 	}
@@ -109,8 +134,8 @@ public class JoinScreen extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		// JTabbedPane를 JFrame의 CENTER에 추가
 		// 탭 추가
-		tabbedPane.addTab("학생", jPanel());
-		tabbedPane.addTab("강사", jPanel2());
+		tabbedPane.addTab("학생", createStudentPanel());
+		tabbedPane.addTab("강사", createTeacherPanel());
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		locationCenter();
 		// pack();
@@ -123,9 +148,38 @@ public class JoinScreen extends JFrame {
 		return panel;
 	}
 
-	private void handleJoin() {
-		// 회원가입 처리 로직
-		JOptionPane.showMessageDialog(this, "회원가입 처리");
+	private void handleJoin(Member member) {
+		switch (member) {
+		case Teacher:
+			inId = id1.getText();
+			inPassword = String.valueOf(password1.getPassword());
+			inPassword2 = String.valueOf(checkPassword1.getPassword());
+			inUserName = userName1.getText();
+			inClassName = className1.getText();
+			break;
+		case Student:
+			inId = id.getText();
+			inPassword = String.valueOf(password.getPassword());
+			inPassword2 = String.valueOf(checkPassword.getPassword());
+			inUserName = userName.getText();
+			inClassName = className.getText();
+			break;
+		}
+
+		try {
+			System.out.println(inId + inClassName);
+			joinService.validationId(inId);
+			joinService.validationPassword(inPassword, inPassword2);
+			joinService.validationUserName(inUserName);
+			joinService.join(inId, inPassword, inUserName, inClassName);
+			JOptionPane.showMessageDialog(this, "가입이 완료되었습니다.");
+			LoginScreen loginScreen = new LoginScreen();
+			this.dispose();
+			loginScreen.setVisible(true);
+		} catch (NullPointerException | MisMatchTypeExecption | InvalidIdPasswordExecption e) {
+			JOptionPane.showMessageDialog(checkPassword, e.getMessage());
+		}
+
 	}
 
 	private void locationCenter() {
