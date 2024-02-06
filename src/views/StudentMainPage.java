@@ -13,8 +13,10 @@ public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calnedar, importantNotice, codeHows;
 	private StudentMainPage page = this;
 	private JFrame main = this;
+	private String userId;
 
-	public StudentMainPage() {
+	public StudentMainPage(String userId) {
+		this.userId = userId;
 		this.setSize(new Dimension(1920, 1800));
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
@@ -86,10 +88,4 @@ public class StudentMainPage extends JFrame {
 		return codeHows;
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			StudentMainPage mainPage = new StudentMainPage();
-			mainPage.setVisible(true);
-		});
-	}
 }
