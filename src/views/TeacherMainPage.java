@@ -27,7 +27,7 @@ public class TeacherMainPage extends JFrame{
 		panel3 = new JPanel();
 		
 		panel1.setLayout(new GridLayout(2,1));
-		panel1.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,Color.LIGHT_GRAY));
+		panel1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		panel2.setLayout(new GridLayout(2,1));
 		panel2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		panel3.setLayout(new GridLayout(2,1));

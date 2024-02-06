@@ -17,9 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class RegistrationApprovalPanel extends JPanel {
 	private JTable student;
@@ -54,6 +57,8 @@ public class RegistrationApprovalPanel extends JPanel {
 					return column == 4;
 				}
 			};
+			
+			
 			student.getTableHeader().setPreferredSize(new Dimension(30,30));
 			model.addColumn("번호");
 			model.addColumn("아이디");
@@ -64,11 +69,19 @@ public class RegistrationApprovalPanel extends JPanel {
 			String[] studentdumpData = { "1", "asd", "123:123123", "123:123", "asd" };
 			model.addRow(studentdumpData);
 			student.setModel(model);
+			student.setRowHeight(25);
 
 			JComboBox<String> comboBox = new JComboBox<>(selectOptions);
 			TableColumn statusColumn = student.getColumnModel().getColumn(4); // "상태" 열 인덱스
 			statusColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
+			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+			dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+			TableColumnModel tcm = student.getColumnModel();
+			
+			for(int i=0; i<tcm.getColumnCount(); i++) {
+				tcm.getColumn(i).setCellRenderer(dtcr);
+			}
 			student.getTableHeader().setReorderingAllowed(false);
 			student.getTableHeader().setResizingAllowed(false);
 			student.addMouseListener(new MouseAdapter() {
