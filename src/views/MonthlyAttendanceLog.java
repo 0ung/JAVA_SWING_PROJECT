@@ -4,18 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
+import models.dto.AttendanceStatusDTO;
 
 public class MonthlyAttendanceLog extends JPanel {
 
@@ -54,9 +57,19 @@ public class MonthlyAttendanceLog extends JPanel {
 		if (jTable == null) {
 			String[] columnNames = { "일자", "출석시간", "퇴근시간", "결과" };
 			Object[][] rowData = {};
-
 			jTable = new JTable(rowData, columnNames);
-			
+			 AttendDAO attend = new AttendDAOImpl(); 
+			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards("01075743839"); 
+			 
+			for (AttendanceStatusDTO board : attendBoards) {
+			    Object[] row = new Object[]{
+			        board.getYearMonthDay(),
+			        board.getStartTime(),
+			        board.getEndTime(),
+			        "결과" // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
+			    };
+			    tableModel.addRow(row);
+			}
 			// 각 셀의 레이아웃을 설정하는 Renderer
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
 				@Override
