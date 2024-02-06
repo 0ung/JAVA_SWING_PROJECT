@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AttendanceStatusDTO {
+	
+	private String yearMonthDay;
 	private String userId;
 	private int lateCnt;
 	private int earlyleaveCnt;
