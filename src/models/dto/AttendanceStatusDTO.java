@@ -3,12 +3,14 @@ package models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.AttendanceCheckDAOImpl;
+import models.dao.AttendanceCheckDAOImpl;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttendanceStatusDTO {
+	
+	private String yearMonthDay;
 	private String userId;
 	private int lateCnt;
 	private int earlyleaveCnt;

@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -24,11 +25,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import models.dto.UserDTO;
+import models.service.UserService;
+
 public class RegistrationApprovalPanel extends JPanel {
+	private UserService service = new UserService();
 	private JTable student;
 	private String[] selectOptions = { "학생", "강사", "승인거부" };
 	private JButton approval;
-
+	
 	public RegistrationApprovalPanel() {
 		drawUI();
 	}
@@ -36,17 +41,15 @@ public class RegistrationApprovalPanel extends JPanel {
 	private void drawUI() {
 		this.setSize(new Dimension(400, 500));
 		this.setLayout(new BorderLayout());
-		//this.add(new JScrollPane(getStudent()));
 		JPanel tablePanel = new JPanel();
 		tablePanel.add(new JScrollPane(getStudent()));
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(getApproval());
-		
-		this.add(tablePanel,BorderLayout.NORTH);
-		this.add(buttonPanel,BorderLayout.SOUTH);
-		//CommonSetting.locationCenter(this);
-	}
 
+		this.add(tablePanel, BorderLayout.NORTH);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		// CommonSetting.locationCenter(this);
+	}
 
 	private JTable getStudent() {
 		if (student == null) {
@@ -57,17 +60,14 @@ public class RegistrationApprovalPanel extends JPanel {
 					return column == 4;
 				}
 			};
-			
-			
-			student.getTableHeader().setPreferredSize(new Dimension(30,30));
+
+			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
 			model.addColumn("번호");
 			model.addColumn("아이디");
 			model.addColumn("이름");
 			model.addColumn("반");
 			model.addColumn("권한");
 
-			String[] studentdumpData = { "1", "asd", "123:123123", "123:123", "asd" };
-			model.addRow(studentdumpData);
 			student.setModel(model);
 			student.setRowHeight(25);
 
@@ -78,12 +78,20 @@ public class RegistrationApprovalPanel extends JPanel {
 			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 			dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 			TableColumnModel tcm = student.getColumnModel();
-			
-			for(int i=0; i<tcm.getColumnCount(); i++) {
+
+			for (int i = 0; i < tcm.getColumnCount(); i++) {
 				tcm.getColumn(i).setCellRenderer(dtcr);
 			}
 			student.getTableHeader().setReorderingAllowed(false);
 			student.getTableHeader().setResizingAllowed(false);
+
+			ArrayList<UserDTO> list = service.getAuthMember();
+			for (int i = 0; i < list.size(); i++) {
+				String[] arr = { String.valueOf(i + 1), list.get(i).getUserId(), list.get(i).getUserName(),
+						list.get(i).getClassName(), "미승인" };
+				model.addRow(arr);
+			}
+
 			student.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -94,19 +102,43 @@ public class RegistrationApprovalPanel extends JPanel {
 		return student;
 	}
 
+	private void updatePanelContents(DefaultTableModel model) {
+		ArrayList<UserDTO> list = service.getAuthMember(); // 가정: 서비스 메서드를 통해 최신 목록을 가져옴
+		model.setRowCount(0); // 테이블의 기존 데이터를 모두 제거
+
+		// 최신 데이터로 테이블 모델을 업데이트
+		for (UserDTO user : list) {
+			String[] arr = { String.valueOf(model.getRowCount() + 1), user.getUserId(), user.getUserName(),
+					user.getClassName(), "미승인" };
+			model.addRow(arr);
+		}
+		this.revalidate();
+		this.repaint();
+	}
+
 	private JButton getApproval() {
 		if (approval == null) {
 			JPanel jp = new JPanel();
-			approval = new JButton("전체승인");
-			approval.setPreferredSize(new Dimension(100,50));
+			approval = new JButton("전체확인");
+			approval.setPreferredSize(new Dimension(100, 50));
 			approval.setBorder(new RoundedBorder(20));
 			jp.setOpaque(false);
-			
+
 			jp.add(approval);
-			//jp.add(approval, BorderLayout.);
 			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e -> {
-				JOptionPane.showConfirmDialog(this, "승인");
+				DefaultTableModel model = (DefaultTableModel) student.getModel();
+				int rowCount = model.getRowCount(); // 테이블의 행 수를 가져옴
+				for (int i = 0; i < rowCount; i++) {
+					UserDTO userDTO = new UserDTO();
+					String userId = model.getValueAt(i, 1).toString(); // '아이디' 열이 1번 인덱스라고 가정
+					int authority = service.checkAuth(model.getValueAt(i, 4).toString()); // '권한' 열이 4번 인덱스라고 가정
+					userDTO.setUserId(userId);
+					userDTO.setAuthority(authority);
+					service.updateAuth(userDTO);
+				}
+				JOptionPane.showMessageDialog(this, "승인이 완료되었습니다.");
+				updatePanelContents(model);
 			});
 		}
 		return approval;

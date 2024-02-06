@@ -21,12 +21,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import models.dto.UserDTO;
+
 public class StudentAttendanceManagement extends JPanel {
 	private JTable student;
 	private String[] selectOptions = { "출석", "결석", "지각", "조퇴", "외출" };
 	private JButton approval;
+	private UserDTO user;
 
-	public StudentAttendanceManagement() {
+	public StudentAttendanceManagement(UserDTO user) {
+		this.user = user;
 		drawUI();
 	}
 
@@ -37,10 +41,10 @@ public class StudentAttendanceManagement extends JPanel {
 		tablePanel.add(new JScrollPane(getStudent()));
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(getApproval());
-		
+
 		this.add(tablePanel, BorderLayout.NORTH);
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		//CommonSetting.locationCenter(this);
+		// CommonSetting.locationCenter(this);
 	}
 
 	private JTable getStudent() {
@@ -52,8 +56,8 @@ public class StudentAttendanceManagement extends JPanel {
 					return column == 4;
 				}
 			};
-			student.getTableHeader().setPreferredSize(new Dimension(30,30));
-			
+			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
+
 			model.addColumn("번호");
 			model.addColumn("이름");
 			model.addColumn("출석");
@@ -72,8 +76,8 @@ public class StudentAttendanceManagement extends JPanel {
 			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 			dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 			TableColumnModel tcm = student.getColumnModel();
-			
-			for(int i=0; i<tcm.getColumnCount(); i++) {
+
+			for (int i = 0; i < tcm.getColumnCount(); i++) {
 				tcm.getColumn(i).setCellRenderer(dtcr);
 			}
 			student.getTableHeader().setReorderingAllowed(false);
@@ -89,12 +93,12 @@ public class StudentAttendanceManagement extends JPanel {
 	}
 
 	private JButton getApproval() {
-		if(approval == null) {
+		if (approval == null) {
 			approval = new JButton("출결 승인");
-			approval.setPreferredSize(new Dimension(100,50));
+			approval.setPreferredSize(new Dimension(100, 50));
 			approval.setBorder(new RoundedBorder(20));
 			approval.setBackground(Color.WHITE);
-			approval.addActionListener(e->{
+			approval.addActionListener(e -> {
 				JOptionPane.showConfirmDialog(this, "승인");
 			});
 		}

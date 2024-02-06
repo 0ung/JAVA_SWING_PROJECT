@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.junit.jupiter.api.Test;
 
-import models.AttendanceCheckDAOImpl;
+import models.dao.AttendanceCheckDAOImpl;
 import views.Calendars;
 import views.Notice;
 

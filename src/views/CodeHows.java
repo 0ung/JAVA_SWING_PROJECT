@@ -1,19 +1,38 @@
 package views;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 
-public class CodeHows extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import models.service.AttendService;
+
+public class CodeHows extends JPanel  {
 	private Image image;
+	private JPanel startCheck, endCheck;
+	private JButton start, end;
 
 	public CodeHows() {
-		this.setLayout(new GridLayout(5,1)); 
+		this.setLayout(new GridLayout(6,1)); 
 		// 이미지 로드
 		loadImage();
 		JLabel blank = new JLabel("");
@@ -30,10 +49,75 @@ public class CodeHows extends JPanel {
 		add(githubLink);
 		add(naverLink);
 		add(googleLink);
+		add(getCheckButton());
+		
+		
 
 		// 패널 크기 설정
-		setPreferredSize(new Dimension(500, 500));
+		setPreferredSize(new Dimension(500, 700));
+
 	}
+	
+	public JPanel getCheckButton(){
+		if(startCheck == null) {
+			startCheck = new JPanel();
+			JButton start = new JButton();
+			start.setPreferredSize(new Dimension(80,80));
+			//start.setBackground(Color.LIGHT_GRAY);
+			
+					
+			JLabel txtStart = new JLabel("출근");
+			start.add(txtStart);
+			start.setBorder(new RoundedBorder(20));
+			txtStart.setHorizontalAlignment(JLabel.CENTER);
+			txtStart.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
+			startCheck.add(start);
+			
+			JButton end = new JButton();
+			end.setPreferredSize(new Dimension(80,80));
+			end.setBorder(new RoundedBorder(20));
+			//end.setBackground(Color.RED);
+			JLabel txtEnd = new JLabel("퇴근");
+			txtEnd.setHorizontalAlignment(SwingConstants.CENTER);
+			txtEnd.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
+			
+			end.add(txtEnd);
+			startCheck.add(end);
+			
+			start.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(e.getSource() == start) {
+						start.setEnabled(false);
+						//LocalDateTime.now();
+						AttendService attendService = new AttendService();
+						attendService.insertStartTime("");
+						end.setEnabled(true);
+						
+					}else if(e.getSource() == end) {
+						end.setEnabled(false);
+						start.setEnabled(true);
+					}
+					
+					
+				}
+			});
+			
+			end.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//attendService.endTime();
+					end.setEnabled(false);
+					start.setEnabled(true);
+				}
+			});
+		
+		}
+		return startCheck;
+
+	}
+	
+
 
 	private void loadImage() {
 		try {
@@ -85,4 +169,5 @@ public class CodeHows extends JPanel {
 			g.drawImage(image, 0, 0, this);
 		}
 	}
+	
 }

@@ -3,18 +3,20 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
-import models.AttendanceCheckDAOImpl;
+import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
+import models.dto.UserDTO;
 
 /*class PaddedFlowLayout extends FlowLayout{
 	private int hotizontalPadding;
@@ -37,7 +39,10 @@ public class AttendStatus extends JPanel {
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label;
 	EtchedBorder eborder = new EtchedBorder();
 
-	public AttendStatus() {
+	private UserDTO user;
+
+	public AttendStatus(UserDTO user) {
+		this.user = user;
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -61,8 +66,8 @@ public class AttendStatus extends JPanel {
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-
 		totalAttendance("01075763839"); //영웅님 꺼랑 연결
+
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
 		this.add(topSpacer, BorderLayout.NORTH);
@@ -84,6 +89,7 @@ public class AttendStatus extends JPanel {
 		cnt2Label.setText(dto.getAbsentCnt() + "");
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
 		cnt4Label.setText(dto.getOutingCnt() + "");
+
 	}
 
 	public JPanel getLateCnt() {
