@@ -7,16 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class commonDAO {
 	private static final String url = "jdbc:mysql://222.119.100.89:3382/attendance";
 	private static final String user = "attendance";
 	private static final String password = "codehows213";
 	@Getter
+	@Setter
 	private PreparedStatement pstmt;
 	@Getter
+	@Setter
 	private Connection conn;
 	@Getter
+	@Setter
 	private ResultSet rs;
 
 	public void connect() {
