@@ -1,11 +1,13 @@
 package models.dao;
 
 import models.dto.UserDTO;
+import models.dto.UserInfoDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAOImpl extends commonDAO implements UserDAO {
 
@@ -60,18 +62,16 @@ public class UserDAOImpl extends commonDAO implements UserDAO {
 	}
 
 	@Override
-	public void updateUser(UserDTO user) {
+	public void updateAuthUser(UserDTO user) {
 		connect();
-		String sql = "UPDATE user SET className = ?, userName = ?, authority = ? where userId = ?";
+		String sql = "UPDATE user SET authority = ? where userId = ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, user.getClassName());
-			getPstmt().setString(2, user.getUserName());
-			getPstmt().setInt(3, user.getAuthority());
-			getPstmt().setString(4, user.getUserId());
+			getPstmt().setInt(1, user.getAuthority());
+			getPstmt().setString(2, user.getUserId());
 			getPstmt().executeUpdate();
 		} catch (SQLException e) {
-			userSystem(sql, false);
+			userSystem(sql, true);
 		}
 		close();
 	}
@@ -87,6 +87,52 @@ public class UserDAOImpl extends commonDAO implements UserDAO {
 		} catch (SQLException e) {
 			userSystem(sql, true);
 		}
+		close();
 
+	}
+
+	@Override
+	public ArrayList<UserDTO> approvalUsers() {
+		connect();
+		String sql = "select userId,userName,className,authority from user where authority Not in (1,2)";
+		ArrayList<UserDTO> arrayList = new ArrayList<>();
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			setRs(getPstmt().executeQuery());
+			while (getRs().next()) {
+				UserDTO userDTO = new UserDTO();
+				userDTO.setUserId(getRs().getString("userId"));
+				userDTO.setUserName(getRs().getString("userName"));
+				userDTO.setClassName(getRs().getString("className"));
+				userDTO.setAuthority(getRs().getInt("authority"));
+				arrayList.add(userDTO);
+			}
+		} catch (SQLException e) {
+			userSystem(sql, true);
+		}
+		close();
+		return arrayList;
+	}
+
+	@Override
+	public UserInfoDTO readInfoDTO(String userId) {
+		connect();
+		UserInfoDTO infoDTO = new UserInfoDTO();
+		String sql = "SELECT u.userId,u.className, c.progress,c.roomNum,c.teacherName FROM User u JOIN Class c ON u.className= c.className and u.userId = ?";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, userId);
+			setRs(getPstmt().executeQuery());
+			while (getRs().next()) {
+				infoDTO.setUserId(getRs().getString("userId"));
+				infoDTO.setClassName(getRs().getString("className"));
+				infoDTO.setProgress(getRs().getString("progress"));
+				infoDTO.setRoomNum(getRs().getString("roomNum"));
+				infoDTO.setTeacherName(getRs().getString("teacherName"));
+			}
+		} catch (SQLException e) {
+			userSystem(e.getMessage(), true);
+		}
+		return infoDTO;
 	}
 }

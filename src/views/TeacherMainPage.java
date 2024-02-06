@@ -8,14 +8,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import models.dto.UserDTO;
+
 public class TeacherMainPage extends JFrame {
 
 	private JPanel classManage, registration, calendar, studentAttendance, studentManage, importNotice;
 	private JPanel panel1, panel2, panel3;
-	private String userId;
+	private UserDTO user;
 
-	public TeacherMainPage(String userId) {
-		this.userId = userId;
+	public TeacherMainPage(UserDTO user) {
+		this.user = user;
 		this.setSize(1800, 1400);
 		this.setResizable(false);
 		this.setTitle("강사 메인 페이지");
@@ -99,17 +101,6 @@ public class TeacherMainPage extends JFrame {
 			importNotice = new JPanel();
 		}
 		return importNotice;
-	}
-
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				TeacherMainPage tMainP = new TeacherMainPage();
-				tMainP.setVisible(true);
-			}
-		});
-
 	}
 
 }

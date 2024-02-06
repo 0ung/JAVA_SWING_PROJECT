@@ -20,11 +20,11 @@ import javax.swing.JTextField;
 
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
-import models.service.LoginService;
+import models.service.UserService;
 
 public class LoginScreen extends JFrame {
 	String choice = null;
-	private LoginService loginService = new LoginService();
+	private UserService userService = new UserService();
 	private LoginScreen loginScreen = this;
 
 	public LoginScreen() {
@@ -106,19 +106,18 @@ public class LoginScreen extends JFrame {
 				String myId = jtf1.getText();
 				String myPwd = new String(jtf2.getPassword());
 				try {
-					loginService.validationId(myId);
-					loginService.validationIdPassword(myId, myPwd);
-					switch (loginService.getAuth(myId)) {
+					userService.validationIdPassword(myId, myPwd);
+					switch (userService.getAuth(myId)) {
 					case 0:
-						JOptionPane.showMessageDialog(jp2, "회원가입이 승인되지 않았습다. 강사에게 문의바랍니다.");
+						JOptionPane.showMessageDialog(jp2, "회원가입이 승인되지 않았습니다. 강사에게 문의바랍니다.");
 						break;
 					case 1:
-						StudentMainPage studentMainPage = new StudentMainPage(myId);
+						StudentMainPage studentMainPage = new StudentMainPage(userService.getUser(myId));
 						studentMainPage.setVisible(true);
 						loginScreen.dispose();
 						break;
 					case 2:
-						TeacherMainPage teacherMainPage = new TeacherMainPage(myId);
+						TeacherMainPage teacherMainPage = new TeacherMainPage(userService.getUser(myId));
 						teacherMainPage.setVisible(true);
 						loginScreen.dispose();
 						break;
@@ -126,7 +125,7 @@ public class LoginScreen extends JFrame {
 						JOptionPane.showMessageDialog(jp2, "잘못된 입력입니다.");
 						break;
 					}
-				} catch (NullPointerException | MisMatchTypeExecption e1) {
+				} catch (NullPointerException e1) {
 					JOptionPane.showMessageDialog(jp2, "잘못된 입력");
 				} catch (InvalidIdPasswordExecption e1) {
 					JOptionPane.showMessageDialog(jp2, "아이디 or 비밀번호가 일치하지 않습니다.");

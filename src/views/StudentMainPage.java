@@ -9,14 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import models.dto.UserDTO;
+
 public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calnedar, importantNotice, codeHows;
 	private StudentMainPage page = this;
 	private JFrame main = this;
-	private String userId;
+	private UserDTO user;
 
-	public StudentMainPage(String userId) {
-		this.userId = userId;
+	public StudentMainPage(UserDTO user) {
+		this.user = user;
 		this.setSize(new Dimension(1920, 1800));
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
@@ -43,7 +45,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getInfo() {
 		if (info == null) {
 			info = new JPanel();
-			info.add(new Information());
+			info.add(new Information(user));
 		}
 		return info;
 	}
