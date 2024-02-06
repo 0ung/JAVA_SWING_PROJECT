@@ -33,7 +33,7 @@ public class RegistrationApprovalPanel extends JPanel {
 	private JTable student;
 	private String[] selectOptions = { "학생", "강사", "승인거부" };
 	private JButton approval;
-
+	
 	public RegistrationApprovalPanel() {
 		drawUI();
 	}

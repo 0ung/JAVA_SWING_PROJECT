@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.commonDAO;
 import models.dto.AttendanceStatusDTO;
 
 public class AttendDAOImpl extends commonDAO implements AttendDAO {

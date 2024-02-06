@@ -12,9 +12,10 @@ import models.dto.UserDTO;
 
 public class TeacherMainPage extends JFrame {
 
-	private JPanel classManage, registration, calendar, studentAttendance, studentManage, importNotice;
+	private JPanel classManage, registration, calendar, studentAttendance, studentManage, importantNotice;
 	private JPanel panel1, panel2, panel3;
 	private UserDTO user;
+	private JFrame main = this;
 
 	public TeacherMainPage(UserDTO user) {
 		this.user = user;
@@ -53,7 +54,7 @@ public class TeacherMainPage extends JFrame {
 		if (studentManage == null) {
 
 			studentManage = new JPanel();
-			studentManage.add(new StudentManage());
+			studentManage.add(new StudentManage(user));
 		}
 		return studentManage;
 	}
@@ -62,15 +63,15 @@ public class TeacherMainPage extends JFrame {
 		if (studentAttendance == null) {
 
 			studentAttendance = new JPanel();
-			studentAttendance.add(new StudentAttendanceManagement());
+			studentAttendance.add(new StudentAttendanceManagement(user));
 		}
 		return studentAttendance;
 	}
 
 	public JPanel getCalendar() {
 		if (calendar == null) {
-
 			calendar = new JPanel();
+			calendar.add(new Calendars(main));
 
 		}
 		return calendar;
@@ -80,7 +81,7 @@ public class TeacherMainPage extends JFrame {
 		if (classManage == null) {
 
 			classManage = new JPanel();
-			classManage.add(new ClassManage());
+			classManage.add(new ClassManage(user));
 
 		}
 		return classManage;
@@ -97,10 +98,11 @@ public class TeacherMainPage extends JFrame {
 	}
 
 	public JPanel getImprotantNotice() {
-		if (importNotice == null) {
-			importNotice = new JPanel();
+		if (importantNotice == null) {
+			importantNotice = new JPanel();
+			importantNotice.add(NoticeFactory.createNoticePanel());
 		}
-		return importNotice;
+		return importantNotice;
 	}
 
 }

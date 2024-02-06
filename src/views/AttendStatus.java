@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
+import models.dto.UserDTO;
 
 /*class PaddedFlowLayout extends FlowLayout{
 	private int hotizontalPadding;
@@ -37,8 +38,11 @@ public class AttendStatus extends JPanel {
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label;
 	EtchedBorder eborder = new EtchedBorder();
-	
-	public AttendStatus() {
+
+	private UserDTO user;
+
+	public AttendStatus(UserDTO user) {
+		this.user = user;
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -57,31 +61,35 @@ public class AttendStatus extends JPanel {
 
 		lowerPanel = new JPanel(new GridLayout(1, 4, 20, 10));
 		lowerPanel.setBorder(BorderFactory.createEmptyBorder(0, 80, 10, 80));
-		
+
 		lowerPanel.add(getCnt1());
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-		
-		totalAttendance("01075763839");
+		totalAttendance("01075763839"); //영웅님 꺼랑 연결
+
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
-		this.add(topSpacer, BorderLayout.NORTH); 
+		this.add(topSpacer, BorderLayout.NORTH);
 		this.add(upperPanel, BorderLayout.CENTER);
 		this.add(lowerPanel, BorderLayout.SOUTH);
 		// this.add(lowerPanel2,BorderLayout.SOUTH);
 	}
-	
+
 	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
 	public void totalAttendance(String userId) {
-		String yearMonth = "2024-02";
+		String yearMonth = "2024-02"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
 //		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
-		
+
 		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);
-		
+
 		System.out.println(dto);
-				
-		cnt1Label.setText(dto.getLateCnt()+"");
+
+		cnt1Label.setText(dto.getLateCnt() + "");
+		cnt2Label.setText(dto.getAbsentCnt() + "");
+		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
+		cnt4Label.setText(dto.getOutingCnt() + "");
+
 	}
 
 	public JPanel getLateCnt() {
@@ -149,8 +157,11 @@ public class AttendStatus extends JPanel {
 	public JPanel getCnt2() {
 		if (cnt2 == null) {
 			cnt2 = new JPanel();
+			cnt2Label = new JLabel();
 			cnt2.setPreferredSize(new Dimension(70, 60));
 			cnt2.setBackground(Color.pink);
+			cnt2.add(cnt2Label);
+
 		}
 		return cnt2;
 
@@ -159,8 +170,10 @@ public class AttendStatus extends JPanel {
 	public JPanel getCnt3() {
 		if (cnt3 == null) {
 			cnt3 = new JPanel();
+			cnt3Label = new JLabel();
 			cnt3.setPreferredSize(new Dimension(70, 60));
 			cnt3.setBackground(Color.pink);
+			cnt3.add(cnt3Label);
 		}
 		return cnt3;
 
@@ -169,12 +182,13 @@ public class AttendStatus extends JPanel {
 	public JPanel getCnt4() {
 		if (cnt4 == null) {
 			cnt4 = new JPanel();
+			cnt4Label = new JLabel();
 			cnt4.setPreferredSize(new Dimension(70, 60));
 			cnt4.setBackground(Color.pink);
+			cnt4.add(cnt4Label);
 
 		}
 		return cnt4;
 	}
-	
 
 }
