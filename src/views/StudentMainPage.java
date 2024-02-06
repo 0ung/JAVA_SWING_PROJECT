@@ -61,7 +61,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getMonthLog() {
 		if (monthLog == null) {
 			monthLog = new JPanel();
-			monthLog.add(new MonthlyAttendanceLog());
+			monthLog.add(new MonthlyAttendanceLog(new UserDTO()));
 		}
 		return monthLog;
 	}
