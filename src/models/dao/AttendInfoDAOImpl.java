@@ -2,7 +2,6 @@ package models.dao;
 
 import java.sql.SQLException;
 
-import models.commonDAO;
 import models.dto.AttendanceStatusDTO;
 
 public class AttendInfoDAOImpl extends commonDAO implements AttendInfoDAO{

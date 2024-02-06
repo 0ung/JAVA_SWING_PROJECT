@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
+import models.dto.UserDTO;
 
 /*class PaddedFlowLayout extends FlowLayout{
 	private int hotizontalPadding;
@@ -37,8 +38,10 @@ public class AttendStatus extends JPanel {
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label;
 	EtchedBorder eborder = new EtchedBorder();
-	
-	public AttendStatus() {
+	private UserDTO user;
+
+	public AttendStatus(UserDTO user) {
+		this.user = user;
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -57,31 +60,31 @@ public class AttendStatus extends JPanel {
 
 		lowerPanel = new JPanel(new GridLayout(1, 4, 20, 10));
 		lowerPanel.setBorder(BorderFactory.createEmptyBorder(0, 80, 10, 80));
-		
+
 		lowerPanel.add(getCnt1());
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-		
+
 		totalAttendance("01075763839");
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
-		this.add(topSpacer, BorderLayout.NORTH); 
+		this.add(topSpacer, BorderLayout.NORTH);
 		this.add(upperPanel, BorderLayout.CENTER);
 		this.add(lowerPanel, BorderLayout.SOUTH);
 		// this.add(lowerPanel2,BorderLayout.SOUTH);
 	}
-	
+
 	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
 	public void totalAttendance(String userId) {
 		String yearMonth = "2024-02";
 //		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
-		
+
 		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);
-		
+
 		System.out.println(dto);
-				
-		cnt1Label.setText(dto.getLateCnt()+"");
+
+		cnt1Label.setText(dto.getLateCnt() + "");
 	}
 
 	public JPanel getLateCnt() {
@@ -175,6 +178,5 @@ public class AttendStatus extends JPanel {
 		}
 		return cnt4;
 	}
-	
 
 }

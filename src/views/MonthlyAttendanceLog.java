@@ -69,7 +69,7 @@ public class MonthlyAttendanceLog extends JPanel {
 
 			
 			 AttendDAO attend = new AttendDAOImpl(); 
-			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserID()); 
+			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 
 			 
 			 
 			for (AttendanceStatusDTO board : attendBoards) {

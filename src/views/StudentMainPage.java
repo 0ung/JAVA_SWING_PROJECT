@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import models.dto.UserDTO;
 
 public class StudentMainPage extends JFrame {
-	private JPanel info, currentAttendance, monthLog, calnedar, importantNotice, codeHows;
+	private JPanel info, currentAttendance, monthLog, calendar, importantNotice, codeHows;
 	private StudentMainPage page = this;
 	private JFrame main = this;
 	private UserDTO user;
@@ -33,7 +33,7 @@ public class StudentMainPage extends JFrame {
 		jPanel3.add(getCodehows());
 		jPanel3.add(getMonthLog());
 
-		jPanel.add(getCalnedar());
+		jPanel.add(getcalendar());
 		jPanel.add(getImportNotice());
 
 		this.add(jPanel2);
@@ -53,7 +53,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getCurrentAttendance() {
 		if (currentAttendance == null) {
 			currentAttendance = new JPanel();
-			currentAttendance.add(new AttendStatus());
+			currentAttendance.add(new AttendStatus(user));
 		}
 		return currentAttendance;
 	}
@@ -61,17 +61,17 @@ public class StudentMainPage extends JFrame {
 	public JPanel getMonthLog() {
 		if (monthLog == null) {
 			monthLog = new JPanel();
-			monthLog.add(new MonthlyAttendanceLog(new UserDTO()));
+			monthLog.add(new MonthlyAttendanceLog(user));
 		}
 		return monthLog;
 	}
 
-	public JPanel getCalnedar() {
-		if (calnedar == null) {
-			calnedar = new JPanel();
-			calnedar.add(new Calendars(main));
+	public JPanel getcalendar() {
+		if (calendar == null) {
+			calendar = new JPanel();
+			calendar.add(new Calendars(main));
 		}
-		return calnedar;
+		return calendar;
 	}
 
 	public JPanel getImportNotice() {
