@@ -3,7 +3,7 @@ package models.dto;
 import lombok.Data;
 
 @Data
-public class userDTO {
+public class UserDTO {
 	private String userID;
 	private String className;
 	private String userName;

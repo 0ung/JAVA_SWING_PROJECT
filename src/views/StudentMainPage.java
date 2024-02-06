@@ -9,10 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import models.dto.UserDTO;
+
 public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calnedar, importantNotice, codeHows;
 	private StudentMainPage page = this;
 	private JFrame main = this;
+	
 
 	public StudentMainPage() {
 		this.setSize(new Dimension(1920, 1800));
@@ -57,7 +60,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getMonthLog() {
 		if (monthLog == null) {
 			monthLog = new JPanel();
-			monthLog.add(new MonthlyAttendanceLog());
+			monthLog.add(new MonthlyAttendanceLog(new UserDTO()));
 		}
 		return monthLog;
 	}
