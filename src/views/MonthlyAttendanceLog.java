@@ -22,6 +22,10 @@ import models.dao.AttendDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
+import models.dto.AttendanceStatusDTO;
+
 public class MonthlyAttendanceLog extends JPanel {
 
 	private JPanel jPanel;
@@ -65,13 +69,8 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("퇴근시간");
 			tableModel.addColumn("결과");
 			
-			//String[] columnNames = { "일자", "출석시간", "퇴근시간", "결과" };
-
-			
 			 AttendDAO attend = new AttendDAOImpl(); 
-			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 
-			 
-			 
+			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserID()); 			 
 			for (AttendanceStatusDTO board : attendBoards) {
 			    Object[] row = new Object[]{
 			        board.getYearMonthDay(),
@@ -82,8 +81,6 @@ public class MonthlyAttendanceLog extends JPanel {
 			    tableModel.addRow(row);
 			}
 
-				
-				
 			// 각 셀의 레이아웃을 설정하는 Renderer
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
 				@Override
