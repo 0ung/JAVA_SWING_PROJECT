@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -62,7 +63,11 @@ public class StudentManage extends JPanel {
 			student.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					// 상세정보 추가
+					if(e.getClickCount() == 2 ) {
+						JDialog dialog = new CombinedDialog(null);
+	                    dialog.setVisible(true);
+					}
+					
 				}
 			});
 		}

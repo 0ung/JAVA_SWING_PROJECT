@@ -9,12 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import models.dto.UserDTO;
+
 public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calnedar, importantNotice, codeHows;
 	private StudentMainPage page = this;
 	private JFrame main = this;
+	private UserDTO user;
 
-	public StudentMainPage() {
+	public StudentMainPage(UserDTO user) {
+		this.user = user;
 		this.setSize(new Dimension(1920, 1800));
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
@@ -41,7 +45,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getInfo() {
 		if (info == null) {
 			info = new JPanel();
-			info.add(new Information());
+			info.add(new Information(user));
 		}
 		return info;
 	}
@@ -57,7 +61,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getMonthLog() {
 		if (monthLog == null) {
 			monthLog = new JPanel();
-			monthLog.add(new MonthlyAttendanceLog());
+			monthLog.add(new MonthlyAttendanceLog(new UserDTO()));
 		}
 		return monthLog;
 	}
@@ -86,10 +90,4 @@ public class StudentMainPage extends JFrame {
 		return codeHows;
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			StudentMainPage mainPage = new StudentMainPage();
-			mainPage.setVisible(true);
-		});
-	}
 }

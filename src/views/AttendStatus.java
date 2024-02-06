@@ -3,15 +3,19 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+
+import models.dao.AttendanceCheckDAOImpl;
+import models.dto.AttendanceStatusDTO;
 
 /*class PaddedFlowLayout extends FlowLayout{
 	private int hotizontalPadding;
@@ -31,11 +35,10 @@ public class AttendStatus extends JPanel {
 
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
-	private JLabel late, absent, earlyLeave, outStanding;
+	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label;
 	EtchedBorder eborder = new EtchedBorder();
-
+	
 	public AttendStatus() {
-
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -54,18 +57,31 @@ public class AttendStatus extends JPanel {
 
 		lowerPanel = new JPanel(new GridLayout(1, 4, 20, 10));
 		lowerPanel.setBorder(BorderFactory.createEmptyBorder(0, 80, 10, 80));
-
+		
 		lowerPanel.add(getCnt1());
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
+		
+		totalAttendance("01075763839");
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
 		this.add(topSpacer, BorderLayout.NORTH); 
 		this.add(upperPanel, BorderLayout.CENTER);
 		this.add(lowerPanel, BorderLayout.SOUTH);
 		// this.add(lowerPanel2,BorderLayout.SOUTH);
-
+	}
+	
+	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
+	public void totalAttendance(String userId) {
+		String yearMonth = "2024-02";
+//		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
+		
+		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);
+		
+		System.out.println(dto);
+				
+		cnt1Label.setText(dto.getLateCnt()+"");
 	}
 
 	public JPanel getLateCnt() {
@@ -122,11 +138,12 @@ public class AttendStatus extends JPanel {
 	public JPanel getCnt1() {
 		if (cnt1 == null) {
 			cnt1 = new JPanel();
+			cnt1Label = new JLabel();
 			cnt1.setPreferredSize(new Dimension(70, 60));
 			cnt1.setBackground(Color.pink);
+			cnt1.add(cnt1Label);
 		}
 		return cnt1;
-
 	}
 
 	public JPanel getCnt2() {
@@ -158,5 +175,6 @@ public class AttendStatus extends JPanel {
 		}
 		return cnt4;
 	}
+	
 
 }
