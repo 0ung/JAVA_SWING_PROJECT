@@ -1,8 +1,10 @@
 package views;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,26 +15,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
-
-/*class PaddedFlowLayout extends FlowLayout{
-	private int hotizontalPadding;
-	
-	public PaddedFlowLayout(int align, int hgap, int vgap, int horizontalPadding) {
-		super(align, hgap, vgap);
-		this.hotizontalPadding = horizontalPadding;
-	}
-	
-	@Override
-	public int getHgap() {
-		return super.getHgap() + hotizontalPadding;
-	}
-}*/
 
 public class AttendStatus extends JPanel {
 
@@ -96,6 +85,7 @@ public class AttendStatus extends JPanel {
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
 		cnt4Label.setText(dto.getOutingCnt() + "");
 		titleLabel.setText(user.getUserName() + "의 " + arr[1] + "월 " + " 출결 상황판");
+		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 
 	}
 

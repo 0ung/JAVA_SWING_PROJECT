@@ -45,6 +45,7 @@ public class LoginScreen extends JFrame {
 
 		JPanel idPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel jlb1 = new JLabel("아이디 : ", JLabel.CENTER);
+		
 
 		idPanel.add(jlb1);
 
@@ -70,9 +71,15 @@ public class LoginScreen extends JFrame {
 
 		JPanel loginPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton jLogin = new JButton("로그인");
+		jLogin.setForeground(Color.WHITE); 
+		jLogin.setBorder(new RoundedBorder(10));
+		jLogin.setBackground(Color.DARK_GRAY);
 
 		JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton join = new JButton("회원가입");
+		join.setForeground(Color.WHITE); 
+		join.setBorder(new RoundedBorder(10));
+		join.setBackground(Color.DARK_GRAY);
 
 		loginPanel.add(jLogin);
 		joinPanel.add(join);

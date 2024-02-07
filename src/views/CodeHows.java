@@ -74,17 +74,17 @@ public class CodeHows extends JPanel {
 //		add(googleLink);
 		add(new JLabel(""));
 		add(Box.createVerticalStrut(180));
-		add(createLinkButton("코드하우스", "https://www.codehows.com/"));
+		add(createLinkButton("코드하우스 ", "https://www.codehows.com/"));
 		add(Box.createVerticalStrut(20));
-		add(createLinkButton("깃허브", "https://github.com/"));
+		add(createLinkButton("  깃허브  ", "https://github.com/"));
 		add(Box.createVerticalStrut(20));
-		add(createLinkButton("네이버", "https://www.naver.com/"));
+		add(createLinkButton("  네이버  ", "https://www.naver.com/"));
 		add(Box.createVerticalStrut(20));
-		add(createLinkButton("구글", "https://www.google.co.kr/?hl=ko"));
+		add(createLinkButton("   구글   ", "https://www.google.co.kr/?hl=ko"));
 		add(Box.createVerticalStrut(40));
 		
 		add(getCheckButton());
-		add(Box.createVerticalStrut(40));
+		add(Box.createVerticalStrut(30));
 		add(MonthlyAttendanceLog());
 
 		// 패널 크기 설정
@@ -94,13 +94,13 @@ public class CodeHows extends JPanel {
 	
 	private JButton createLinkButton(String text, String url) {
 		JButton button = new JButton(text);
-		button.setPreferredSize(new Dimension(400, 80));
-		
+		button.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		button.setPreferredSize(new Dimension(200,80));
 		button.setFocusPainted(true);
-		button.setBorderPainted(true);
-		button.setContentAreaFilled(true);
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		button.setForeground(Color.BLUE);
+		button.setForeground(Color.DARK_GRAY);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -121,26 +121,25 @@ public class CodeHows extends JPanel {
 	public JPanel getCheckButton() {
 		if (startCheck == null) {
 			startCheck = new JPanel();
-			start = new JButton();
-			start.setPreferredSize(new Dimension(80, 80));
+			start = new JButton("출근");
+			start.setPreferredSize(new Dimension(100, 80));
 			// start.setBackground(Color.LIGHT_GRAY);
 
-			JLabel txtStart = new JLabel("출근");
-			start.add(txtStart);
 			start.setBorder(new RoundedBorder(20));
-			txtStart.setHorizontalAlignment(JLabel.CENTER);
-			txtStart.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
+			start.setFont(new Font("맑은 고딕", getFont().BOLD, 20));
+			start.setForeground(Color.DARK_GRAY);
+			start.setBackground(new Color(248, 240, 198));
+			//start.setOpaque(false);
 			startCheck.add(start);
 
-			end = new JButton();
-			end.setPreferredSize(new Dimension(80, 80));
+			end = new JButton("퇴근");
+			end.setPreferredSize(new Dimension(100, 80));
 			end.setBorder(new RoundedBorder(20));
-			// end.setBackground(Color.RED);
-			JLabel txtEnd = new JLabel("퇴근");
-			txtEnd.setHorizontalAlignment(SwingConstants.CENTER);
-			txtEnd.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
- 
-			end.add(txtEnd);
+			end.setFont(new Font("맑은 고딕", getFont().BOLD, 20));
+			end.setForeground(Color.DARK_GRAY);
+			end.setBackground(new Color(248, 240, 198));
+			//end.setOpaque(false);
+
 			startCheck.add(end);
 
 			start.addActionListener(new ActionListener() {
