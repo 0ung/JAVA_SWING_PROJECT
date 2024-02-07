@@ -66,7 +66,7 @@ public class AttendStatus extends JPanel {
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-		totalAttendance("01075763839"); //영웅님 꺼랑 연결
+		totalAttendance("01087353158"); //영웅님 꺼랑 연결
 
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
@@ -78,7 +78,7 @@ public class AttendStatus extends JPanel {
 
 	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
 	public void totalAttendance(String userId) {
-		String yearMonth = "2024-02"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
+		String yearMonth = "2024-03"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
 //		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
 
 		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);

@@ -1,6 +1,7 @@
-package views;
+ package views;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,10 +23,6 @@ import models.dao.AttendDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 
-import models.dao.AttendDAO;
-import models.dao.AttendDAOImpl;
-import models.dto.AttendanceStatusDTO;
-
 public class MonthlyAttendanceLog extends JPanel {
 
 	private JPanel jPanel;
@@ -33,6 +30,7 @@ public class MonthlyAttendanceLog extends JPanel {
 	private JButton before, next;
 	private UserDTO dto;
 	EtchedBorder eborder = new EtchedBorder();
+	AttendDAO attend = new AttendDAOImpl();
 
 	public MonthlyAttendanceLog(UserDTO user) {
 		this.dto = user;
@@ -69,8 +67,9 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("퇴근시간");
 			tableModel.addColumn("결과");
 			
-			 AttendDAO attend = new AttendDAOImpl(); 
-			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserID()); 			 
+			  
+			 
+			 List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId()); 			 
 			for (AttendanceStatusDTO board : attendBoards) {
 			    Object[] row = new Object[]{
 			        board.getYearMonthDay(),
@@ -113,11 +112,21 @@ public class MonthlyAttendanceLog extends JPanel {
 		return jTable;
 	}
 	
-//	public void main(String[] args) {
-//		SwingUtilities.invokeLater(()->{
-//			MonthlyAttendanceLog jframe = new MonthlyAttendanceLog();
-//			jframe.setVisible(true);
-//		});
-//	}
+	public void addRowToTable() {
+	    DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
+	    List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId());
+
+	    tableModel.setNumRows(0);
+	    for (AttendanceStatusDTO board : attendBoards) {
+		    Object[] row = new Object[]{
+		        board.getYearMonthDay(),
+		        board.getStartTime(),
+		        board.getEndTime(),
+		        "결과" // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
+		    };
+		    tableModel.addRow(row);
+		}
+	}
+
 
 }
