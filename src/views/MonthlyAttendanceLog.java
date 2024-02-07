@@ -29,9 +29,8 @@ public class MonthlyAttendanceLog extends JPanel {
 	private JTable jTable;
 	private JButton before, next;
 	private UserDTO dto;
-  private AttendDAO attend = new AttendDAOImpl();
+	private AttendDAO attend = new AttendDAOImpl();
 	EtchedBorder eborder = new EtchedBorder();
-	AttendDAO attend = new AttendDAOImpl();
 
 	public MonthlyAttendanceLog(UserDTO user) {
 		this.dto = user;
@@ -69,22 +68,7 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("결과");
 			List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 			 
 			for (AttendanceStatusDTO board : attendBoards) {
-				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" // '결과'는
-																														// 해당
-																														// 출근
-																														// 데이터에
-																														// 기반한
-																														// 상태를
-																														// 나타냅니다
-																														// (예:
-																														// 정상,
-																														// 지각
-																														// 등).
-																														// 필요에
-																														// 따라
-																														// 계산
-																														// 로직
-																														// 추가
+				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" 
 				};
 				tableModel.addRow(row);
 			}
