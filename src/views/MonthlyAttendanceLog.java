@@ -70,7 +70,7 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("결과");
 			
 			 AttendDAO attend = new AttendDAOImpl(); 
-			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserID()); 			 
+			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 			 
 			for (AttendanceStatusDTO board : attendBoards) {
 			    Object[] row = new Object[]{
 			        board.getYearMonthDay(),
