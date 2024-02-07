@@ -19,8 +19,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import exception.InvalidIdPasswordExecption;
-import exception.MisMatchTypeExecption;
 import models.service.UserService;
+
 
 public class LoginScreen extends JFrame {
 	String choice = null;
@@ -36,7 +36,7 @@ public class LoginScreen extends JFrame {
 		JLabel login = new JLabel("로그인 화면");
 
 		login.setForeground(new Color(5, 0, 153));
-		login.setFont(new Font("휴먼편지체", Font.BOLD, 25));
+		login.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 
 		title.add(login);
 
@@ -160,3 +160,4 @@ public class LoginScreen extends JFrame {
 		loginScreen.setVisible(true);
 	}
 }
+

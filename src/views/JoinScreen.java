@@ -54,7 +54,7 @@ public class JoinScreen extends JFrame {
 		JPanel signUpPanel = new JPanel(new BorderLayout());
 		JLabel title = new JLabel("회원가입", JLabel.CENTER);
 		title.setForeground(new Color(5, 0, 153));
-		title.setFont(new Font("휴먼편지체", Font.BOLD, 30));
+		title.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		signUpPanel.add(title, BorderLayout.NORTH);
 
 		id = new JTextField(11);
@@ -96,7 +96,7 @@ public class JoinScreen extends JFrame {
 		JPanel signUpPanel = new JPanel(new BorderLayout());
 		JLabel title = new JLabel("회원가입", JLabel.CENTER);
 		title.setForeground(new Color(5, 0, 153));
-		title.setFont(new Font("휴먼편지체", Font.BOLD, 30));
+		title.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		signUpPanel.add(title, BorderLayout.NORTH);
 		id1 = new JTextField(11);
 		password1 = new JPasswordField(11);

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
+import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
 
 /*class PaddedFlowLayout extends FlowLayout{
@@ -36,7 +38,7 @@ public class AttendStatus extends JPanel {
 
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
-	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label;
+	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel;
 	EtchedBorder eborder = new EtchedBorder();
 
 	private UserDTO user;
@@ -50,6 +52,8 @@ public class AttendStatus extends JPanel {
 		JPanel topSpacer = new JPanel();
 		topSpacer.setPreferredSize(new Dimension(this.getWidth(), 100)); // 상단 공간의 높이 설정
 		topSpacer.setOpaque(false);
+		titleLabel = new JLabel();
+		topSpacer.add(titleLabel);
 
 		upperPanel = new JPanel(new GridLayout(1, 4, 20, 10));
 		upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 80, 10, 80));
@@ -66,8 +70,7 @@ public class AttendStatus extends JPanel {
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-		totalAttendance("01075763839"); //영웅님 꺼랑 연결
-
+		totalAttendance(user.getUserId()); // 영웅님 꺼랑 연결
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
 		this.add(topSpacer, BorderLayout.NORTH);
@@ -78,17 +81,21 @@ public class AttendStatus extends JPanel {
 
 	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
 	public void totalAttendance(String userId) {
-		String yearMonth = "2024-02"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
+		String yearMonth = "2024-03"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
 //		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
 
 		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);
 
+		String[] arr = LocalDate.now().toString().split("-");
+
+		System.out.println(user);
 		System.out.println(dto);
 
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
 		cnt4Label.setText(dto.getOutingCnt() + "");
+		titleLabel.setText(user.getUserName() + "의 " + arr[1] + "월 " + " 출결 상황판");
 
 	}
 

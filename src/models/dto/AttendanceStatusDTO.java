@@ -3,7 +3,6 @@ package models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.dao.AttendanceCheckDAOImpl;
 
 @Data
 @AllArgsConstructor

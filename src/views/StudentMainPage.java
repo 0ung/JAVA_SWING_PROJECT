@@ -85,7 +85,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getCodehows() {
 		if (codeHows == null) {
 			codeHows = new JPanel();
-			codeHows.add(new CodeHows());
+			codeHows.add(new CodeHows(user));
 		}
 		return codeHows;
 	}

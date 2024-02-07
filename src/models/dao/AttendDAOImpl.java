@@ -9,15 +9,16 @@ import models.dto.AttendanceStatusDTO;
 public class AttendDAOImpl extends commonDAO implements AttendDAO {
 
 	@Override
-	public void insertStartTime(AttendanceStatusDTO startTime) {
+	/*public void insertStartTime(AttendanceStatusDTO startTime)*/ 
+	public void insertStartTime(String userId, String date, String startTime) throws SQLException{
 		connect();
 		String sql = "INSERT INTO attendanceStatus(userId,yearMonthDay, startTime) values ( ?, ?, ? ) ";
 
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, startTime.getUserId());
-			getPstmt().setString(2, startTime.getYearMonthDay());
-			getPstmt().setString(3, startTime.getStartTime());
+			getPstmt().setString(1, userId);
+			getPstmt().setString(2, date);
+			getPstmt().setString(3, startTime);
 			getPstmt().executeUpdate();
 
 		} catch (SQLException e) {
@@ -47,11 +48,11 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 	}
 	
 	public List<AttendanceStatusDTO> getAttendBoards(String userId){
-		
 		List<AttendanceStatusDTO> attendBoards = new ArrayList<>();
+		
+		connect();
 		String sql = "SELECT yearMonthDay, startTime, endTime from attendanceStatus where userId = ? ";
 		try {
-			connect();
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
 			setRs(getPstmt().executeQuery());
