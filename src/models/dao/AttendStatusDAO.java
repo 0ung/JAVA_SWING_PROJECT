@@ -20,7 +20,7 @@ public class AttendStatusDAO {
 		try {
 			
 			dao.connect();
-			String sql = "INSERT INTO attendance (userId, lateCnt, earlyLeaveCnt, outingCnt, absentCnt, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO attendancestatus (userId, lateCnt, earlyLeaveCnt, outingCnt, absentCnt, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			dao.setPstmt(dao.getConn().prepareStatement(sql));
 			dao.getPstmt().setString(1, data.getUserId());
 			dao.getPstmt().setInt(2, data.getLateCnt());

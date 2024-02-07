@@ -2,26 +2,34 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import models.dto.UserDTO;
 
 public class DetailNotice extends JDialog {
 	private JPanel titlePanel, createTimePanel, writerPanel;
-	private JLabel titleLabel, createTimeLabel, writerLabel;
+	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel;
 	private JTextArea contentTextArea;
 	private JTextField titleTextField, createTimeTextField, writerTextField;
+	private JComboBox<String> statusComboBox; // 상태를 선택하기 위한 콤보박스
+	private UserDTO user;
+	private JButton jButton;
 
-	public DetailNotice(JDialog jDialog) {
-		super(jDialog, true);
+	public DetailNotice(JFrame jframe, UserDTO user) {
+		super(jframe, true);
+		this.user = user;
 		initializeUI();
 	}
 
@@ -40,6 +48,13 @@ public class DetailNotice extends JDialog {
 		setLocationRelativeTo(null); // Center on screen
 	}
 
+	public void setFieldsEditable(boolean editable) {
+		titleTextField.setEditable(editable);
+		createTimeTextField.setEditable(editable);
+		writerTextField.setEditable(editable);
+		contentTextArea.setEditable(editable);
+	}
+
 	private JPanel getTitlePanel() {
 		if (titlePanel == null) {
 			titlePanel = new JPanel();
@@ -48,6 +63,36 @@ public class DetailNotice extends JDialog {
 			titleTextField.setEditable(false); // Make it non-editable
 			titlePanel.add(titleLabel);
 			titlePanel.add(titleTextField);
+
+			// 콤보 박스
+			statusLabel = new JLabel("선택:");
+			statusComboBox = new JComboBox<>(new String[] { "중요한 게시물", "켈린더 게시물" }); // 콤보박스 항목 초기화
+			titlePanel.add(statusLabel);
+			titlePanel.add(statusComboBox);
+
+			// 저장 버튼
+			jButton = new JButton();
+			jButton.setText("저장");
+			titlePanel.add(jButton);
+			jButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("클릭");
+				}
+			});
+
+			if (user.getAuthority() == 1) {
+				statusComboBox.setVisible(false);
+				statusLabel.setVisible(false);
+				jButton.setVisible(false);
+			}
+			if (user.getAuthority() == 2) {
+				statusComboBox.setVisible(true);
+				statusLabel.setVisible(true);
+				jButton.setVisible(true);
+			}
+
 		}
 		return titlePanel;
 	}
