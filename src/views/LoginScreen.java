@@ -19,8 +19,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import exception.InvalidIdPasswordExecption;
-import exception.MisMatchTypeExecption;
 import models.service.UserService;
+
 
 public class LoginScreen extends JFrame {
 	String choice = null;
