@@ -9,7 +9,7 @@ public interface UserDAO {
 	public void insertUser(UserDTO user);
 
 	public UserDTO readID(String userId);
-	
+
 	public UserInfoDTO readInfoDTO(String userId);
 
 	public void updateAuthUser(UserDTO user);
@@ -17,4 +17,6 @@ public interface UserDAO {
 	public void deleteUser(String userId);
 
 	public ArrayList<UserDTO> approvalUsers();
+
+	public ArrayList<UserDTO> classUsers(String userId);
 }

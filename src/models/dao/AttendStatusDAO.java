@@ -68,7 +68,7 @@ public class AttendStatusDAO {
 	        e.printStackTrace();
 	        
 	    }
-	    
+	    dao.close();
 	    return attendanceRate;
 	}
 }

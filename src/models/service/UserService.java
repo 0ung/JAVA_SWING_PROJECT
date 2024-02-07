@@ -79,8 +79,12 @@ public class UserService {
 	public void updateAuth(UserDTO user) {
 		userDAO.updateAuthUser(user);
 	}
-	
+
 	public UserInfoDTO getInfo(String userId) {
 		return userDAO.readInfoDTO(userId);
+	}
+
+	public ArrayList<UserDTO> getSameClassMember(String userId) {
+		return userDAO.classUsers(userId);
 	}
 }

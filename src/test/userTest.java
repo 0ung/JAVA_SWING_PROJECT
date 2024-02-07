@@ -3,10 +3,15 @@ package test;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import models.dto.UserDTO;
+import models.service.UserService;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 public class userTest {
 	UserDAO userDAO = new UserDAOImpl();
+	UserService service = new UserService();
 //
 //	@Test
 //	void insertTest() {
@@ -31,13 +36,19 @@ public class userTest {
 //		userDAO.deleteUser("01075763839");
 //	}
 	
+//	@Test
+//	void readbyakk() {
+//		 System.out.println(userDAO.approvalUsers());
+//	}
+//	
+//	@Test
+//	void asd() {
+//		System.out.println(userDAO.readInfoDTO("01075743839"));
+//	}
+//	
 	@Test
-	void readbyakk() {
-		 System.out.println(userDAO.approvalUsers());
-	}
-	
-	@Test
-	void asd() {
-		System.out.println(userDAO.readInfoDTO("01075743839"));
+	void asdasd() {
+		ArrayList<UserDTO> list = service.getSameClassMember("01075743839");
+		System.out.println(list);
 	}
 }
