@@ -19,6 +19,7 @@ import models.dao.AttendanceCheckDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
+import models.service.UserService;
 
 /*class PaddedFlowLayout extends FlowLayout{
 	private int hotizontalPadding;
@@ -39,12 +40,14 @@ public class AttendStatus extends JPanel {
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel;
+	private UserService service = new UserService();
 	EtchedBorder eborder = new EtchedBorder();
 
+	private String userId;
 	private UserDTO user;
-
-	public AttendStatus(UserDTO user) {
-		this.user = user;
+	public AttendStatus(String userId) {
+		this.userId = userId;
+		this.user = service.getUser(userId);
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -70,7 +73,7 @@ public class AttendStatus extends JPanel {
 		lowerPanel.add(getCnt2());
 		lowerPanel.add(getCnt3());
 		lowerPanel.add(getCnt4());
-		totalAttendance(user.getUserId()); // 영웅님 꺼랑 연결
+		totalAttendance(userId); // 영웅님 꺼랑 연결
 
 		// this.add(upperPanel2,BorderLayout.NORTH);
 		this.add(topSpacer, BorderLayout.NORTH);
@@ -88,8 +91,6 @@ public class AttendStatus extends JPanel {
 
 		String[] arr = LocalDate.now().toString().split("-");
 
-		System.out.println(user);
-		System.out.println(dto);
 
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");

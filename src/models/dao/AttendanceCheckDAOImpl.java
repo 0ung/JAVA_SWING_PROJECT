@@ -23,12 +23,11 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 		String sql = "SELECT * FROM attendancestatus where userId = ? ";
 
 		try {
+			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
 			setRs(getPstmt().executeQuery());
-
 			while (getRs().next()) {
 				AttendanceStatusDTO dto = new AttendanceStatusDTO();
-				setPstmt(getConn().prepareStatement(sql));
 				dto.setUserId(getRs().getString("userId"));
 				dto.setLateCnt(getRs().getInt("lateCnt"));
 				dto.setEarlyleaveCnt(getRs().getInt("earlyleaveCnt"));
@@ -46,6 +45,7 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 		return list;
 	}
 
+	@Override
 	public AttendanceStatusDTO calculateMonthlyAttendance(String userId, String yearMonth) {
 		AttendanceStatusDTO dto = new AttendanceStatusDTO();
 		connect();
@@ -65,18 +65,6 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 				dto.setEarlyleaveCnt(getRs().getInt("earlyLeaveCnt"));
 				dto.setOutingCnt(getRs().getInt("outingCnt"));
 				dto.setAbsentCnt(getRs().getInt("absentCnt"));
-
-//				int lateCnt = getRs().getInt("lateCnt");
-//				int earlyLeaveCnt = getRs().getInt("earlyLeaveCnt");
-//				int outingCnt = getRs().getInt("outingCnt");
-//				int absentCnt = getRs().getInt("absentCnt");
-//
-//				// 결과 출력
-//				System.out.println("지각: " + lateCnt);
-//				System.out.println("조퇴: " + earlyLeaveCnt);
-//				System.out.println("외출: " + outingCnt);
-//				System.out.println("결석: " + absentCnt);
-				//System.out.println(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
