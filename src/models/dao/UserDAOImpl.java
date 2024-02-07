@@ -133,6 +133,30 @@ public class UserDAOImpl extends commonDAO implements UserDAO {
 		} catch (SQLException e) {
 			userSystem(e.getMessage(), true);
 		}
+		close();
 		return infoDTO;
+	}
+
+	@Override
+	public ArrayList<UserDTO> classUsers(String userId) {
+		connect();
+		UserDTO user = null;
+		ArrayList<UserDTO> list = new ArrayList<>();
+		String sql = "SELECT u.userId, u.userName FROM user u JOIN user u2 ON u.className = u2.className WHERE u2.userId = ? and u.authority = 1";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, userId);
+			setRs(getPstmt().executeQuery());
+			while (getRs().next()) {
+				user = new UserDTO();
+				user.setUserId(getRs().getString("userId"));
+				user.setUserName(getRs().getString("userName"));
+				list.add(user);
+			}
+		} catch (SQLException e) {
+			userSystem(e.getMessage(), true);
+		}
+		close();
+		return list;
 	}
 }

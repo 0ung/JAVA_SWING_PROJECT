@@ -21,6 +21,7 @@ public class AttendStatusDAO {
 			
 			dao.connect();
 			String sql = "INSERT INTO attendance (userId, lateCnt, earlyLeaveCnt, outingCnt, absentCnt, startTime, endTime, yearMonthDay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
 			dao.setPstmt(dao.getConn().prepareStatement(sql));
 			
 			dao.getPstmt().setString(1, data.getUserId());
@@ -79,7 +80,7 @@ public class AttendStatusDAO {
 	    }catch (SQLException e) {
 	    	 e.printStackTrace();
 	    }
-	
+	    dao.close();
 	    return attendanceRate;
 	}
 }

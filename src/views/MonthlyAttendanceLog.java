@@ -1,4 +1,4 @@
- package views;
+package views;
 
 import java.awt.BorderLayout;
 
@@ -22,6 +22,7 @@ import models.dao.AttendDAO;
 import models.dao.AttendDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
+import models.service.UserService;
 
 public class MonthlyAttendanceLog extends JPanel {
 
@@ -31,9 +32,10 @@ public class MonthlyAttendanceLog extends JPanel {
 	private UserDTO dto;
 	private AttendDAO attend = new AttendDAOImpl();
 	EtchedBorder eborder = new EtchedBorder();
+	private UserService service = new UserService();
 
-	public MonthlyAttendanceLog(UserDTO user) {
-		this.dto = user;
+	public MonthlyAttendanceLog(String userId) {
+		this.dto = service.getUser(userId);
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
@@ -66,10 +68,9 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("출석시간");
 			tableModel.addColumn("퇴근시간");
 			tableModel.addColumn("결과");
-			List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 			 
+			List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId());
 			for (AttendanceStatusDTO board : attendBoards) {
-				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" 
-				};
+				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" };
 				tableModel.addRow(row);
 			}
 
@@ -106,18 +107,29 @@ public class MonthlyAttendanceLog extends JPanel {
 	}
 
 	public void addRowToTable() {
-	    DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
-	    List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId());
+		DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
+		List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId());
 
-	    tableModel.setNumRows(0);
-	    for (AttendanceStatusDTO board : attendBoards) {
-		    Object[] row = new Object[]{
-		        board.getYearMonthDay(),
-		        board.getStartTime(),
-		        board.getEndTime(),
-		        "결과" // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
-		    };
-		    tableModel.addRow(row);
+		tableModel.setNumRows(0);
+		for (AttendanceStatusDTO board : attendBoards) {
+			Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" // '결과'는
+																													// 해당
+																													// 출근
+																													// 데이터에
+																													// 기반한
+																													// 상태를
+																													// 나타냅니다
+																													// (예:
+																													// 정상,
+																													// 지각
+																													// 등).
+																													// 필요에
+																													// 따라
+																													// 계산
+																													// 로직
+																													// 추가
+			};
+			tableModel.addRow(row);
 		}
 	}
 

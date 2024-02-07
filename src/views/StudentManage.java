@@ -1,12 +1,11 @@
 package views;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,11 +15,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import models.dto.UserDTO;
+import models.dto.UserInfoDTO;
+import models.service.UserService;
 
 public class StudentManage extends JPanel {
 
 	private JTable student;
 	private UserDTO user;
+	private UserInfoDTO infoDTO;
+	private UserService service = new UserService();
 
 	public StudentManage(UserDTO user) {
 		this.user = user;
@@ -48,12 +51,17 @@ public class StudentManage extends JPanel {
 			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
 			student.setRowHeight(25);
 			model.addColumn("번호");
+			model.addColumn("아아디");
 			model.addColumn("이름");
+			ArrayList<UserDTO> list = service.getSameClassMember(user.getUserId());
+			for (int i = 0; i < list.size(); i++) {
+				String[] arr = new String[3];
+				arr[0] = String.valueOf(i + 1);
+				arr[1] = list.get(i).getUserId();
+				arr[2] = list.get(i).getUserName();
+				model.addRow(arr);
+			}
 
-			// 데이터 가져올 부분
-			String[] studentdumpData = { "1", "asd" };
-
-			model.addRow(studentdumpData);
 			student.setModel(model);
 			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 			dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,7 +76,8 @@ public class StudentManage extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 2) {
-						JDialog dialog = new CombinedDialog(user);
+						int row = student.getSelectedRow(); // 선택된 행의 인덱스
+						JDialog dialog = new CombinedDialog(student.getModel().getValueAt(row, 1).toString());
 						dialog.setVisible(true);
 					}
 

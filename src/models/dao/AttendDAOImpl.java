@@ -31,14 +31,15 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 	
 	
 	@Override
-	public void updateEndTime(AttendanceStatusDTO endTime) {
+	public void updateEndTime(String userId, String endTime, String yearMonthDay) {
 		connect();
 		String sql = "UPDATE attendanceStatus set endTime = ? where userId = ? and yearMonthDay = ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, endTime.getEndTime());
-			getPstmt().setString(2, endTime.getUserId());
-			getPstmt().setString(3, endTime.getYearMonthDay());
+			getPstmt().setString(1,endTime);
+			getPstmt().setString(2,userId);
+			getPstmt().setString(3,yearMonthDay); 
+			
 			getPstmt().executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
