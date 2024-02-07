@@ -65,8 +65,9 @@ public class MonthlyAttendanceLog extends JPanel {
 			tableModel.addColumn("퇴근시간");
 			tableModel.addColumn("결과");
 
-			AttendDAO attend = new AttendDAOImpl();
-			List<AttendanceStatusDTO> attendBoards = attend.getAttendBoards(dto.getUserId());
+			 AttendDAO attend = new AttendDAOImpl(); 
+			 List<AttendanceStatusDTO>attendBoards = attend.getAttendBoards(dto.getUserId()); 			 
+
 			for (AttendanceStatusDTO board : attendBoards) {
 				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" // '결과'는
 																														// 해당
