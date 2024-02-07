@@ -15,18 +15,18 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 
+import models.dto.UserDTO;
 import models.service.AttendService;
 
 public class CodeHows extends JPanel  {
+	private UserDTO dto;
 	private Image image;
 	private JPanel startCheck, endCheck;
 	private JButton start, end;
@@ -50,9 +50,8 @@ public class CodeHows extends JPanel  {
 		add(naverLink);
 		add(googleLink);
 		add(getCheckButton());
+		this.dto = dto;
 		
-		
-
 		// 패널 크기 설정
 		setPreferredSize(new Dimension(500, 700));
 
@@ -91,8 +90,9 @@ public class CodeHows extends JPanel  {
 					if(e.getSource() == start) {
 						start.setEnabled(false);
 						//LocalDateTime.now();
-						AttendService attendService = new AttendService();
-						attendService.insertStartTime("");
+						AttendService attendService = new AttendService(dto, null);
+						attendService.insertStartTime("01087353158");
+						
 						end.setEnabled(true);
 						
 					}else if(e.getSource() == end) {

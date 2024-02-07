@@ -1,12 +1,11 @@
 package models.dao;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import models.commonDAO;
 import models.dto.AttendanceStatusDTO;
 
 public class AttendStatusDAO {
