@@ -25,14 +25,16 @@ import javax.swing.SwingConstants;
 import models.dto.UserDTO;
 import models.service.AttendService;
 
-public class CodeHows extends JPanel  {
-	private UserDTO dto;
+public class CodeHows extends JPanel {
 	private Image image;
 	private JPanel startCheck, endCheck;
 	private JButton start, end;
+	private UserDTO user;
+	private AttendService attendService = new AttendService();
 
-	public CodeHows() {
-		this.setLayout(new GridLayout(6,1)); 
+	public CodeHows(UserDTO user) {
+		this.user = user;
+		this.setLayout(new GridLayout(6, 1));
 		// 이미지 로드
 		loadImage();
 		JLabel blank = new JLabel("");
@@ -50,74 +52,67 @@ public class CodeHows extends JPanel  {
 		add(naverLink);
 		add(googleLink);
 		add(getCheckButton());
-		this.dto = dto;
-		
+
 		// 패널 크기 설정
 		setPreferredSize(new Dimension(500, 700));
 
 	}
-	
-	public JPanel getCheckButton(){
-		if(startCheck == null) {
+
+	public JPanel getCheckButton() {
+		if (startCheck == null) {
 			startCheck = new JPanel();
 			JButton start = new JButton();
-			start.setPreferredSize(new Dimension(80,80));
-			//start.setBackground(Color.LIGHT_GRAY);
-			
-					
+			start.setPreferredSize(new Dimension(80, 80));
+			// start.setBackground(Color.LIGHT_GRAY);
+
 			JLabel txtStart = new JLabel("출근");
 			start.add(txtStart);
 			start.setBorder(new RoundedBorder(20));
 			txtStart.setHorizontalAlignment(JLabel.CENTER);
 			txtStart.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
 			startCheck.add(start);
-			
+
 			JButton end = new JButton();
-			end.setPreferredSize(new Dimension(80,80));
+			end.setPreferredSize(new Dimension(80, 80));
 			end.setBorder(new RoundedBorder(20));
-			//end.setBackground(Color.RED);
+			// end.setBackground(Color.RED);
 			JLabel txtEnd = new JLabel("퇴근");
 			txtEnd.setHorizontalAlignment(SwingConstants.CENTER);
 			txtEnd.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
-			
+
 			end.add(txtEnd);
 			startCheck.add(end);
-			
+
 			start.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(e.getSource() == start) {
+					if (e.getSource() == start) {
 						start.setEnabled(false);
-						//LocalDateTime.now();
-						AttendService attendService = new AttendService(dto, null);
-						attendService.insertStartTime("01087353158");
-						
+						// LocalDateTime.now();
+						attendService.insertStartTime(user.getUserId());
 						end.setEnabled(true);
-						
-					}else if(e.getSource() == end) {
+
+					} else if (e.getSource() == end) {
 						end.setEnabled(false);
 						start.setEnabled(true);
 					}
-					
-					
+
 				}
 			});
-			
+
 			end.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//attendService.endTime();
+					// attendService.endTime();
 					end.setEnabled(false);
 					start.setEnabled(true);
 				}
 			});
-		
+
 		}
 		return startCheck;
 
 	}
-	
-
 
 	private void loadImage() {
 		try {
@@ -136,7 +131,7 @@ public class CodeHows extends JPanel  {
 	}
 
 	public void loadURI(JLabel jLabel, String url) {
-		jLabel.setFont(new Font("맑은 고딕",Font.BOLD,20));
+		jLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		jLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -150,10 +145,12 @@ public class CodeHows extends JPanel  {
 					}
 				}
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -169,5 +166,5 @@ public class CodeHows extends JPanel  {
 			g.drawImage(image, 0, 0, this);
 		}
 	}
-	
+
 }
