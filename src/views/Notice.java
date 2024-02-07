@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -13,11 +14,17 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import models.dto.UserDTO;
+
 public class Notice extends JPanel {
 	private JTable noticeTable;
 	private JDialog dialog;
+	private JFrame jFrame;
+	private UserDTO user;
 
-	public Notice(JDialog dialog) {
+	public Notice(JDialog dialog, JFrame jframe, UserDTO user) {
+		this.jFrame = jframe;
+		this.user = user;
 		add(new JScrollPane(getTable()));
 		setSize(new Dimension(800, 800));
 		CommonSetting.locationCenter(this);
@@ -60,7 +67,7 @@ public class Notice extends JPanel {
 			noticeTable.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					DetailNotice detailNotice = new DetailNotice(dialog);
+					DetailNotice detailNotice = new DetailNotice(jFrame, user);
 					detailNotice.setVisible(true);
 				}
 			});
