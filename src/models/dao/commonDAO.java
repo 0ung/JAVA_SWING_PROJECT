@@ -10,9 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class commonDAO {
-    private static final String url = "jdbc:mysql://222.119.100.89:3382/attendance";
-    private static final String user = "attendance";
-    private static final String password = "codehows213";
+    private static final String url = "jdbc:mysql://172.20.21.99:3306/attendance";
+    private static final String user = "hero";
+    private static final String password = "1234321";
     @Getter
     @Setter
     private PreparedStatement pstmt;

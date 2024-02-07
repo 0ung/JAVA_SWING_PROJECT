@@ -68,7 +68,7 @@ public class StudentManage extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 2) {
-						JDialog dialog = new CombinedDialog(null);
+						JDialog dialog = new CombinedDialog(user);
 						dialog.setVisible(true);
 					}
 
