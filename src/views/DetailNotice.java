@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,11 +12,14 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import models.dao.NoticeDAOImpl;
+import models.dto.NoticeDto;
 import models.dto.UserDTO;
 
 public class DetailNotice extends JDialog {
@@ -26,10 +30,12 @@ public class DetailNotice extends JDialog {
 	private JComboBox<String> statusComboBox; // 상태를 선택하기 위한 콤보박스
 	private UserDTO user;
 	private JButton jButton;
+	private NoticeDto noticeDto;
 
 	public DetailNotice(JFrame jframe, UserDTO user) {
 		super(jframe, true);
 		this.user = user;
+
 		initializeUI();
 	}
 
@@ -46,6 +52,7 @@ public class DetailNotice extends JDialog {
 		setTitle("상세보기");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Center on screen
+		writerTextField.setText(user.getUserName());
 	}
 
 	public void setFieldsEditable(boolean editable) {
@@ -75,10 +82,32 @@ public class DetailNotice extends JDialog {
 			jButton.setText("저장");
 			titlePanel.add(jButton);
 			jButton.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("클릭");
+					// 저장 버튼 클릭시
+					System.out.println(statusComboBox.getSelectedItem());
+
+					noticeDto = new NoticeDto();
+					// 사용자 입력값을 NoticeDto 객체에 설정
+					noticeDto.setUserId(user.getUserId());
+					noticeDto.setTitle(titleTextField.getText());
+					noticeDto.setContent(contentTextArea.getText());
+					// 선택된 콤보박스 항목에 따라 important 값 설정
+					noticeDto.setImportant(statusComboBox.getSelectedIndex() == 0);
+					// 예를 들어 "중요한 게시물"이 첫 번째 항목일 경우 1로저장됨
+
+					// 여기서 noticeDto의 나머지 필드(예: createTime, userId)를 적절히 설정해야 할 수 있습니다.
+					// 예: noticeDto.setCreateTime(new java.sql.Date(System.currentTimeMillis()));
+					// userId는 현재 로그인한 사용자의 ID 등으로 설정할 수 있습니다. user 객체를 사용할 수 있습니다.
+					// noticeDto.setUserId(user.getUserId());
+
+					// DAO를 사용하여 데이터베이스에 저장
+					NoticeDAOImpl dao = new NoticeDAOImpl();
+					dao.insertNotice(noticeDto);
+
+					// 저장 후 알림
+					JOptionPane.showMessageDialog(DetailNotice.this, "공지가 성공적으로 저장되었습니다.");
+
 				}
 			});
 
@@ -99,10 +128,10 @@ public class DetailNotice extends JDialog {
 
 	private JPanel getInfoPanel() {
 		JPanel infoPanel = new JPanel();
-
+		String[] arr = LocalDate.now().toString().split("-");
 		createTimePanel = new JPanel();
 		createTimeLabel = new JLabel("작성일:");
-		createTimeTextField = new JTextField(20);
+		createTimeTextField = new JTextField(arr[0] + "년" + arr[1] + "월" + arr[2] + "일");
 		createTimeTextField.setEditable(false);
 		createTimePanel.add(createTimeLabel);
 		createTimePanel.add(createTimeTextField);

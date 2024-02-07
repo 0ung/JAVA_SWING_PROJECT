@@ -88,9 +88,6 @@ public class AttendStatus extends JPanel {
 
 		String[] arr = LocalDate.now().toString().split("-");
 
-		System.out.println(user);
-		System.out.println(dto);
-
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
