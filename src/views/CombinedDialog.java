@@ -32,8 +32,8 @@ public class CombinedDialog extends JDialog {
 		MonthlyAttendanceLog mal = new MonthlyAttendanceLog(userId);
 
 		JButton excel = new JButton("Excel");
-
 		AttendStatus as = new AttendStatus(userId);
+
 
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));

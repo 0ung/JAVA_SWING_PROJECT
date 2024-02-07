@@ -6,17 +6,18 @@ import java.util.List;
 
 import models.dao.AttendDAO;
 import models.dao.AttendDAOImpl;
+import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 import views.MonthlyAttendanceLog;
 
 public class AttendService {
-	private UserDTO dto;
 	private AttendDAO attendStatusDAO = new AttendDAOImpl();
-	private MonthlyAttendanceLog monthlyAttendanceLog;
+	private MonthlyAttendanceLog month;
 
 	public List<String> setTime() {
-		;
+
 		String total = LocalDateTime.now().toString();
+
 		String[] day = total.split("T");
 		String time = day[1].substring(0, 8);
 		ArrayList<String> list = new ArrayList<>();
@@ -29,14 +30,26 @@ public class AttendService {
 		List<String> currentTime = setTime();
 		String yearMonthDay = currentTime.get(0);
 		String startTime = currentTime.get(1);
-
 		try {
 			attendStatusDAO.insertStartTime(userId, yearMonthDay, startTime);
-			MonthlyAttendanceLog month = new MonthlyAttendanceLog(dto);
-			month.addRowToTable();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void updateEndTime(String userId) {
+		List<String> currentTime = setTime();
+		String yearMonthDay = currentTime.get(0);
+		String endTime = currentTime.get(1);
+		try {
+			attendStatusDAO.updateEndTime(userId, endTime, yearMonthDay);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<AttendanceStatusDTO> getAttendTime(String userId) {
+		return attendStatusDAO.getAttendBoards(userId);
 	}
 }

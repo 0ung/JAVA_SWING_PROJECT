@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import exception.InvalidIdPasswordExecption;
 import models.service.UserService;
 
-
 public class LoginScreen extends JFrame {
 	String choice = null;
 	private UserService userService = new UserService();
@@ -126,7 +125,8 @@ public class LoginScreen extends JFrame {
 						break;
 					}
 				} catch (NullPointerException e1) {
-					JOptionPane.showMessageDialog(jp2, "잘못된 입력");
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(jp2, e1.getCause());
 				} catch (InvalidIdPasswordExecption e1) {
 					JOptionPane.showMessageDialog(jp2, "아이디 or 비밀번호가 일치하지 않습니다.");
 				}
@@ -160,4 +160,3 @@ public class LoginScreen extends JFrame {
 		loginScreen.setVisible(true);
 	}
 }
-
