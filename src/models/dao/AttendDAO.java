@@ -10,7 +10,7 @@ public interface AttendDAO {
 	// public void insertStartTime(AttendanceStatusDTO startTime);
 	public void insertStartTime(String userId, String date, String startTime) throws SQLException;
 	public List<AttendanceStatusDTO> getAttendBoards(String userId);
-	public void updateEndTime(AttendanceStatusDTO endTime);
+	public void updateEndTime(String userId, String endTime, String yearMonthDay);
 	public void deleteAttend(String userId);
 
 }

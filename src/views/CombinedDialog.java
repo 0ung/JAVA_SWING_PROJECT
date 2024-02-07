@@ -45,7 +45,7 @@ public class CombinedDialog extends JDialog {
 
 		JButton excel = new JButton("Excel");
 
-		AttendStatus as = new AttendStatus(null);
+		AttendStatus as = new AttendStatus(user);
 
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));
