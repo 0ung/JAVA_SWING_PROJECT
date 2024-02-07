@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,11 +9,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import constant.Editable;
+import models.dao.ClassDAO;
 
 public class ClassForm extends JDialog {
 
@@ -52,7 +53,7 @@ public class ClassForm extends JDialog {
 		setSize(new Dimension(500, 600));
 
 		setLocationRelativeTo(null); // 화면 중앙에 위치
-
+		
 	}
 
 	private JPanel getClassNum() {
@@ -133,13 +134,27 @@ public class ClassForm extends JDialog {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("클릭");
-				}
+					String classNumText = classNum.getText();
+			        String roomNumText = roomNum.getText();
+			        String progressText = progress.getText();
+			        String teacherText = teacher.getText();
+			        
+			        // DAO를 사용하여 데이터베이스에 반 정보 삽입
+			        ClassDAO classDAO = new ClassDAO();
+			        classDAO.insertClass(classNumText, roomNumText, progressText, teacherText);
+
+			        // 성공 메시지 표시
+			        JOptionPane.showMessageDialog(ClassForm.this, "반 정보가 성공적으로 생성되었습니다.");
+			        
+			        // 다이얼로그 닫기
+			        dispose();
+			    }
 			});
 		}
 		return confirm;
 	}
+	
+	
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
