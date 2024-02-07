@@ -1,6 +1,7 @@
 package models.service;
 
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,9 @@ import models.dao.AttendDAO;
 import models.dao.AttendDAOImpl;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
-import views.MonthlyAttendanceLog;
 
 public class AttendService {
 	private AttendDAO attendStatusDAO = new AttendDAOImpl();
-	private MonthlyAttendanceLog month;
 
 	public List<String> setTime() {
 

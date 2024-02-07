@@ -6,9 +6,9 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +20,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -38,12 +40,11 @@ import models.service.AttendService;
 
 public class CodeHows extends JPanel {
 	private Image image;
-	private JPanel startCheck, endCheck, monthlyPanel;
+	private JPanel startCheck, monthlyPanel;
 	private JButton start, end;
 	private UserDTO user;
 	private AttendService attendService = new AttendService();
 	private CodeHows codeHows = this;
-	private JPanel test;
 	private JPanel jPanel;
 	private JTable jTable;
 	private JButton before, next;
@@ -51,30 +52,70 @@ public class CodeHows extends JPanel {
 
 	public CodeHows(UserDTO user) {
 		this.user = user;
-		this.test = test;
-		this.setLayout(new GridLayout(6, 1));
+		//this.setLayout(new GridLayout(7, 1,5,5));
+		
 		// 이미지 로드
 		loadImage();
-		JLabel blank = new JLabel("");
-		JLabel codehowsLink = new JLabel("1. 코드하우스!!!");
-		loadURI(codehowsLink, "https://www.codehows.com/");
-		JLabel githubLink = new JLabel("2. 깃허브!!!");
-		loadURI(githubLink, "https://github.com/");
-		JLabel naverLink = new JLabel("3. 네이버!!!");
-		loadURI(naverLink, "https://www.naver.com/");
-		JLabel googleLink = new JLabel("4. 구글!!!");
-		loadURI(googleLink, "https://www.google.co.kr/?hl=ko");
-		add(blank);
-		add(codehowsLink);
-		add(githubLink);
-		add(naverLink);
-		add(googleLink);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setAlignmentX(CENTER_ALIGNMENT);
+//		JLabel blank = new JLabel("");
+//		JLabel codehowsLink = new JLabel("1. 코드하우스!!!");
+//		loadURI(codehowsLink, "https://www.codehows.com/");
+//		JLabel githubLink = new JLabel("2. 깃허브!!!");
+//		loadURI(githubLink, "https://github.com/");
+//		JLabel naverLink = new JLabel("3. 네이버!!!");
+//		loadURI(naverLink, "https://www.naver.com/");
+//		JLabel googleLink = new JLabel("4. 구글!!!");
+//		loadURI(googleLink, "https://www.google.co.kr/?hl=ko");
+//		add(blank);
+//		add(codehowsLink);
+//		add(githubLink);
+//		add(naverLink);
+//		add(googleLink);
+		add(new JLabel(""));
+		add(Box.createVerticalStrut(180));
+		add(createLinkButton("코드하우스", "https://www.codehows.com/"));
+		add(Box.createVerticalStrut(20));
+		add(createLinkButton("깃허브", "https://github.com/"));
+		add(Box.createVerticalStrut(20));
+		add(createLinkButton("네이버", "https://www.naver.com/"));
+		add(Box.createVerticalStrut(20));
+		add(createLinkButton("구글", "https://www.google.co.kr/?hl=ko"));
+		add(Box.createVerticalStrut(40));
+		
 		add(getCheckButton());
+		add(Box.createVerticalStrut(40));
 		add(MonthlyAttendanceLog());
 
 		// 패널 크기 설정
-		setPreferredSize(new Dimension(500, 700));
+		setPreferredSize(new Dimension(500, 1200));
 
+	}
+	
+	private JButton createLinkButton(String text, String url) {
+		JButton button = new JButton(text);
+		button.setPreferredSize(new Dimension(400, 80));
+		
+		button.setFocusPainted(true);
+		button.setBorderPainted(true);
+		button.setContentAreaFilled(true);
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setForeground(Color.BLUE);
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Desktop.isDesktopSupported()) {
+					try {
+						Desktop.getDesktop().browse(new URI(url));
+					}catch(IOException | URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+		});
+		return button;
 	}
 
 	public JPanel getCheckButton() {
@@ -98,7 +139,7 @@ public class CodeHows extends JPanel {
 			JLabel txtEnd = new JLabel("퇴근");
 			txtEnd.setHorizontalAlignment(SwingConstants.CENTER);
 			txtEnd.setFont(new Font("맑은 고딕", getFont().BOLD, 15));
-
+ 
 			end.add(txtEnd);
 			startCheck.add(end);
 
@@ -190,15 +231,15 @@ public class CodeHows extends JPanel {
 	}
 
 	public JPanel MonthlyAttendanceLog() {
-		monthlyPanel = new JPanel();
-		monthlyPanel.setSize(600, 500);
-		monthlyPanel.setLayout(new BorderLayout());
+		
+		monthlyPanel = new JPanel(new BorderLayout());
+		
 		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
-		JPanel tablePanel = new JPanel(new BorderLayout());
-		tablePanel.add(new JScrollPane(getJTable()), BorderLayout.CENTER);
+		
+		monthlyPanel.add(new JScrollPane(getJTable()));
 
 		// 버튼을 담은 패널 생성
-		JPanel buttonPanel = new JPanel();
+		JPanel buttonPanel = new JPanel(new FlowLayout());
 		before = new JButton("이전");
 		before.setBorder(new RoundedBorder(20));
 		before.setBackground(Color.WHITE);
@@ -211,7 +252,6 @@ public class CodeHows extends JPanel {
 		buttonPanel.add(next);
 
 		// 패널을 Frame에 추가
-		monthlyPanel.add(tablePanel, BorderLayout.NORTH);
 		monthlyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		return monthlyPanel;
