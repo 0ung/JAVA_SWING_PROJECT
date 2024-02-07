@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import models.dto.UserDTO;
+import views.student.AttendStatus;
 
 public class CombinedDialog extends JDialog {
 	private String userId;

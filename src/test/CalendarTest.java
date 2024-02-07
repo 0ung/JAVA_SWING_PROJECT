@@ -8,8 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import org.junit.jupiter.api.Test;
 
 import models.dao.AttendanceCheckDAOImpl;
-import views.Calendars;
-import views.Notice;
+import views.cal.Calendars;
+import views.cal.Notice;
 
 public class CalendarTest {
 

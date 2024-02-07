@@ -1,4 +1,4 @@
-package views;
+package views.student;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 import models.service.AttendService;
+import views.RoundedBorder;
 
 public class CodeHows extends JPanel {
 	private Image image;
@@ -42,7 +43,6 @@ public class CodeHows extends JPanel {
 	private JButton start, end;
 	private UserDTO user;
 	private AttendService attendService = new AttendService();
-	private CodeHows codeHows = this;
 	private JPanel test;
 	private JPanel jPanel;
 	private JTable jTable;
@@ -51,7 +51,6 @@ public class CodeHows extends JPanel {
 
 	public CodeHows(UserDTO user) {
 		this.user = user;
-		this.test = test;
 		this.setLayout(new GridLayout(6, 1));
 		// 이미지 로드
 		loadImage();

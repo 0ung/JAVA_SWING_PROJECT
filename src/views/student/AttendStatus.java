@@ -1,4 +1,4 @@
-package views;
+package views.student;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

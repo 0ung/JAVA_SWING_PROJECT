@@ -10,11 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import models.dto.UserDTO;
+import views.cal.Calendars;
+import views.student.CodeHows;
+import views.student.Information;
 
 public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calendar, importantNotice, codeHows;
-	private StudentMainPage page = this;
-	private JFrame main = this;
 	private UserDTO user;
 
 	public StudentMainPage(UserDTO user) {
@@ -52,7 +53,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getCurrentAttendance() {
 		if (currentAttendance == null) {
 			currentAttendance = new JPanel();
-			currentAttendance.add(new AttendStatus(user));
+//			currentAttendance.add(new AttendStatus(user));
 		}
 		return currentAttendance;
 	}
@@ -60,7 +61,8 @@ public class StudentMainPage extends JFrame {
 	public JPanel getcalendar() {
 		if (calendar == null) {
 			calendar = new JPanel();
-			calendar.add(new Calendars(main));
+			Calendars calendars = new Calendars();
+			calendar.add(calendars.getCalendars());
 		}
 		return calendar;
 	}
@@ -68,7 +70,8 @@ public class StudentMainPage extends JFrame {
 	public JPanel getImportNotice() {
 		if (importantNotice == null) {
 			importantNotice = new JPanel();
-			importantNotice.add(NoticeFactory.createNoticePanel(user, main));
+			Calendars calendars = new Calendars();
+			importantNotice.add(calendars.getNotice(user));
 		}
 		return importantNotice;
 	}
@@ -79,6 +82,13 @@ public class StudentMainPage extends JFrame {
 			codeHows.add(new CodeHows(user));
 		}
 		return codeHows;
+	}
+
+	public static void main(String[] args) {
+		UserDTO dto = new UserDTO();
+		dto.setUserId("01075743839");
+		StudentMainPage mainPage = new StudentMainPage(dto);
+		mainPage.setVisible(true);
 	}
 
 }
