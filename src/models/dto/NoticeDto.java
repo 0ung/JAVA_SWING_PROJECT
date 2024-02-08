@@ -16,5 +16,5 @@ public class NoticeDto {
 	private String content;
 	private Date createTime;
 	private boolean important;
-
+	private String userName;
 }
