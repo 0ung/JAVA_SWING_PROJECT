@@ -6,12 +6,12 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -141,18 +141,24 @@ public class StudentAttendanceManagement extends JPanel {
 
 				for (int i = 0; i < rowCount; i++) {
 					AttendanceStatusDTO dto = new AttendanceStatusDTO();
+					dto.setYearMonthDay(LocalDate.now().toString());
 					String key = String.valueOf(model.getValueAt(i, 4));
+					String userId = String.valueOf(model.getValueAt(i, 1));
 					switch (key) {
 					case "결석":
+						dto.setUserId(userId);
 						dto.setAbsentCnt(1);
 						break;
 					case "지각":
+						dto.setUserId(userId);
 						dto.setLateCnt(1);
 						break;
 					case "외출":
+						dto.setUserId(userId);
 						dto.setOutingCnt(1);
 						break;
 					case "조퇴":
+						dto.setUserId(userId);
 						dto.setEarlyleaveCnt(1);
 						break;
 					default:

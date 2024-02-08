@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -32,11 +33,13 @@ public class DetailNotice extends JDialog {
 	private JButton jButton;
 	private NoticeDto noticeDto;
 
-	public DetailNotice(JFrame jframe, UserDTO user) {
+	public DetailNotice(JFrame jframe, UserDTO user, Boolean edit) {
 		super(jframe, true);
 		this.user = user;
 
 		initializeUI();
+
+		setStatusComboBoxEditable(edit);
 	}
 
 	private void initializeUI() {
@@ -53,6 +56,13 @@ public class DetailNotice extends JDialog {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Center on screen
 		writerTextField.setText(user.getUserName());
+	}
+
+	// 콤보박스 띄우는지 여부 확인
+	public void setStatusComboBoxEditable(boolean editable) {
+		statusComboBox.setVisible(editable);
+		jButton.setVisible(editable);
+		statusLabel.setVisible(editable);
 	}
 
 	public void setFieldsEditable(boolean editable) {
@@ -84,8 +94,6 @@ public class DetailNotice extends JDialog {
 			jButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// 저장 버튼 클릭시
-					System.out.println(statusComboBox.getSelectedItem());
 
 					noticeDto = new NoticeDto();
 					// 사용자 입력값을 NoticeDto 객체에 설정
@@ -96,17 +104,13 @@ public class DetailNotice extends JDialog {
 					noticeDto.setImportant(statusComboBox.getSelectedIndex() == 0);
 					// 예를 들어 "중요한 게시물"이 첫 번째 항목일 경우 1로저장됨
 
-					// 여기서 noticeDto의 나머지 필드(예: createTime, userId)를 적절히 설정해야 할 수 있습니다.
-					// 예: noticeDto.setCreateTime(new java.sql.Date(System.currentTimeMillis()));
-					// userId는 현재 로그인한 사용자의 ID 등으로 설정할 수 있습니다. user 객체를 사용할 수 있습니다.
-					// noticeDto.setUserId(user.getUserId());
-
-					// DAO를 사용하여 데이터베이스에 저장
 					NoticeDAOImpl dao = new NoticeDAOImpl();
 					dao.insertNotice(noticeDto);
 
 					// 저장 후 알림
 					JOptionPane.showMessageDialog(DetailNotice.this, "공지가 성공적으로 저장되었습니다.");
+
+					dispose();
 
 				}
 			});
@@ -151,6 +155,7 @@ public class DetailNotice extends JDialog {
 	}
 
 	private JScrollPane getContentPanel() {
+
 		contentTextArea = new JTextArea(10, 20);
 		contentTextArea.setEditable(false);
 		JScrollPane contentScrollPane = new JScrollPane(contentTextArea);
