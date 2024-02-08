@@ -23,6 +23,8 @@ public class StudentMainPage extends JFrame {
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		JPanel jPanel = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel2 = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel3 = new JPanel(new GridLayout(1, 1));
