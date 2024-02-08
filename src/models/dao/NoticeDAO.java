@@ -8,5 +8,6 @@ public interface NoticeDAO {
 	public void insertNotice(NoticeDto notice);
 
 	public List<NoticeDto> readID(int important);
-
+	
+	public NoticeDto getNoticeDetailById(long noticeId);
 }
