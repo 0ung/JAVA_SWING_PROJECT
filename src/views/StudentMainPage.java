@@ -68,7 +68,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getImportNotice() {
 		if (importantNotice == null) {
 			importantNotice = new JPanel();
-			importantNotice.add(NoticeFactory.createNoticePanel());
+			importantNotice.add(NoticeFactory.createNoticePanel(user, main));
 		}
 		return importantNotice;
 	}

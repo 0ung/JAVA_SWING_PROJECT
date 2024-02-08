@@ -19,8 +19,8 @@ public class Information extends JPanel {
 	private JTextField txtClassName, txtUserName, txtTeacherName, txtRoomNum, txtProgress;
 	private UserDTO user;
 	private UserInfoDTO info;
-	private UserService service = new UserService(); 
-	
+	private UserService service = new UserService();
+
 	public Information(UserDTO user) {
 		this.user = user;
 		this.info = service.getInfo(user.getUserId());
@@ -44,7 +44,7 @@ public class Information extends JPanel {
 			userName.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			userName.setPreferredSize(new Dimension(100, 90));
 			userName.setHorizontalAlignment(JLabel.CENTER);
-			txtUserName = new JTextField(info.getUserId());
+			txtUserName = new JTextField(user.getUserName());
 			txtUserName.setPreferredSize(new Dimension(280, 35));
 			txtUserName.setEditable(false);
 			pUserName.add(userName);
