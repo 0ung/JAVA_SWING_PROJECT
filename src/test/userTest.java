@@ -1,12 +1,16 @@
 package test;
 
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
+import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 import org.junit.jupiter.api.Test;
 
 public class userTest {
 	UserDAO userDAO = new UserDAOImpl();
+	AttendDAOImpl dao = new AttendDAOImpl();
 //
 //	@Test
 //	void insertTest() {
@@ -30,14 +34,15 @@ public class userTest {
 //	void deleteTest() {
 //		userDAO.deleteUser("01075763839");
 //	}
-	
+
 	@Test
 	void readbyakk() {
-		 System.out.println(userDAO.approvalUsers());
+		System.out.println(userDAO.approvalUsers());
 	}
-	
+
 	@Test
 	void asd() {
 		System.out.println(userDAO.readInfoDTO("01075743839"));
 	}
+
 }
