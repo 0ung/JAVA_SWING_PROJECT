@@ -21,11 +21,10 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 		List<AttendanceStatusDTO> list = new ArrayList<>();
 		connect();
 		String sql = "SELECT * FROM attendancestatus where userId = ? ";
-
 		try {
+			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
 			setRs(getPstmt().executeQuery());
-
 			while (getRs().next()) {
 				AttendanceStatusDTO dto = new AttendanceStatusDTO();
 				setPstmt(getConn().prepareStatement(sql));
@@ -76,7 +75,7 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 //				System.out.println("조퇴: " + earlyLeaveCnt);
 //				System.out.println("외출: " + outingCnt);
 //				System.out.println("결석: " + absentCnt);
-				//System.out.println(dto);
+				// System.out.println(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

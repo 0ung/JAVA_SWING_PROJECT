@@ -12,5 +12,6 @@ public interface AttendDAO {
 	public List<AttendanceStatusDTO> getAttendBoards(String userId);
 	public void updateEndTime(String userId, String endTime, String yearMonthDay);
 	public void deleteAttend(String userId);
-
+	public List<AttendanceStatusDTO> getClassAttendance(String userId);
+	public void updateClass(String userId,AttendanceStatusDTO user);
 }

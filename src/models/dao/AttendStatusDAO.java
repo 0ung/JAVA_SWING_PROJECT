@@ -80,7 +80,7 @@ public class AttendStatusDAO {
 	    }catch (SQLException e) {
 	    	 e.printStackTrace();
 	    }
-	
+	    dao.close();
 	    return attendanceRate;
 	}
 }

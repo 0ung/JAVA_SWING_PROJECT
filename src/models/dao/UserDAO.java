@@ -17,4 +17,6 @@ public interface UserDAO {
 	public void deleteUser(String userId);
 
 	public ArrayList<UserDTO> approvalUsers();
+	
+	public ArrayList<UserDTO> classUsers(String userId);
 }
