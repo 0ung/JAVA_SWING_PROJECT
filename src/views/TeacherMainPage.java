@@ -19,9 +19,11 @@ public class TeacherMainPage extends JFrame {
 
 	public TeacherMainPage(UserDTO user) {
 		this.user = user;
+		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setSize(1800, 1400);
 		this.setResizable(false);
 		this.setTitle("강사 메인 페이지");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.setLayout(new GridLayout(1, 3));
 
@@ -49,12 +51,13 @@ public class TeacherMainPage extends JFrame {
 		this.add(panel2);
 		this.add(panel3);
 	}
-
+	
 	public JPanel getStudentManage() {
 		if (studentManage == null) {
 
 			studentManage = new JPanel();
-			studentManage.add(new StudentManage(user));
+			CodeHows codeHows = new CodeHows(user);
+			studentManage.add(codeHows.getStudentMange());
 		}
 		return studentManage;
 	}

@@ -20,8 +20,11 @@ public class StudentMainPage extends JFrame {
 	public StudentMainPage(UserDTO user) {
 		this.user = user;
 		this.setSize(new Dimension(1920, 1800));
+		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		JPanel jPanel = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel2 = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel3 = new JPanel(new GridLayout(1, 1));
