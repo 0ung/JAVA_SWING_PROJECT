@@ -3,14 +3,13 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -85,7 +84,7 @@ public class StudentAttendanceManagement extends JPanel {
 			student.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					// 상세정보 추가
+					
 				}
 			});
 		}
@@ -104,4 +103,6 @@ public class StudentAttendanceManagement extends JPanel {
 		}
 		return approval;
 	}
+	
+
 }

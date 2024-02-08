@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttendanceStatusDTO {
 	
-	private String yearMonthDay;
+	
 	private String userId;
 	private int lateCnt;
 	private int earlyleaveCnt;
@@ -17,5 +17,5 @@ public class AttendanceStatusDTO {
 	private int absentCnt;
 	private String startTime;
 	private String endTime;
-
+	private String yearMonthDay;
 }
