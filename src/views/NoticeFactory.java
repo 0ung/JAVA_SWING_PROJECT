@@ -21,7 +21,7 @@ public class NoticeFactory {
 		NoticeFactory.user = user;
 		System.out.println(user);
 
-		Notice notice = new Notice(new JDialog(), jframe, user);
+		Notice notice = new Notice(new JDialog(), jframe, user, 1);
 		JPanel jPanel = new JPanel(new BorderLayout());
 		JButton jButton = new JButton("생성");
 		jButton.addActionListener(new ActionListener() {
@@ -29,11 +29,10 @@ public class NoticeFactory {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				DetailNotice detailDialog = new DetailNotice(jframe, user);
+				DetailNotice detailDialog = new DetailNotice(jframe, user, true);
 				// 텍스트 필드를 편집 가능하게 설정합니다.
 				detailDialog.setFieldsEditable(true);
 				detailDialog.setVisible(true);
-
 			}
 		});
 
@@ -60,7 +59,7 @@ public class NoticeFactory {
 
 	public static JDialog createNoticeDialog(JFrame jframe) {
 		JDialog dialog = new JDialog(jframe, "notice", true);
-		Notice notice = new Notice(dialog, jframe, user);
+		Notice notice = new Notice(dialog, jframe, user, 0);
 		dialog.getContentPane().add(notice, BorderLayout.CENTER);
 		dialog.pack();
 		return dialog;
