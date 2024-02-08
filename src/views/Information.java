@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -14,7 +15,7 @@ import models.service.UserService;
 
 public class Information extends JPanel {
 	private JPanel pClassName, pUserName, pTeacherName, pRoomNum, pProgress;
-	private JLabel className, userName, teacherName, roomNum, progress;
+	private JLabel className, userName, teacherName, roomNum, progress, titleLabel;
 	private JTextField txtClassName, txtUserName, txtTeacherName, txtRoomNum, txtProgress;
 	private UserDTO user;
 	private UserInfoDTO info;
@@ -30,14 +31,17 @@ public class Information extends JPanel {
 		this.add(getPprogress());
 		this.add(getProomNum());
 		this.add(getPteacherName());
+		
 
 	}
 
 	public JPanel getPuserName() {
 		if (pUserName == null) {
 			pUserName = new JPanel();
+		
 			userName = new JLabel();
 			userName.setText("이름");
+			userName.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			userName.setPreferredSize(new Dimension(100, 90));
 			userName.setHorizontalAlignment(JLabel.CENTER);
 			txtUserName = new JTextField(user.getUserName());
@@ -56,6 +60,7 @@ public class Information extends JPanel {
 
 			className = new JLabel();
 			className.setText("반");
+			className.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			className.setPreferredSize(new Dimension(100, 90));
 			className.setHorizontalAlignment(JLabel.CENTER);
 			txtClassName = new JTextField(info.getClassName());
@@ -73,6 +78,7 @@ public class Information extends JPanel {
 			pProgress = new JPanel();
 			progress = new JLabel();
 			progress.setText("반진도");
+			progress.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			progress.setPreferredSize(new Dimension(100, 90));
 			progress.setHorizontalAlignment(JLabel.CENTER);
 			txtProgress = new JTextField(info.getProgress());
@@ -90,6 +96,7 @@ public class Information extends JPanel {
 			pRoomNum = new JPanel();
 			roomNum = new JLabel();
 			roomNum.setText("반호실");
+			roomNum.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			roomNum.setPreferredSize(new Dimension(100, 90));
 			roomNum.setHorizontalAlignment(JLabel.CENTER);
 			txtRoomNum = new JTextField(info.getRoomNum());
@@ -107,6 +114,7 @@ public class Information extends JPanel {
 			pTeacherName = new JPanel();
 			teacherName = new JLabel();
 			teacherName.setText("강사이름");
+			teacherName.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 			teacherName.setPreferredSize(new Dimension(100, 90));
 			teacherName.setHorizontalAlignment(JLabel.CENTER);
 			txtTeacherName = new JTextField(info.getTeacherName());

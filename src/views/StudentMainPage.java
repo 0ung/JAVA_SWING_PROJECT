@@ -23,15 +23,14 @@ public class StudentMainPage extends JFrame {
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
 		JPanel jPanel = new JPanel(new GridLayout(2, 1));
-		JPanel jPanel3 = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel2 = new JPanel(new GridLayout(2, 1));
+		JPanel jPanel3 = new JPanel(new GridLayout(1, 1));
 		setBackground(Color.white);
 
 		jPanel2.add(getInfo());
 		jPanel2.add(getCurrentAttendance());
 
 		jPanel3.add(getCodehows());
-		jPanel3.add(getMonthLog());
 
 		jPanel.add(getcalendar());
 		jPanel.add(getImportNotice());
@@ -56,14 +55,6 @@ public class StudentMainPage extends JFrame {
 			currentAttendance.add(new AttendStatus(user));
 		}
 		return currentAttendance;
-	}
-
-	public JPanel getMonthLog() {
-		if (monthLog == null) {
-			monthLog = new JPanel();
-			monthLog.add(new MonthlyAttendanceLog(user));
-		}
-		return monthLog;
 	}
 
 	public JPanel getcalendar() {
