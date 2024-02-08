@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import constant.Editable;
 import models.dao.ClassDAO;
@@ -22,7 +23,7 @@ import models.dto.UserDTO;
 public class ClassManage extends JPanel {
 	
 	private JButton create, delete;
-	private JComboBox<String> comboBox, comboBox2, yearCombo, dayCombo;
+	private JComboBox<String> comboBox, comboBox2, yearCombo, monthCombo;
 	private JPanel createClass, deleteClass, updateClass;
 
 	private UserDTO user;
@@ -45,7 +46,7 @@ public class ClassManage extends JPanel {
         comboBox2.setFont(new Font("맑은고딕", Font.PLAIN, 30));
         
         yearCombo = new JComboBox<>();
-        dayCombo = new JComboBox<>();
+        monthCombo = new JComboBox<>();
         
         
         
@@ -69,8 +70,8 @@ public class ClassManage extends JPanel {
 			createClass = new JPanel();
 			create = new JButton("생성하기");
 			create.setBackground(Color.WHITE);
-			create.setBorder(new RoundedBorder(20));
-			create.setPreferredSize(new Dimension(80, 60));
+			create.setBorder(new RoundedBorder(30));
+			create.setPreferredSize(new Dimension(70, 50));
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			create.addActionListener(e -> {
 				ClassForm classForm = new ClassForm(Editable.CREATE);
@@ -92,9 +93,10 @@ public class ClassManage extends JPanel {
 	private JPanel getDeleteClass() {
         if (deleteClass == null) {
             deleteClass = new JPanel(new GridLayout(1, 3, 50, 50));
-            delete = new JButton("삭제하기");
+            delete = new JButton("삭제");
             delete.setBackground(Color.WHITE);
-            delete.setPreferredSize(new Dimension(80, 60));
+            delete.setBorder(new RoundedBorder(30));
+            delete.setPreferredSize(new Dimension(70, 50));
             delete.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
             
             
@@ -125,8 +127,8 @@ public class ClassManage extends JPanel {
 		if (updateClass == null) {
 			updateClass = new JPanel(new GridLayout(1,3,50,50));
 			create = new JButton("수정");
-			create.setPreferredSize(new Dimension(80, 60));
-			create.setBorder(new RoundedBorder(20));
+			create.setPreferredSize(new Dimension(70, 50));
+			create.setBorder(new RoundedBorder(30));
 			create.setBackground(Color.WHITE);
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			
@@ -157,7 +159,8 @@ public class ClassManage extends JPanel {
 
 	private JPanel getAvailableday() {
 		
-		JPanel availableday = new JPanel(new GridLayout(1,3,50,50));
+		JPanel availableday = new JPanel(new GridLayout(1,4,50,50));
+		JTextField txtAvailableday = new JTextField();
 		JButton submmit = new JButton("저장");
 		
 		/*
@@ -165,11 +168,12 @@ public class ClassManage extends JPanel {
 		 */
 		submmit.setFont(new Font("맑은고딕", Font.PLAIN, 20));
 		submmit.setBackground(Color.WHITE);
-		submmit.setPreferredSize(new Dimension(80,60));
+		submmit.setPreferredSize(new Dimension(70,50));
 		submmit.setBorder(new RoundedBorder(20));
 		
 		availableday.add(yearCombo);
-		availableday.add(dayCombo);
+		availableday.add(monthCombo);
+		availableday.add(txtAvailableday);
 		availableday.add(submmit);
 		
 		return availableday;

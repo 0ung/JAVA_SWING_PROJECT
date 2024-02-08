@@ -1,7 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.dto.UserDTO;
@@ -16,14 +17,20 @@ import models.dto.UserDTO;
 public class NoticeFactory {
 
 	private static UserDTO user;
+	
 
 	public static JPanel createNoticePanel(UserDTO user, JFrame jframe) {
 		NoticeFactory.user = user;
 		System.out.println(user);
-
+				
 		Notice notice = new Notice(new JDialog(), jframe, user, 1);
+		
 		JPanel jPanel = new JPanel(new BorderLayout());
 		JButton jButton = new JButton("생성");
+		jButton.setBorder(new RoundedBorder(20));
+		jButton.setBackground(new Color(198, 232, 149));
+		jButton.setPreferredSize(new Dimension(100,40));
+		
 		jButton.addActionListener(new ActionListener() {
 
 			@Override
