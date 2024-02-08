@@ -98,7 +98,7 @@ public class AttendStatus extends JPanel {
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
 		cnt4Label.setText(dto.getOutingCnt() + "");
 
-		titleLabel.setText(user.getUserName() + "의 " + arr[1] + "월 " + " 출결 상황판");
+		titleLabel.setText(user.getUserName() + "의 " + currentDate.getMonthValue() + "월 " + " 출결 상황판");
 		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		attendanceRateLabel.setText("전체 출석률: " + String.format("%.2f%%", attendanceRate));
 

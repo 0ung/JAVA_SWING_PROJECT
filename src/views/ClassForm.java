@@ -1,10 +1,17 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,8 +26,8 @@ import models.dao.ClassDAO;
 
 public class ClassForm extends JDialog {
 
-	private JButton confirm;
-	private JTextField teacher, roomNum, progress, classNum;
+	private String selectedClassName;
+	private JTextField teacher, roomNum, progress, classNum, classNameField;
 	private JPanel classPanel, roomPanel, progressPanel, teacherPanel, btnPanel;
 
 	public ClassForm(Editable editable) {
@@ -33,17 +40,17 @@ public class ClassForm extends JDialog {
 		switch (editable) {
 		case CREATE:
 			add(getClassNum());
-			add(getRoomPanel());
 			add(getTeacherPanel());
+			add(getRoomPanel());
 			add(getProgressPanel());
 			add(getBtnPanel());
 			break;
 		case UPDATE:
 			add(getClassNum());
-			add(getRoomPanel());
 			add(getTeacherPanel());
+			add(getRoomPanel());
 			add(getProgressPanel());
-			add(getBtnPanel());
+			add(getUpdateBtnPanel());
 			break;
 		default:
 			break;
@@ -53,7 +60,11 @@ public class ClassForm extends JDialog {
 		setSize(new Dimension(500, 600));
 
 		setLocationRelativeTo(null); // 화면 중앙에 위치
-		
+
+		placeholder(classNum, "?반 형식으로 입력하세요");
+		placeholder(roomNum, "?호실 형식으로 입력하세요");
+		placeholder(teacher, "강사님 이름을 입력하세요");
+		placeholder(progress, "진도 상태를 입력하세요");
 	}
 
 	private JPanel getClassNum() {
@@ -69,32 +80,6 @@ public class ClassForm extends JDialog {
 		return classPanel;
 	}
 
-	private JPanel getRoomPanel() {
-		roomPanel = new JPanel();
-		roomNum = new JTextField();
-		roomNum.setPreferredSize(new Dimension(300, 50));
-		JLabel label = new JLabel("반 호실 :");
-		label.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		label.setSize(30, 20);
-		label.setPreferredSize(new Dimension(100, 50));
-		roomPanel.add(label);
-		roomPanel.add(roomNum);
-		return roomPanel;
-	}
-
-	private JPanel getProgressPanel() {
-		progressPanel = new JPanel();
-		progress = new JTextField();
-		progress.setPreferredSize(new Dimension(300, 50));
-		JLabel label = new JLabel("진도 :");
-		label.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		label.setSize(30, 20);
-		label.setPreferredSize(new Dimension(100, 50));
-		progressPanel.add(label);
-		progressPanel.add(progress);
-		return progressPanel;
-	}
-
 	private JPanel getTeacherPanel() {
 		teacherPanel = new JPanel();
 		teacher = new JTextField();
@@ -108,53 +93,201 @@ public class ClassForm extends JDialog {
 		return teacherPanel;
 	}
 
+	private JPanel getRoomPanel() {
+		roomPanel = new JPanel();
+		roomNum = new JTextField();
+		roomNum.setPreferredSize(new Dimension(300, 50));
+		JLabel label = new JLabel("반 호실 :");
+		label.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		label.setSize(30, 20);
+		label.setPreferredSize(new Dimension(100, 50));
+		roomPanel.add(label);
+		roomPanel.add(roomNum);
+		return roomPanel;
+	}
+
+	public void validationClass(String input) throws RuntimeException {
+		Pattern pattern = Pattern.compile("\\d+반");
+		Matcher matcher = pattern.matcher(input);
+		if (!matcher.matches()) {
+			throw new RuntimeException();
+		}
+	}
+
+	public void validationRoom(String input) throws RuntimeException {
+		Pattern pattern = Pattern.compile("\\d+호");
+		Matcher matcher = pattern.matcher(input);
+		if (!matcher.matches()) {
+			throw new RuntimeException();
+		}
+	}
+
+	public void validationTeacher(String input) throws RuntimeException {
+		Pattern pattern = Pattern.compile("[가-힣]{2,5}");
+		Matcher matcher = pattern.matcher(input);
+		if (!matcher.matches()) {
+			throw new RuntimeException();
+		}
+	}
+
+	private JPanel getProgressPanel() {
+		progressPanel = new JPanel();
+		progress = new JTextField();
+		progress.setPreferredSize(new Dimension(300, 50));
+		JLabel label = new JLabel("진도 :");
+		label.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		label.setSize(30, 20);
+		label.setPreferredSize(new Dimension(100, 50));
+		progressPanel.add(label);
+		progressPanel.add(progress);
+		return progressPanel;
+	};
+
 	private JPanel getBtnPanel() {
+		ClassDAO classDAO = new ClassDAO();
+
 		if (btnPanel == null) {
 			btnPanel = new JPanel();
-			btnPanel.add(getConfirm());
+			btnPanel.setLayout(new GridLayout(1, 2, 10, 10)); // 버튼을 옆으로 배치하기 위해 GridLayout 사용
 
-			confirm.setPreferredSize(new Dimension(200, 50));
-			JLabel label = new JLabel("확인");
-			label.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-			label.setSize(30, 20);
-			label.setPreferredSize(new Dimension(100, 50));
-			btnPanel.add(label);
-			btnPanel.add(confirm);
+			JButton okButton = new JButton("확인");
+			// 확인 버튼의 폰트 크기 설정
+			okButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+			// 버튼의 크기 설정
+			okButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
 
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String classNumText = classNum.getText();
+					String teacherText = teacher.getText();
+					String roomNumText = roomNum.getText();
+					String progressText = progress.getText();
+					try {
+						validationClass(classNumText);
+						validationRoom(roomNumText);
+						validationTeacher(teacherText);
+						classDAO.insertClass(classNumText, teacherText, roomNumText, progressText);
+
+						JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+						dispose();
+					} catch (RuntimeException e2) {
+						JOptionPane.showMessageDialog(okButton, "입력이 올바르지 않습니다.");
+					}
+
+					// 다이얼로그 닫기
+					dispose();
+				}
+			});
+
+			JButton cancelButton = new JButton("취소");
+			// 취소 버튼의 폰트 크기 설정
+			cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+			// 버튼의 크기 설정
+			cancelButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
+			cancelButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// 다이얼로그 닫기
+					dispose();
+				}
+			});
+
+			btnPanel.add(okButton);
+			btnPanel.add(cancelButton);
 		}
 		return btnPanel;
 	}
 
-	private JButton getConfirm() {
-		if (confirm == null) {
-			confirm = new JButton();
-			confirm.setText("Ok");
-//			confirm.setLayout(new GridLayout(1, 1));
-			confirm.addActionListener(new ActionListener() {
+	private JPanel getUpdateBtnPanel() {
+		ClassDAO classDAO = new ClassDAO();
+		JPanel updateBtnPanel = new JPanel();
+		updateBtnPanel.setLayout(new GridLayout(1, 1, 10, 10)); // 수정 버튼을 추가하기 위해 1개의 열로 설정
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String classNumText = classNum.getText();
-			        String roomNumText = roomNum.getText();
-			        String progressText = progress.getText();
-			        String teacherText = teacher.getText();
-			        
-			        // DAO를 사용하여 데이터베이스에 반 정보 삽입
-			        ClassDAO classDAO = new ClassDAO();
-			        classDAO.insertClass(classNumText, roomNumText, progressText, teacherText);
+		JButton updateButton = new JButton("수정"); // 수정 버튼 생성
+		updateButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
+		updateButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 입력된 반 정보 가져오기
+				String classNumText = classNum.getText();
+				String roomNumText = roomNum.getText();
+				String progressText = progress.getText();
+				String teacherText = teacher.getText();
+				try {
+					validationClass(classNumText);
+					validationRoom(roomNumText);
+					validationTeacher(teacherText);
+					classDAO.updateClass(classNumText, roomNumText, progressText, teacherText);
+					JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+					dispose();
+				} catch (RuntimeException e2) {
+					JOptionPane.showMessageDialog(updateButton, "입력이 올바르지 않습니다.");
+				}
+				// 입력된 값이 비어 있는지 확인
+//				if (classNumText.isEmpty() || roomNumText.isEmpty() || progressText.isEmpty()
+//						|| teacherText.isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "모든 정보를 입력해주세요.");
+//					return;
+//				}
 
-			        // 성공 메시지 표시
-			        JOptionPane.showMessageDialog(ClassForm.this, "반 정보가 성공적으로 생성되었습니다.");
-			        
-			        // 다이얼로그 닫기
-			        dispose();
-			    }
-			});
-		}
-		return confirm;
+			}
+		});
+
+		JButton cancelButton = new JButton("취소"); // 취소 버튼 생성
+		cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
+		cancelButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 다이얼로그 닫기
+				dispose();
+			}
+		});
+
+		updateBtnPanel.add(updateButton); // 수정 버튼 패널에 추가
+		updateBtnPanel.add(cancelButton);
+		return updateBtnPanel;
 	}
-	
-	
+
+	public void setClassInfo(String className) {
+		// DAO를 사용하여 DB에서 해당 반의 정보 가져오기
+		ClassDAO classDAO = new ClassDAO();
+		String[] classInfo = classDAO.getClassInfo(className);
+
+		if (classInfo != null) {
+			classNum.setText(classInfo[0]);
+			teacher.setText(classInfo[1]);
+			roomNum.setText(classInfo[2]);
+			progress.setText(classInfo[3]);
+		} else {
+			// 해당 반의 정보가 없는 경우 예외 처리
+			JOptionPane.showMessageDialog(null, "해당 반의 정보를 가져올 수 없습니다.");
+		}
+	}
+
+	private void placeholder(JTextField textField, String placeholder) {
+		textField.setForeground(Color.GRAY);
+		textField.setText(placeholder);
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textField.getText().equals(placeholder)) {
+					textField.setText("");
+					textField.setForeground(Color.BLACK);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textField.getText().isEmpty()) {
+					textField.setForeground(Color.GRAY);
+					textField.setText(placeholder);
+				}
+			}
+		});
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
