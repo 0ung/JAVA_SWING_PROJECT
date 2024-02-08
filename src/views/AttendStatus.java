@@ -104,9 +104,6 @@ public class AttendStatus extends JPanel {
 		double attendanceRate = attendStatusDAO.calculateAttendanceRate(userId, yearMonth);
 
 
-		System.out.println(user);
-		System.out.println(dto);
-
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");
 		cnt3Label.setText(dto.getEarlyleaveCnt() + "");
