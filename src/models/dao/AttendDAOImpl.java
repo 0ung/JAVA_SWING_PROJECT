@@ -46,12 +46,11 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 			close();
 		}
 	}
-
+	
 	public List<AttendanceStatusDTO> getAttendBoards(AttendanceStatusDTO userId) {
 		List<AttendanceStatusDTO> attendBoards = new ArrayList<>();
-
 		connect();
-		String sql = "SELECT yearMonthDay, startTime, endTime from attendanceStatus where userId = ? and yearMonthDay like ?";
+		String sql = "SELECT * from attendanceStatus where userId = ? and yearMonthDay like ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId.getUserId());
@@ -65,6 +64,10 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 				board.setYearMonthDay(getRs().getString("yearMonthDay"));
 				board.setStartTime(getRs().getString("startTime"));
 				board.setEndTime(getRs().getString("endTime"));
+				board.setEarlyleaveCnt(getRs().getInt("earlyLeaveCnt"));
+				board.setLateCnt(getRs().getInt("lateCnt"));
+				board.setOutingCnt(getRs().getInt("outingCnt"));
+				board.setAbsentCnt(getRs().getInt("absentCnt"));
 				attendBoards.add(board);
 			}
 
@@ -110,8 +113,7 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 	@Override
 	public void updateClass(String userId, AttendanceStatusDTO user) {
 		connect();
-		String sql = "update attendancestatus set lateCnt =?, earlyleaveCnt = ?,outingCnt = ?, absentCnt = ? where userId in (select userId from user where className = (select className from user where userId = ?) and authority = 1 and yearMonthDay = ?)";
-
+		String sql = "update attendancestatus set lateCnt =?, earlyleaveCnt = ?,outingCnt = ?, absentCnt = ? where userId = (select userId from user where className = (select className from user where userId = ?) and authority = 1 and yearMonthDay = ? and userId = ?)";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setLong(1, user.getLateCnt());
@@ -120,6 +122,7 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 			getPstmt().setLong(4, user.getAbsentCnt());
 			getPstmt().setString(5, userId);
 			getPstmt().setString(6, user.getYearMonthDay());
+			getPstmt().setString(7, user.getUserId());
 			getPstmt().executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

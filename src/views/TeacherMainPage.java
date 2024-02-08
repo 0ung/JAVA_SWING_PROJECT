@@ -50,7 +50,7 @@ public class TeacherMainPage extends JFrame {
 		this.add(panel2);
 		this.add(panel3);
 	}
-
+	
 	public JPanel getStudentManage() {
 		if (studentManage == null) {
 

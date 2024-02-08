@@ -105,4 +105,18 @@ public class AttendService {
 	public void updateAttend(String userId, AttendanceStatusDTO user) {
 		attendStatusDAO.updateClass(userId, user);
 	}
+
+	public String vlidaiton(AttendanceStatusDTO attendanceStatusDTO) {
+		if (attendanceStatusDTO.getEarlyleaveCnt() == 1) {
+			return "조퇴";
+		} else if (attendanceStatusDTO.getLateCnt() == 1) {
+			return "지각";
+		} else if (attendanceStatusDTO.getOutingCnt() == 1) {
+			return "외출";
+		} else if (attendanceStatusDTO.getAbsentCnt() == 1) {
+			return "결석";
+		} else {
+			return "출석";
+		}
+	}
 }
