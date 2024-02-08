@@ -3,6 +3,7 @@ package models.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,14 +28,16 @@ public class AttendService {
 		return list;
 	}
 
-	public void insertStartTime(String userId) {
+	public boolean insertStartTime(String userId) {
 		List<String> currentTime = setTime();
 		String yearMonthDay = currentTime.get(0);
 		String startTime = currentTime.get(1);
 		try {
 			attendStatusDAO.insertStartTime(userId, yearMonthDay, startTime);
-		} catch (Exception e) {
+			return true;
+		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}
@@ -50,7 +53,7 @@ public class AttendService {
 		}
 	}
 
-	public List<AttendanceStatusDTO> getAttendTime(String userId) {
+	public List<AttendanceStatusDTO> getAttendTime(AttendanceStatusDTO userId) {
 		return attendStatusDAO.getAttendBoards(userId);
 	}
 

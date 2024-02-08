@@ -1,5 +1,7 @@
 package test;
 
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import models.dto.AttendanceStatusDTO;
@@ -15,6 +17,8 @@ public class userTest {
 	UserDAO userDAO = new UserDAOImpl();
 	UserService service = new UserService();
 	AttendService service1 = new AttendService();
+	AttendDAOImpl dao = new AttendDAOImpl();
+
 //
 //	@Test
 //	void insertTest() {
@@ -39,26 +43,15 @@ public class userTest {
 //		userDAO.deleteUser("01075763839");
 //	}
 
-//	@Test
-//	void readbyakk() {
-//		System.out.println(userDAO.approvalUsers());
-//	}
-//
-//	@Test
-//	void asd() {
-//		System.out.println(userDAO.readInfoDTO("01075743839"));
-//	}
 
 	@Test
-	void asdf() {
-		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
-		attendanceStatusDTO.setStartTime("2024-02-08 09:10:00");
-		attendanceStatusDTO.setEndTime("2024-02-08 16:00:00");
-		try {
-			service1.attendAlgorithm(attendanceStatusDTO);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	void readbyakk() {
+		System.out.println(userDAO.approvalUsers());
 	}
+
+	@Test
+	void asd() {
+		System.out.println(userDAO.readInfoDTO("01075743839"));
+	}
+
 }

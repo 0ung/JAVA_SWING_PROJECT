@@ -22,7 +22,7 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 			getPstmt().executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new SQLException();
 		} finally {
 			close();
 		}
@@ -47,19 +47,21 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 		}
 	}
 
-	public List<AttendanceStatusDTO> getAttendBoards(String userId) {
+	public List<AttendanceStatusDTO> getAttendBoards(AttendanceStatusDTO userId) {
 		List<AttendanceStatusDTO> attendBoards = new ArrayList<>();
 
 		connect();
-		String sql = "SELECT yearMonthDay, startTime, endTime from attendanceStatus where userId = ? ";
+		String sql = "SELECT yearMonthDay, startTime, endTime from attendanceStatus where userId = ? and yearMonthDay like ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, userId);
+			getPstmt().setString(1, userId.getUserId());
+			
+			getPstmt().setString(2, userId.getYearMonthDay().substring(0,7) + "%");
 			setRs(getPstmt().executeQuery());
+		
 
 			while (getRs().next()) {
 				AttendanceStatusDTO board = new AttendanceStatusDTO();
-				board.setUserId(userId);
 				board.setYearMonthDay(getRs().getString("yearMonthDay"));
 				board.setStartTime(getRs().getString("startTime"));
 				board.setEndTime(getRs().getString("endTime"));
@@ -81,7 +83,6 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 		close();
 
 	}
-
 	@Override
 	public List<AttendanceStatusDTO> getClassAttendance(String userId) {
 		connect();

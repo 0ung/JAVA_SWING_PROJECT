@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -58,58 +58,42 @@ public class CodeHows extends JPanel {
 	private JTable student;
 	private UserService service = new UserService();
 	EtchedBorder eborder = new EtchedBorder();
+	private LocalDate thisMonth = LocalDate.now();
 
 	public CodeHows(UserDTO user) {
 		this.user = user;
-		// this.setLayout(new GridLayout(7, 1,5,5));
+
+		this.setLayout(new FlowLayout());
+
 		// 이미지 로드
 		loadImage();
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setAlignmentX(CENTER_ALIGNMENT);
-		add(new JLabel(""));
-		add(Box.createVerticalStrut(180));
-		add(createLinkButton("코드하우스 ", "https://www.codehows.com/"));
-		add(Box.createVerticalStrut(20));
-		add(createLinkButton("  깃허브  ", "https://github.com/"));
-		add(Box.createVerticalStrut(20));
-		add(createLinkButton("  네이버  ", "https://www.naver.com/"));
-		add(Box.createVerticalStrut(20));
-		add(createLinkButton("   구글   ", "https://www.google.co.kr/?hl=ko"));
-		add(Box.createVerticalStrut(40));
-
+		JLabel blank = new JLabel("");
+		blank.setPreferredSize(new Dimension(400, 120));
+		JLabel codehowsLink = new JLabel("CODE HOWS");
+		codehowsLink.setPreferredSize(new Dimension(400, 100));
+		loadURI(codehowsLink, "https://www.codehows.com/");
+		JLabel githubLink = new JLabel("GitHub");
+		githubLink.setPreferredSize(new Dimension(400, 100));
+		loadURI(githubLink, "https://github.com/");
+		JLabel naverLink = new JLabel("NAVER");
+		naverLink.setPreferredSize(new Dimension(400, 100));
+		loadURI(naverLink, "https://www.naver.com/");
+		JLabel googleLink = new JLabel("GOOGLE");
+		googleLink.setPreferredSize(new Dimension(400, 100));
+		loadURI(googleLink, "https://www.google.co.kr/?hl=ko");
+		add(blank);
+		add(codehowsLink);
+		add(githubLink);
+		add(naverLink);
+		add(googleLink);
+		JLabel blank2 = new JLabel("");
+		blank2.setPreferredSize(new Dimension(400, 120));
 		add(getCheckButton());
-		add(Box.createVerticalStrut(30));
-		add(MonthlyAttendanceLog(true, user.getUserId()));
+		add(MonthlyAttendanceLog());
 
 		// 패널 크기 설정
 		setPreferredSize(new Dimension(500, 1200));
 
-	}
-
-	private JButton createLinkButton(String text, String url) {
-		JButton button = new JButton(text);
-		button.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		button.setPreferredSize(new Dimension(200, 80));
-		button.setFocusPainted(true);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		button.setForeground(Color.DARK_GRAY);
-		button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (Desktop.isDesktopSupported()) {
-					try {
-						Desktop.getDesktop().browse(new URI(url));
-					} catch (IOException | URISyntaxException e1) {
-						e1.printStackTrace();
-					}
-				}
-
-			}
-		});
-		return button;
 	}
 
 	public JPanel getCheckButton() {
@@ -143,12 +127,11 @@ public class CodeHows extends JPanel {
 					if (e.getSource() == start) {
 						start.setEnabled(false);
 						end.setEnabled(true);
-
-						attendService.insertStartTime(user.getUserId());
-						updateToTable((DefaultTableModel) getJTable(user.getUserId()).getModel(), user.getUserId());
-					} else if (e.getSource() == end) {
-						end.setEnabled(false);
-						start.setEnabled(true);
+						if (attendService.insertStartTime(user.getUserId())) {
+						} else {
+							JOptionPane.showMessageDialog(start, "이미 출근하셨습니다.");
+						}
+						updateToTable((DefaultTableModel) getJTable().getModel());
 					}
 				}
 			});
@@ -157,10 +140,9 @@ public class CodeHows extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					// attendService.endTime();
 					attendService.updateEndTime(user.getUserId());
-					updateToTable((DefaultTableModel) getJTable(user.getUserId()).getModel(), user.getUserId());
-
+					updateToTable((DefaultTableModel) getJTable().getModel());
 					end.setEnabled(false);
-					start.setEnabled(true);
+					start.setEnabled(false);
 
 				}
 			});
@@ -223,31 +205,60 @@ public class CodeHows extends JPanel {
 		}
 	}
 
-	public JPanel MonthlyAttendanceLog(boolean isBtn, String userId) {
-		monthlyPanel = new JPanel(new BorderLayout());
-		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
-		monthlyPanel.add(new JScrollPane(getJTable(userId)));
-		if (isBtn) {
-			// 버튼을 담은 패널 생성
-			JPanel buttonPanel = new JPanel(new FlowLayout());
-			before = new JButton("이전");
-			before.setBorder(new RoundedBorder(20));
-			before.setBackground(Color.WHITE);
-			before.setPreferredSize(new Dimension(80, 50));
-			next = new JButton("다음");
-			next.setBorder(new RoundedBorder(20));
-			next.setBackground(Color.WHITE);
-			next.setPreferredSize(new Dimension(80, 50));
-			buttonPanel.add(before);
-			buttonPanel.add(next);
+	public JPanel MonthlyAttendanceLog() {
 
-			// 패널을 Frame에 추가
-			monthlyPanel.add(buttonPanel, BorderLayout.SOUTH);
-		}
+		monthlyPanel = new JPanel(new BorderLayout());
+
+		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
+
+		monthlyPanel.add(new JScrollPane(getJTable()));
+
+		// 버튼을 담은 패널 생성
+		JPanel buttonPanel = new JPanel(new FlowLayout());
+		before = new JButton("<");
+		before.setFont(new Font("Arial", Font.PLAIN, 24));
+		// before.setFocusPainted(false);
+		before.setPreferredSize(new Dimension(80, 60));
+		before.setOpaque(false);
+		before.setContentAreaFilled(false);
+		before.setBorderPainted(false);
+
+		before.addActionListener(e -> {
+			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+			attendanceStatusDTO.setUserId(user.getUserId());
+			thisMonth = thisMonth.minusMonths(1);
+			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+			System.out.println(attendanceStatusDTO.toString());
+			updateToTable((DefaultTableModel) getJTable().getModel());
+		});
+
+		next = new JButton(">");
+		next.setFont(new Font("Arial", Font.PLAIN, 24));
+		// next.setFocusPainted(false);
+		next.setPreferredSize(new Dimension(80, 60));
+
+		next.setOpaque(false);
+		next.setContentAreaFilled(false);
+		next.setBorderPainted(false);
+		next.addActionListener(e -> {
+			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+			attendanceStatusDTO.setUserId(user.getUserId());
+			thisMonth = thisMonth.plusMonths(1);
+			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+			System.out.println(attendanceStatusDTO.toString());
+			updateToTable((DefaultTableModel) getJTable().getModel());
+		});
+		buttonPanel.add(before);
+		buttonPanel.add(next);
+
+		// 패널을 Frame에 추가
+		monthlyPanel.add(buttonPanel, BorderLayout.SOUTH); // 패널을 Frame에 추가
+		monthlyPanel.add(buttonPanel, BorderLayout.SOUTH);
 		return monthlyPanel;
 	}
 
-	public JTable getJTable(String userId) {
+
+	public JTable getJTable() {
 		if (jTable == null) {
 			jTable = new JTable();
 			DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
@@ -255,7 +266,11 @@ public class CodeHows extends JPanel {
 			tableModel.addColumn("출석시간");
 			tableModel.addColumn("퇴근시간");
 			tableModel.addColumn("결과");
-			List<AttendanceStatusDTO> attendBoards = attendService.getAttendTime(userId);
+
+			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+			attendanceStatusDTO.setUserId(user.getUserId());
+			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+			List<AttendanceStatusDTO> attendBoards = attendService.getAttendTime(attendanceStatusDTO);
 			for (AttendanceStatusDTO board : attendBoards) {
 				Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(), "결과" };
 				tableModel.addRow(row);
@@ -292,9 +307,14 @@ public class CodeHows extends JPanel {
 		return jTable;
 	}
 
-	public void updateToTable(DefaultTableModel tableModel, String userId) {
-		List<AttendanceStatusDTO> attendBoards = attendService.getAttendTime(user.getUserId());
-		DefaultTableModel tableModel2 = (DefaultTableModel) this.getJTable(userId).getModel();
+
+	public void updateToTable(DefaultTableModel tableModel) {
+		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+		attendanceStatusDTO.setUserId(user.getUserId());
+		
+		attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+		List<AttendanceStatusDTO> attendBoards = attendService.getAttendTime(attendanceStatusDTO);
+		DefaultTableModel tableModel2 = (DefaultTableModel) this.getJTable().getModel();
 		tableModel2.setRowCount(0);
 
 		for (AttendanceStatusDTO board : attendBoards) {
