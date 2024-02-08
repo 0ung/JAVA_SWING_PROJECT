@@ -69,6 +69,7 @@ public class ClassManage extends JPanel {
 			create.addActionListener(e -> {
 				ClassForm classForm = new ClassForm(Editable.CREATE);
 				classForm.setVisible(true);
+				 updateClassComboBox(); 
 			});
 
 			createClass.setLayout(new GridLayout(1, 2, 50, 50));
@@ -118,8 +119,6 @@ public class ClassManage extends JPanel {
 			create.setBackground(Color.WHITE);
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			
-			comboBox.setPreferredSize(new Dimension(80, 60));
-			comboBox.setFont(new Font("맑은고딕", Font.PLAIN, 30));
 			updateClass.setLayout(new GridLayout(1, 2, 50, 50));
 			
 			JLabel update = new JLabel("반 수정", JLabel.CENTER);
@@ -128,8 +127,22 @@ public class ClassManage extends JPanel {
 
 			updateClass.add(comboBox);
 			updateClass.add(create);
-
-		}
-		return updateClass;
+			
+			create.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                // 선택된 반의 이름 가져오기
+	                String selectedClassName = (String) comboBox.getSelectedItem();
+	                
+	                // 선택된 반의 정보 수정 다이얼로그 생성 및 표시
+	                ClassForm classForm = new ClassForm(Editable.UPDATE);
+	                classForm.setClassInfo(selectedClassName); // 선택된 반의 이름 전달
+	                classForm.setVisible(true);
+	            }
+	        });
+	    }
+	    return updateClass;
 	}
+	
+
 }
