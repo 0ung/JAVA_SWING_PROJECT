@@ -29,7 +29,7 @@ public class NoticeFactory {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				DetailNotice detailDialog = new DetailNotice(jframe, user, true);
+				DetailNotice detailDialog = new DetailNotice(jframe, user, true, null);
 				// 텍스트 필드를 편집 가능하게 설정합니다.
 				detailDialog.setFieldsEditable(true);
 				detailDialog.setVisible(true);

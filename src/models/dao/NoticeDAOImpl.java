@@ -67,9 +67,11 @@ public class NoticeDAOImpl extends commonDAO implements NoticeDAO {
 			connect(); // 데이터베이스 연결
 			String sql = "SELECT * FROM notice WHERE noticeId = ?";
 
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setLong(1, noticeId); // 선택된 공지사항의 ID 설정
+			setRs(getPstmt().executeQuery());
+
 			if (getRs().next()) {
-				setPstmt(getConn().prepareStatement(sql));
-				getPstmt().setLong(1, noticeId); // 선택된 공지사항의 ID 설정
 				noticeDetail = new NoticeDto();
 				// ResultSet에서 데이터 추출하여 NoticeDto 객체에 설정
 				noticeDetail.setNoticeId(getRs().getLong("noticeId"));

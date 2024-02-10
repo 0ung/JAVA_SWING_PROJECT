@@ -84,9 +84,20 @@ public class Notice extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int a = noticeTable.getSelectedRow();
-				System.out.println(noticeTable.getValueAt(a, 0));
-				System.out.println(noticeTable.getValueAt(a, 2));
-				DetailNotice detailNotice = new DetailNotice(jFrame, user, false);
+				String noticeId = (String) noticeTable.getValueAt(a, 0);
+				
+				NoticeDAOImpl impl = new NoticeDAOImpl();
+				NoticeDto noticeDetail = new NoticeDto();
+				noticeDetail = impl.getNoticeDetailById(Integer.parseInt(noticeId));
+				
+				System.out.println(noticeDetail);
+				
+				String userName = (String) noticeTable.getValueAt(a, 2);
+				noticeDetail.setUserName(userName);
+
+				System.out.println(noticeDetail);
+
+				DetailNotice detailNotice = new DetailNotice(jFrame, user, false, noticeDetail);
 				detailNotice.setVisible(true);
 				detailNotice.setStatusComboBoxEditable(false);
 			}

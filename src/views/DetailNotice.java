@@ -33,17 +33,18 @@ public class DetailNotice extends JDialog {
 	private JButton jButton;
 	private NoticeDto noticeDto;
 
-	public DetailNotice(JFrame jframe, UserDTO user, Boolean edit) {
+	public DetailNotice(JFrame jframe, UserDTO user, Boolean edit, NoticeDto noticeDto) {
 		super(jframe, true);
 		this.user = user;
+		this.noticeDto = noticeDto;
 
 		initializeUI();
 
 		setStatusComboBoxEditable(edit);
 	}
+	
 
 	private void initializeUI() {
-
 		setSize(new Dimension(700, 800));
 		setLayout(new BorderLayout(5, 5));
 		setAlwaysOnTop(true);
@@ -55,7 +56,11 @@ public class DetailNotice extends JDialog {
 		setTitle("상세보기");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); // Center on screen
-		writerTextField.setText(user.getUserName());
+		titleTextField.setText(noticeDto.getTitle());
+		contentTextArea.setText(noticeDto.getContent());
+		createTimeTextField.setText(noticeDto.getCreateTime()+"");
+		writerTextField.setText(noticeDto.getUserName());
+		
 	}
 
 	// 콤보박스 띄우는지 여부 확인
@@ -132,10 +137,9 @@ public class DetailNotice extends JDialog {
 
 	private JPanel getInfoPanel() {
 		JPanel infoPanel = new JPanel();
-		String[] arr = LocalDate.now().toString().split("-");
 		createTimePanel = new JPanel();
 		createTimeLabel = new JLabel("작성일:");
-		createTimeTextField = new JTextField(arr[0] + "년" + arr[1] + "월" + arr[2] + "일");
+		createTimeTextField = new JTextField(20);
 		createTimeTextField.setEditable(false);
 		createTimePanel.add(createTimeLabel);
 		createTimePanel.add(createTimeTextField);
