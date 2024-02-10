@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class DateBox extends JPanel {
+	@Getter
 	@Setter
 	private String day;
 	@Setter

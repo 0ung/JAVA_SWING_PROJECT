@@ -89,4 +89,38 @@ public class NoticeDAOImpl extends commonDAO implements NoticeDAO {
 		return noticeDetail;
 	}
 
+	@Override
+	public void updateNoticeById(NoticeDto notice) {
+		connect();
+		String sql = "update notice set title = ?, content = ?,important =? where userId = ? and noitceId = ?";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, notice.getTitle());
+			getPstmt().setString(2, notice.getContent());
+			getPstmt().setBoolean(3, notice.isImportant());
+			getPstmt().setString(4, notice.getUserId());
+			getPstmt().setLong(5, notice.getNoticeId());
+			setRs(getPstmt().executeQuery());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	@Override
+	public void deleteNoticeById(NoticeDto notice) {
+		connect();
+		String sql = "delete from notice where userId =? and noticeId= ?";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, notice.getUserId());
+			getPstmt().setLong(2, notice.getNoticeId());
+			getPstmt().execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

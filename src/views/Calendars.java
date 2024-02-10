@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import models.dto.UserDTO;
+
 public class Calendars extends JPanel {
 	private static final Calendar cal = Calendar.getInstance();
 	String[] dayAr = { "일", "월", "화", "수", "목", "금", "토" };
@@ -29,10 +31,11 @@ public class Calendars extends JPanel {
 	private int keyMonth;
 	private int startDay;
 	private int lastDay;
-	private Calendars calendars = this;
 	private JFrame frame;
+	private UserDTO user;
 
-	public Calendars(JFrame jFrame) {
+	public Calendars(JFrame jFrame, UserDTO user) {
+		this.user = user;
 		this.frame = jFrame;
 		setLayout(new BorderLayout()); // 패널의 레이아웃을 BorderLayout으로 설정
 		pNorth = new JPanel();
@@ -68,7 +71,7 @@ public class Calendars extends JPanel {
 		setDateTitle();
 		createDay();
 		createDate();
-		printDate(jFrame);
+		printDate();
 		setPreferredSize(new Dimension(600, 600)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
 		CommonSetting.locationCenter(this);
 	}
@@ -112,12 +115,14 @@ public class Calendars extends JPanel {
 	}
 
 	// 날짜 박스에 날짜 출력하기
-	public void printDate(JFrame frame) {
+	public void printDate(int year, int month) {
 		int n = 1;
 		for (int i = 0; i < dateBoxAr.length; i++) {
 			if (i >= startDay && n <= lastDay) {
+	            final int day = n; // 현재 날짜를 final 변수로 선언
+	            final int currentYear = year; // 현재 년도
+	            final int currentMonth = month; // 현재 월
 				dateBoxAr[i].setDay(Integer.toString(n));
-				dateBoxAr[i].setShowNotice(getNoticeList(n));
 				dateBoxAr[i].repaint();
 				n++;
 				for (MouseListener listener : dateBoxAr[i].getMouseListeners()) {
@@ -126,7 +131,8 @@ public class Calendars extends JPanel {
 				dateBoxAr[i].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						NoticeFactory.createNoticeDialog(frame).setVisible(true);
+						Notice notice = new Notice(user);
+						notice.createNoticeDialog(currentYear, currentMonth, day, 0).setVisible(true);
 					}
 				});
 			} else {
@@ -148,17 +154,8 @@ public class Calendars extends JPanel {
 		// 캘린더 객체에 들어있는 날짜를 기준으로 월 정보를 바꿔준다.
 		cal.set(Calendar.MONTH, keyMonth + data);
 		getDateInfo();
-		printDate(frame);
+		printDate();
 		setDateTitle();
-	}
-
-	// notice 정보 가져오기
-	public String getNoticeList(int n) {
-		if (n == 2) {
-			return "2일";
-		} else {
-			return "2일 아님";
-		}
 	}
 
 }
