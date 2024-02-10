@@ -105,7 +105,6 @@ public class Notice {
 		customizeTable();
 		return noticeTable;
 	}
-
 	private void customizeTable() {
 		noticeTable.getTableHeader().setPreferredSize(new Dimension(30, 30));
 		noticeTable.setRowHeight(25);

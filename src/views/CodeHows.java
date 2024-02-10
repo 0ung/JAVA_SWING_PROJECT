@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,12 +48,14 @@ import models.service.AttendService;
 import models.service.UserService;
 
 public class CodeHows extends JPanel {
-	private Image image;
-	private JPanel startCheck, monthlyPanel, monthlyPanel1, studentManage;
+
+	private Image image1,image2;
+	private JPanel startCheck, monthlyPanel, monthlyPanel1, studentManage, imagePane1;
 	private JButton start, end;
 	private UserDTO user;
 	private AttendService attendService = new AttendService();
-	private JPanel jPanel;
+	private JLabel label1, label2;
+	
 	private JTable jTable;
 	private JButton before, next;
 	private JDialog combined;
@@ -63,34 +67,26 @@ public class CodeHows extends JPanel {
 	public CodeHows(UserDTO user) {
 		this.user = user;
 
-		this.setLayout(new FlowLayout());
-
-		// 이미지 로드
+		
+		this.setLayout(new BorderLayout());
+		
+		JPanel topPanel = new JPanel(new GridLayout(4,1));
+		JPanel blank = new JPanel();
+		JPanel blank2 = new JPanel();
+		
+		
+		
 		loadImage();
-		JLabel blank = new JLabel("");
-		blank.setPreferredSize(new Dimension(400, 120));
-		JLabel codehowsLink = new JLabel("CODE HOWS");
-		codehowsLink.setPreferredSize(new Dimension(400, 100));
-		loadURI(codehowsLink, "https://www.codehows.com/");
-		JLabel githubLink = new JLabel("GitHub");
-		githubLink.setPreferredSize(new Dimension(400, 100));
-		loadURI(githubLink, "https://github.com/");
-		JLabel naverLink = new JLabel("NAVER");
-		naverLink.setPreferredSize(new Dimension(400, 100));
-		loadURI(naverLink, "https://www.naver.com/");
-		JLabel googleLink = new JLabel("GOOGLE");
-		googleLink.setPreferredSize(new Dimension(400, 100));
-		loadURI(googleLink, "https://www.google.co.kr/?hl=ko");
-		add(blank);
-		add(codehowsLink);
-		add(githubLink);
-		add(naverLink);
-		add(googleLink);
-		JLabel blank2 = new JLabel("");
-		blank2.setPreferredSize(new Dimension(400, 120));
-		add(getCheckButton());
-		add(MonthlyAttendanceLog(true));
-
+		topPanel.add(blank2);
+		topPanel.add(imagePane1);
+		topPanel.add(blank);
+		topPanel.add(getCheckButton());
+		
+		JPanel bottomPanel = new JPanel(new BorderLayout());
+		bottomPanel.add(MonthlyAttendanceLog(true), BorderLayout.CENTER);
+		add(topPanel, BorderLayout.NORTH);
+		add(bottomPanel, BorderLayout.CENTER);
+		
 		// 패널 크기 설정
 		setPreferredSize(new Dimension(500, 1200));
 
@@ -154,13 +150,37 @@ public class CodeHows extends JPanel {
 
 	private void loadImage() {
 		try {
-			String imagePath = System.getProperty("user.dir") + File.separator + "image" + File.separator + "logo.png";
-			ImageIcon imageIcon = new ImageIcon(imagePath);
-			image = imageIcon.getImage();
+			
+			
+			// Loading the first image
+            String imagePath1 = System.getProperty("user.dir") + File.separator + "image" + File.separator + "logo1.png";
+            ImageIcon imageIcon1 = new ImageIcon(imagePath1);
+            image1 = imageIcon1.getImage();
+            
+
+            // Loading the second image
+            String imagePath2 = System.getProperty("user.dir") + File.separator + "image" + File.separator + "logo2.png";
+            ImageIcon imageIcon2 = new ImageIcon(imagePath2);
+            image2 = imageIcon2.getImage();
+            
+            
+            label1 = new JLabel(imageIcon1);
+            label2 = new JLabel(imageIcon2);
+            
+            loadURI(label1, "https:www.codehows.com/");
+            loadURI(label2, "https:www.codehows.com/");
+            
+            //this.setLayout(new BorderLayout());
+            imagePane1 = new JPanel();
+            imagePane1.add(label1);
+            imagePane1.add(label2);
+            
+           
+
 
 			// 이미지 로딩 검증 (선택적)
-			if (imageIcon.getIconWidth() == -1) {
-				System.err.println("Image load failed: " + imagePath);
+			if (imageIcon1.getIconWidth() == -1 || imageIcon2.getIconWidth() == -1) {
+				System.err.println("Image load failed: " + imagePath1 + imagePath2);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -200,8 +220,11 @@ public class CodeHows extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// 이미지가 있을 경우에만 그리기
-		if (image != null) {
-			g.drawImage(image, 0, 0, this);
+		if (image1 != null) {
+			g.drawImage(image1, 400, 500, this);
+		}
+		if(image2 !=null) {
+			g.drawImage(image2, 400, 500, this);
 		}
 	}
 

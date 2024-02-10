@@ -39,11 +39,11 @@ public class Calendars extends JPanel {
 		this.frame = jFrame;
 		setLayout(new BorderLayout()); // 패널의 레이아웃을 BorderLayout으로 설정
 		pNorth = new JPanel();
-		btPrev = new JButton("이전");
+		btPrev = new JButton("<");
 		btPrev.setBorder(new RoundedBorder(8));
 		btPrev.setBackground(Color.WHITE);
 		lbTittle = new JLabel("년도올예정", SwingConstants.CENTER);
-		btNext = new JButton("다음");
+		btNext = new JButton(">");
 		btNext.setBorder(new RoundedBorder(8));
 		btNext.setBackground(Color.WHITE);
 		pCenter = new JPanel(new GridLayout(7, 7, 5, 5)); // pCenter에 GridLayout 설정
