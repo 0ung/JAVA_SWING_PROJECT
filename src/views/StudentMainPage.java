@@ -36,7 +36,7 @@ public class StudentMainPage extends JFrame {
 		jPanel3.add(getCodehows());
 
 		jPanel.add(getcalendar());
-		jPanel.add(getImportNotice());
+		jPanel.add(getImprotantNotice());
 
 		this.add(jPanel2);
 		this.add(jPanel3);
@@ -63,15 +63,16 @@ public class StudentMainPage extends JFrame {
 	public JPanel getcalendar() {
 		if (calendar == null) {
 			calendar = new JPanel();
-			calendar.add(new Calendars(main));
+			calendar.add(new Calendars(main,user));
 		}
 		return calendar;
 	}
 
-	public JPanel getImportNotice() {
+	public JPanel getImprotantNotice() {
 		if (importantNotice == null) {
 			importantNotice = new JPanel();
-			importantNotice.add(NoticeFactory.createNoticePanel(user, main));
+			Notice notice = new Notice(user);
+			importantNotice.add(notice.getNotice(1));
 		}
 		return importantNotice;
 	}

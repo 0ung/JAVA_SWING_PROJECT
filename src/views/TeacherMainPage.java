@@ -74,7 +74,7 @@ public class TeacherMainPage extends JFrame {
 	public JPanel getCalendar() {
 		if (calendar == null) {
 			calendar = new JPanel();
-			calendar.add(new Calendars(main));
+			calendar.add(new Calendars(main,user));
 
 		}
 		return calendar;
@@ -103,7 +103,8 @@ public class TeacherMainPage extends JFrame {
 	public JPanel getImprotantNotice() {
 		if (importantNotice == null) {
 			importantNotice = new JPanel();
-			importantNotice.add(NoticeFactory.createNoticePanel(user, main));
+			Notice notice = new Notice(user);
+			importantNotice.add(notice.getNotice(1));
 		}
 		return importantNotice;
 	}

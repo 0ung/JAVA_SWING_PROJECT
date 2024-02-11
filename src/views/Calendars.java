@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import models.dto.UserDTO;
+
 public class Calendars extends JPanel {
 	private static final Calendar cal = Calendar.getInstance();
 	String[] dayAr = { "일", "월", "화", "수", "목", "금", "토" };
@@ -29,18 +31,19 @@ public class Calendars extends JPanel {
 	private int keyMonth;
 	private int startDay;
 	private int lastDay;
-	private Calendars calendars = this;
 	private JFrame frame;
+	private UserDTO user;
 
-	public Calendars(JFrame jFrame) {
+	public Calendars(JFrame jFrame, UserDTO user) {
+		this.user = user;
 		this.frame = jFrame;
 		setLayout(new BorderLayout()); // 패널의 레이아웃을 BorderLayout으로 설정
 		pNorth = new JPanel();
-		btPrev = new JButton("이전");
+		btPrev = new JButton("<");
 		btPrev.setBorder(new RoundedBorder(8));
 		btPrev.setBackground(Color.WHITE);
 		lbTittle = new JLabel("년도올예정", SwingConstants.CENTER);
-		btNext = new JButton("다음");
+		btNext = new JButton(">");
 		btNext.setBorder(new RoundedBorder(8));
 		btNext.setBackground(Color.WHITE);
 		pCenter = new JPanel(new GridLayout(7, 7, 5, 5)); // pCenter에 GridLayout 설정
@@ -66,9 +69,8 @@ public class Calendars extends JPanel {
 		});
 		getDateInfo();
 		setDateTitle();
-		createDay();
 		createDate();
-		printDate(jFrame);
+		printDate(keyYear, keyMonth);
 		setPreferredSize(new Dimension(600, 600)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
 		CommonSetting.locationCenter(this);
 	}
@@ -82,19 +84,22 @@ public class Calendars extends JPanel {
 	}
 
 	// 요일 생성
-	public void createDay() {
-		for (int i = 0; i < 7; i++) {
-			DateBox dayBox = new DateBox(dayAr[i], Color.gray, 100, 70, "");
-			pCenter.add(dayBox);
-		}
-	}
-
-	// 날짜 생성
 	public void createDate() {
-		for (int i = 0; i < dayAr.length * 6; i++) {
-			DateBox dateBox = new DateBox("", Color.gray, 100, 100, "");
-			pCenter.add(dateBox);
-			dateBoxAr[i] = dateBox;
+		Calendar tempCal = (Calendar) cal.clone(); // 현재 캘린더 상태 복제
+		tempCal.set(Calendar.DAY_OF_MONTH, 1);
+		int firstDayOfWeek = tempCal.get(Calendar.DAY_OF_WEEK) - 1;
+
+		for (int i = 0; i < dateBoxAr.length; i++) {
+			int dayOfMonth = i - firstDayOfWeek + 1;
+			// 조건 수정: 현재 월의 일자에 해당하는 DateBox만 생성
+			if (dayOfMonth > 0 && dayOfMonth <= lastDay) {
+				dateBoxAr[i] = new DateBox(String.valueOf(dayOfMonth), Color.gray, 100, 100, "", keyYear, keyMonth,
+						dayOfMonth);
+			} else {
+				// 현재 월의 일자가 아닌 경우 비워진 DateBox 생성
+				dateBoxAr[i] = new DateBox("", Color.gray, 100, 100, "", keyYear, keyMonth, 0);
+			}
+			pCenter.add(dateBoxAr[i]);
 		}
 	}
 
@@ -112,28 +117,24 @@ public class Calendars extends JPanel {
 	}
 
 	// 날짜 박스에 날짜 출력하기
-	public void printDate(JFrame frame) {
-		int n = 1;
+	public void printDate(int year, int month) {
 		for (int i = 0; i < dateBoxAr.length; i++) {
-			if (i >= startDay && n <= lastDay) {
-				dateBoxAr[i].setDay(Integer.toString(n));
-				dateBoxAr[i].setShowNotice(getNoticeList(n));
-				dateBoxAr[i].repaint();
-				n++;
-				for (MouseListener listener : dateBoxAr[i].getMouseListeners()) {
-					dateBoxAr[i].removeMouseListener(listener);
-				}
-				dateBoxAr[i].addMouseListener(new MouseAdapter() {
+			DateBox db = dateBoxAr[i];
+			int dayOfMonth = db.getDayInt(); // 수정: DateBox에서 일자 정보 직접 가져오기
+			if (dayOfMonth > 0) {
+				db.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						NoticeFactory.createNoticeDialog(frame).setVisible(true);
+						Notice notice = new Notice(user);
+						System.out.println("년도" + db.getYear() + "달" + db.getMonth() + "일" + db.getDayInt());
+						notice.createNoticeDialog(db.getYear(), db.getMonth(), db.getDayInt(), 0).setVisible(true);
 					}
 				});
 			} else {
-				dateBoxAr[i].setDay("");
-				dateBoxAr[i].setShowNotice("");
-				dateBoxAr[i].repaint();
+				db.setDay(""); // 날짜가 없는 경우 빈 문자열로 설정
+				db.setShowNotice("");
 			}
+			db.repaint();
 		}
 	}
 
@@ -143,22 +144,21 @@ public class Calendars extends JPanel {
 		lbTittle.updateUI();
 	}
 
-	// 달력을 넘기거나 전으로 이동할 때 날짜 객체에 대한 정보도 변경
-	public void updateMonth(int data) {
+	public void updateMonth(int delta) {
 		// 캘린더 객체에 들어있는 날짜를 기준으로 월 정보를 바꿔준다.
-		cal.set(Calendar.MONTH, keyMonth + data);
-		getDateInfo();
-		printDate(frame);
-		setDateTitle();
-	}
+		cal.add(Calendar.MONTH, delta);
+		keyYear = cal.get(Calendar.YEAR);
+		keyMonth = cal.get(Calendar.MONTH);
+		getDateInfo(); // 새로운 keyYear, keyMonth에 대한 정보를 다시 가져온다.
+		setDateTitle(); // 타이틀 라벨 업데이트
 
-	// notice 정보 가져오기
-	public String getNoticeList(int n) {
-		if (n == 2) {
-			return "2일";
-		} else {
-			return "2일 아님";
-		}
+		// pCenter 패널의 모든 컴포넌트를 제거하고 다시 그리기
+		pCenter.removeAll(); // 기존 날짜 박스 제거
+		pCenter.revalidate(); // 레이아웃 매니저에게 패널의 레이아웃을 다시 계산하도록 지시
+		pCenter.repaint(); // 패널을 다시 그리도록 지시
+
+		createDate(); // 변경된 달에 대한 새로운 날짜 박스 생성
+		printDate(keyYear, keyMonth); // 변경된 달에 대한 날짜 박스에 날짜 출력
 	}
 
 }

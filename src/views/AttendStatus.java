@@ -1,23 +1,26 @@
 package views;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendStatusDAO;
+import models.dao.AttendanceCheckDAO;
 import models.dao.AttendanceCheckDAOImpl;
+import models.dao.AvailableDayDAO;
 import models.dto.AttendanceStatusDTO;
+import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
 
 public class AttendStatus extends JPanel {
@@ -27,13 +30,14 @@ public class AttendStatus extends JPanel {
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel,
 			attendanceRateLabel;;
 	EtchedBorder eborder = new EtchedBorder();
-	private AttendStatusDAO attendStatusDAO;
+	private AttendStatusDAO attendStatusDAO = new AttendStatusDAO();
+	private AttendanceCheckDAO checkDAO = new AttendanceCheckDAOImpl();
+	private AvailableDayDAO dayDAO = new AvailableDayDAO();
 
 	private UserDTO user;
 
 	public AttendStatus(UserDTO user) {
 		this.user = user;
-		attendStatusDAO = new AttendStatusDAO();
 		this.setSize(600, 500);
 		this.setLayout(new BorderLayout());
 		// this.setLayout(new PaddedFlowLayout(FlowLayout.CENTER, 20, 20, 20));
@@ -87,8 +91,9 @@ public class AttendStatus extends JPanel {
 //		String yearMonth = "2024-03"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
 //		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
 
-		AttendanceStatusDTO dto = AttendanceCheckDAOImpl.getInstance().calculateMonthlyAttendance(userId, yearMonth);
-		double attendanceRate = attendStatusDAO.calculateAttendanceRate(userId, yearMonth);
+		AttendanceStatusDTO dto = checkDAO.calculateMonthlyAttendance(userId, yearMonth);
+		AttendanceStatusDTO statusDTO = attendStatusDAO.calculateAttendanceRate(userId, yearMonth);
+		AvailableDayDTO dayDTO = dayDAO.readClassName(user.getClassName(), yearMonth);
 
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");
@@ -97,8 +102,16 @@ public class AttendStatus extends JPanel {
 
 		titleLabel.setText(user.getUserName() + "의 " + currentDate.getMonthValue() + "월 " + " 출결 상황판");
 		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
-		attendanceRateLabel.setText("전체 출석률: " + String.format("%.2f%%", attendanceRate));
+		attendanceRateLabel
+				.setText("전체 출석률: " + String.format("%.2f%%", calculate(statusDTO, dayDTO.getAvailableDay())));
 
+	}
+
+	private double calculate(AttendanceStatusDTO statusDTO, int availableDay) {
+		double cnt = statusDTO.getAbsentCnt()
+				+ (statusDTO.getEarlyleaveCnt() + statusDTO.getOutingCnt() + statusDTO.getLateCnt()) / 3.0;
+		double result = (availableDay - cnt) / availableDay * 100;
+		return result;
 	}
 
 	public JPanel getLateCnt() {
