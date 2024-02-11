@@ -15,7 +15,8 @@ public class StudentMainPage extends JFrame {
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private JFrame main = this;
 	private UserDTO user;
-
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	
 	public StudentMainPage(UserDTO user) {
 		this.user = user;
 		this.setSize(screen);
