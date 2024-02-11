@@ -126,6 +126,8 @@ public class CodeHows extends JPanel {
 						if (attendService.insertStartTime(user.getUserId())) {
 						} else {
 							JOptionPane.showMessageDialog(start, "이미 출근하셨습니다.");
+							start.setEnabled(false);
+							end.setEnabled(false);
 						}
 						updateToTable((DefaultTableModel) getJTable(true, null).getModel());
 					}

@@ -14,4 +14,6 @@ public interface NoticeDAO {
 	public void updateNoticeById(NoticeDto notice);
 
 	public void deleteNoticeById(NoticeDto notice);
+
+	public List<NoticeDto> readbyday(String date);
 }

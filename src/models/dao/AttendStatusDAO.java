@@ -45,46 +45,41 @@ public class AttendStatusDAO {
 		}
 	}
 
-	public double calculateAttendanceRate(String userId, String yearMonth) {
-		double attendanceRate = 0.0;
-
+	public AttendanceStatusDTO calculateAttendanceRate(String userId, String yearMonth) {
+		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
 		try {
-			String[] parts = yearMonth.split("-");
-			int month = Integer.parseInt(parts[1]);
-
 			Connection conn = DriverManager.getConnection("jdbc:mysql://222.119.100.89:3382/attendance", "attendance",
 					"codehows213");
-			String sql = "SELECT COUNT(*) AS totalDays, SUM(case when absentCnt = 0 then 1 else 0 end) AS attendedDays FROM attendancestatus WHERE userId = ? AND MONTH(startTime) = ?";
-
+			String sql = """
+						SELECT
+					    SUM(CASE WHEN `attendancestatus`.`lateCnt` > 0 THEN 1 ELSE 0 END) AS `LateCount`,
+					    SUM(CASE WHEN `attendancestatus`.`earlyleaveCnt` > 0 THEN 1 ELSE 0 END) AS `EarlyLeaveCount`,
+					    SUM(CASE WHEN `attendancestatus`.`outingCnt` > 0 THEN 1 ELSE 0 END) AS `OutingCount`,
+					    SUM(CASE WHEN `attendancestatus`.`absentCnt` > 0 THEN 1 ELSE 0 END) AS `AbsentCount`
+					FROM
+					    `attendancestatus`
+					WHERE
+					    `userId` = ?
+					    AND `yearMonthDay` LIKE ?
+					""";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, userId);
-			statement.setInt(2, month);
-
+			statement.setString(2, yearMonth);
 			ResultSet resultSet = statement.executeQuery();
-
 			if (resultSet.next()) {
-
-				int totalDays = resultSet.getInt("totalDays");
-				int attendedDays = resultSet.getInt("attendedDays");
-
-				if (totalDays > 0) {
-					attendanceRate = (double) attendedDays / totalDays * 100;
-				} else {
-					attendanceRate = 0.0;
-				}
+				attendanceStatusDTO.setLateCnt(resultSet.getInt("LateCount"));
+				attendanceStatusDTO.setEarlyleaveCnt(resultSet.getInt("EarlyLeaveCount"));
+				attendanceStatusDTO.setOutingCnt(resultSet.getInt("OutingCount"));
+				attendanceStatusDTO.setAbsentCnt(resultSet.getInt("AbsentCount"));
 			}
 
 		} catch (NumberFormatException e1) {
 			System.err.println("월을 숫자로 변환하는 중 오류 발생: " + e1.getMessage());
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		} finally {
-
 			dao.close();
-
 		}
-		return attendanceRate;
+		return attendanceStatusDTO;
 	}
 }

@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,6 +52,15 @@ public class Notice {
 	public JPanel getNotice(int important) {
 		notice = new JPanel();
 		notice.add(new JScrollPane(getTable(important)));
+		notice.setSize(new Dimension(800, 800));
+		notice.add(createNoticePanel());
+		CommonSetting.locationCenter(notice);
+		return notice;
+	}
+
+	public JPanel getNotice(int important, int year, int month, int day) {
+		notice = new JPanel();
+		notice.add(new JScrollPane(getTable(important, year, month, day)));
 		notice.setSize(new Dimension(800, 800));
 		notice.add(createNoticePanel());
 		CommonSetting.locationCenter(notice);
@@ -105,6 +115,40 @@ public class Notice {
 		customizeTable();
 		return noticeTable;
 	}
+
+	public JTable getTable(int important, int year, int month, int day) {
+		noticeTable = new JTable();
+		DefaultTableModel tableModel = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tableModel.addColumn("번호");
+		tableModel.addColumn("제목");
+		tableModel.addColumn("글쓴이");
+		tableModel.addColumn("등록일자");
+
+		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
+		// 날짜 포매팅
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, month, day);
+		String formattedDate = sdf.format(cal.getTime());
+
+		List<NoticeDto> list = daoImpl.readbyday(formattedDate); // 가정: readID가 List<NoticeDto>를 반환
+		for (int i = 0; i < list.size(); i++) {
+			map.put(i + 1, list.get(i).getNoticeId());
+			Object[] arr = { String.valueOf(i + 1), // 가정: getNoticeId()가 long 또는 int 타입
+					list.get(i).getTitle(), list.get(i).getUserName(), // UserDTO에 getUserName()이 정의되어 있어야 함
+					list.get(i).getCreateTime().toString() };// SimpleDateFormat을 사용하여 포매팅할 수 있음
+			tableModel.addRow(arr);
+		}
+		noticeTable.setModel(tableModel);
+		customizeTable();
+		return noticeTable;
+	}
+
 	private void customizeTable() {
 		noticeTable.getTableHeader().setPreferredSize(new Dimension(30, 30));
 		noticeTable.setRowHeight(25);
@@ -180,7 +224,7 @@ public class Notice {
 
 	public JDialog createNoticeDialog(int year, int month, int day, int important) {
 		JDialog dialog = new JDialog();
-		JPanel jPanel = getNotice(important);
+		JPanel jPanel = getNotice(important, year, month, day);
 		dialog.getContentPane().add(jPanel, BorderLayout.CENTER);
 		dialog.pack();
 		return dialog;

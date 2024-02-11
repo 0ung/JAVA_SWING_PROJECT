@@ -11,11 +11,6 @@ import com.mysql.cj.QueryReturnType;
 import models.dto.AttendanceStatusDTO;
 
 public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheckDAO {
-	private static AttendanceCheckDAOImpl instance = new AttendanceCheckDAOImpl();
-
-	public static AttendanceCheckDAOImpl getInstance() {
-		return instance;
-	}
 
 	@Override
 	public List<AttendanceStatusDTO> readID(String userId) {
@@ -46,6 +41,7 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 		return list;
 	}
 
+	@Override
 	public AttendanceStatusDTO calculateMonthlyAttendance(String userId, String yearMonth) {
 		AttendanceStatusDTO dto = new AttendanceStatusDTO();
 		connect();
@@ -65,18 +61,6 @@ public class AttendanceCheckDAOImpl extends commonDAO implements AttendanceCheck
 				dto.setEarlyleaveCnt(getRs().getInt("earlyLeaveCnt"));
 				dto.setOutingCnt(getRs().getInt("outingCnt"));
 				dto.setAbsentCnt(getRs().getInt("absentCnt"));
-
-//				int lateCnt = getRs().getInt("lateCnt");
-//				int earlyLeaveCnt = getRs().getInt("earlyLeaveCnt");
-//				int outingCnt = getRs().getInt("outingCnt");
-//				int absentCnt = getRs().getInt("absentCnt");
-//
-//				// 결과 출력
-//				System.out.println("지각: " + lateCnt);
-//				System.out.println("조퇴: " + earlyLeaveCnt);
-//				System.out.println("외출: " + outingCnt);
-//				System.out.println("결석: " + absentCnt);
-				// System.out.println(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
