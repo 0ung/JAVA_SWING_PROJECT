@@ -7,21 +7,21 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
-import constant.Member;
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
+import models.dao.ClassDAO;
 import models.service.UserService;
 
 public class JoinScreen extends JFrame {
@@ -30,20 +30,16 @@ public class JoinScreen extends JFrame {
 	private JPasswordField password;
 	private JPasswordField checkPassword;
 	private JTextField userName;
-	private JTextField className;
-	private JTextField id1;
-	private JPasswordField password1;
-	private JPasswordField checkPassword1;
-	private JTextField userName1;
-	private JTextField className1;
+	private JComboBox<String> className;
 	private String inId = null, inPassword = null, inPassword2 = null, inUserName = null, inClassName = null;
 	private UserService joinService = new UserService();
+	private ClassDAO classDAO = new ClassDAO();
 
 	public JoinScreen() {
 		initializeUI();
 	}
 
-	private JPanel createStudentPanel() {
+	private JPanel createJoinPanel() {
 		setTitle("회원가입 화면");
 		// setSize(400, 800);
 		setLocationRelativeTo(null);
@@ -61,7 +57,11 @@ public class JoinScreen extends JFrame {
 		password = new JPasswordField(11);
 		checkPassword = new JPasswordField(11);
 		userName = new JTextField(11);
-		className = new JTextField(11);
+		className = new JComboBox<String>();
+		ArrayList<String> list = classDAO.fetchAllClasses();
+		for (String string : list) {
+			className.addItem(string);
+		}
 		// 폼 패널
 		JPanel formPanel = new JPanel(new GridLayout(5, 1, 10, 10));
 		formPanel.add(createInputPanel("아이디 :", id));
@@ -86,14 +86,15 @@ public class JoinScreen extends JFrame {
 		signUpPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		// 이벤트 처리
-		join.addActionListener(e -> handleJoin(Member.Student));
+
+		join.addActionListener(e -> handleJoin());
 		cancel.addActionListener(e -> dispose());
 		return signUpPanel;
 	}
 
 	private void initializeUI() {
 		setSize(260, 400);
-		getContentPane().add(createStudentPanel(), BorderLayout.CENTER);
+		getContentPane().add(createJoinPanel(), BorderLayout.CENTER);
 		locationCenter();
 	}
 
@@ -104,26 +105,13 @@ public class JoinScreen extends JFrame {
 		return panel;
 	}
 
-	private void handleJoin(Member member) {
-		switch (member) {
-		case Teacher:
-			inId = id1.getText();
-			inPassword = String.valueOf(password1.getPassword());
-			inPassword2 = String.valueOf(checkPassword1.getPassword());
-			inUserName = userName1.getText();
-			inClassName = className1.getText();
-			break;
-		case Student:
-			inId = id.getText();
-			inPassword = String.valueOf(password.getPassword());
-			inPassword2 = String.valueOf(checkPassword.getPassword());
-			inUserName = userName.getText();
-			inClassName = className.getText();
-			break;
-		}
-
+	private void handleJoin() {
+		inId = id.getText();
+		inPassword = String.valueOf(password.getPassword());
+		inPassword2 = String.valueOf(checkPassword.getPassword());
+		inUserName = userName.getText();
+		inClassName = (String) className.getSelectedItem();
 		try {
-			System.out.println(inId + inClassName);
 			joinService.validationId(inId);
 			joinService.validationPassword(inPassword, inPassword2);
 			joinService.validationUserName(inUserName);

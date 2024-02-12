@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
@@ -25,7 +26,7 @@ public class StudentMainPage extends JFrame {
 
 		JPanel jPanel = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel2 = new JPanel(new GridLayout(2, 1));
-		JPanel jPanel3 = new JPanel(new GridLayout(1, 1));
+		JPanel jPanel3 = new JPanel(new FlowLayout());
 		setBackground(Color.white);
 
 		jPanel2.add(getInfo());

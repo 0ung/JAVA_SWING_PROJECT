@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.logging.log4j.core.tools.picocli.CommandLine.Help.TextTable.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -16,8 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
-import models.dao.AttendanceCheckDAO;
-import models.dao.AttendanceCheckDAOImpl;
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import models.dto.AttendanceStatusDTO;
@@ -29,8 +28,9 @@ public class UserService {
 	private Pattern userNamePattern = Pattern.compile("^[가-힣]{2,5}$");
 	private UserDAO userDAO = new UserDAOImpl();
 	private String workingDir = System.getProperty("user.dir") + "/AttendanceManage/";
-	private AttendanceCheckDAO checkDAO = new AttendanceCheckDAOImpl();
-
+	private AttendDAO checkDAO = new AttendDAOImpl();
+	private AttendService service = new AttendService();
+	
 	public void validationId(String id) throws MisMatchTypeExecption, NullPointerException {
 		Matcher matcher = idPattern.matcher(id);
 		if (!matcher.matches())
@@ -77,7 +77,10 @@ public class UserService {
 		UserDTO user = userDAO.readID(userId);
 		return user.getAuthority();
 	}
-
+	
+	public void deleteUser(UserDTO user) {
+		userDAO.deleteUser(user.getUserId());
+	}
 	public ArrayList<UserDTO> getAuthMember() {
 		return userDAO.approvalUsers();
 	}
@@ -110,7 +113,7 @@ public class UserService {
 		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
 			XSSFSheet sheet = workbook.createSheet("출결 정보");
 			XSSFRow head = sheet.createRow(0);
-			String[] header = { "출석 시간", "퇴근 시간", "결과" };
+			String[] header = { "날짜","출석 시간", "퇴근 시간", "결과" };
 			for (int i = 0; i < header.length; i++) {
 				XSSFCell cell = head.createCell(i);
 				cell.setCellValue(header[i]);
@@ -134,12 +137,15 @@ public class UserService {
 		ArrayList<String[]> list = new ArrayList<>();
 		List<AttendanceStatusDTO> arr = checkDAO.readID(userId);
 		for (AttendanceStatusDTO attendanceStatusDTO : arr) {
-			String[] arr2 = new String[3];
-			arr2[0] = attendanceStatusDTO.getStartTime();
-			arr2[1] = attendanceStatusDTO.getEndTime();
+			String[] arr2 = new String[4];
+			arr2[0] = attendanceStatusDTO.getYearMonthDay();
+			arr2[1] = attendanceStatusDTO.getStartTime();
+			arr2[2] = attendanceStatusDTO.getEndTime();
+			arr2[3] = service.validaiton(attendanceStatusDTO);
 			list.add(arr2);
 		}
 		return list;
 	}
+	
 	
 }

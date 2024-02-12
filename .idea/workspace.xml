@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="004d0c7f-20f8-449f-a676-9879df2722d1" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/src/constant/Member.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/AttendDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dao/AttendDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/AttendDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dao/AttendDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/AttendInfoDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/AttendInfoDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/AttendStatusDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dao/AttendStatusDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dao/ClassDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dao/ClassDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/ClassForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ClassForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/JoinScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/JoinScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Notice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/RegistrationApprovalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RegistrationApprovalPanel.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2cG7dz946iregoJ56ouk5ud2xkX" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feat/final1.0",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="004d0c7f-20f8-449f-a676-9879df2722d1" name="변경" comment="" />
+      <created>1707726155095</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707726155095</updated>
+      <workItem from="1707726156959" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
