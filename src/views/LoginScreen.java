@@ -1,26 +1,12 @@
 package views;
 
-import java.awt.BorderLayout;
-
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import exception.InvalidIdPasswordExecption;
 import models.service.UserService;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginScreen extends JFrame {
 	String choice = null;
@@ -163,8 +149,4 @@ public class LoginScreen extends JFrame {
 		this.setLocation(leftTopX, leftTopY);
 	}
 
-	public static void main(String[] args) {
-		LoginScreen loginScreen = new LoginScreen();
-		loginScreen.setVisible(true);
-	}
 }

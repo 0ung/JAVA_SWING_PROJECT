@@ -1,28 +1,17 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import constant.Editable;
+import models.dao.ClassDAO;
+import models.dao.ClassDAOImpl;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import constant.Editable;
-import models.dao.ClassDAO;
 
 public class ClassForm extends JDialog {
 
@@ -145,7 +134,7 @@ public class ClassForm extends JDialog {
 	};
 
 	private JPanel getBtnPanel() {
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 
 		if (btnPanel == null) {
 			btnPanel = new JPanel();
@@ -200,7 +189,7 @@ public class ClassForm extends JDialog {
 	}
 
 	private JPanel getUpdateBtnPanel() {
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 		JPanel updateBtnPanel = new JPanel();
 		updateBtnPanel.setLayout(new GridLayout(1, 1, 10, 10)); // 수정 버튼을 추가하기 위해 1개의 열로 설정
 
@@ -247,7 +236,7 @@ public class ClassForm extends JDialog {
 
 	public void setClassInfo(String className) {
 		// DAO를 사용하여 DB에서 해당 반의 정보 가져오기
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 		String[] classInfo = classDAO.getClassInfo(className);
 
 		if (classInfo != null) {

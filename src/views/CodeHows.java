@@ -1,19 +1,16 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
+import models.dto.AttendanceStatusDTO;
+import models.dto.UserDTO;
+import models.service.AttendService;
+import models.service.UserService;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -25,28 +22,6 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
-import models.dto.AttendanceStatusDTO;
-import models.dto.UserDTO;
-import models.service.AttendService;
-import models.service.UserService;
 
 public class CodeHows extends JPanel {
 
@@ -82,7 +57,7 @@ public class CodeHows extends JPanel {
 		add(getCheckButton(), BorderLayout.CENTER);
 		
 		//JPanel bottomPanel = new JPanel();
-		add(MonthlyAttendanceLog(true),  BorderLayout.SOUTH);
+		add(MonthlyAttendanceLog(), BorderLayout.SOUTH);
 		//add(topPanel);
 		//add(bottomPanel);
 		
@@ -247,7 +222,6 @@ public class CodeHows extends JPanel {
 			attendanceStatusDTO.setUserId(user.getUserId());
 			thisMonth = thisMonth.minusMonths(1);
 			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-			System.out.println(attendanceStatusDTO.toString());
 			updateToTable((DefaultTableModel) jTable.getModel());
 		});
 
@@ -264,7 +238,6 @@ public class CodeHows extends JPanel {
 			attendanceStatusDTO.setUserId(user.getUserId());
 			thisMonth = thisMonth.plusMonths(1);
 			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-			System.out.println(attendanceStatusDTO.toString());
 			updateToTable((DefaultTableModel) jTable.getModel());
 		});
 		buttonPanel.add(before);

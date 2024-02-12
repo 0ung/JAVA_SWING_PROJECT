@@ -1,28 +1,14 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
 import models.dao.ClassDAO;
+import models.dao.ClassDAOImpl;
 import models.service.UserService;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class JoinScreen extends JFrame {
 	String choice = null;
@@ -33,7 +19,7 @@ public class JoinScreen extends JFrame {
 	private JComboBox<String> className;
 	private String inId = null, inPassword = null, inPassword2 = null, inUserName = null, inClassName = null;
 	private UserService joinService = new UserService();
-	private ClassDAO classDAO = new ClassDAO();
+	private final ClassDAO classDAO = new ClassDAOImpl();
 
 	public JoinScreen() {
 		initializeUI();

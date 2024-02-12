@@ -26,8 +26,15 @@ public class AttendStatus extends JPanel {
 
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
-	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel,
-			attendanceRateLabel;
+	private JLabel late;
+    private JLabel earlyLeave;
+    private JLabel outStanding;
+    private JLabel cnt1Label;
+    private JLabel cnt2Label;
+    private JLabel cnt3Label;
+    private JLabel cnt4Label;
+    private JLabel titleLabel;
+    private JLabel attendanceRateLabel;
 	EtchedBorder eborder = new EtchedBorder();
 	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
 	private AttendDAO checkDAO = new AttendDAOImpl();
@@ -132,7 +139,7 @@ public class AttendStatus extends JPanel {
 	public JPanel getAbsentCnt() {
 		if (absentCnt == null) {
 			absentCnt = new JPanel();
-			absent = new JLabel("결석", JLabel.CENTER);
+            JLabel absent = new JLabel("결석", JLabel.CENTER);
 			absent.setPreferredSize(new Dimension(width / 8, width / 8));
 			absent.setBorder(eborder);
 			absent.setBackground(Color.pink);
