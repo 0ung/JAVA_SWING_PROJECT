@@ -354,7 +354,7 @@ public class CodeHows extends JPanel {
 			row[0] = board.getYearMonthDay();
 			row[1] = board.getStartTime();
 			row[2] = board.getEndTime();
-			row[3] = "결과"; // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
+			row[3] = attendService.validaiton(board); // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
 			tableModel.addRow(row);
 		}
 		this.revalidate();

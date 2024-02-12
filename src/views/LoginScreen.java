@@ -119,8 +119,7 @@ public class LoginScreen extends JFrame {
 						break;
 					}
 				} catch (NullPointerException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(jp2, e1.getCause());
+					JOptionPane.showMessageDialog(jp2, "입력이 없습니다. 확인 부탁바랍니다.");
 				} catch (InvalidIdPasswordExecption e1) {
 					JOptionPane.showMessageDialog(jp2, "아이디 or 비밀번호가 일치하지 않습니다.");
 				}
