@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -44,6 +45,10 @@ public class Notice {
 	private UserDTO user;
 	private NoticeDto noticeDto;
 	private HashMap<Integer, Long> map = new HashMap<>();
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public Notice(UserDTO user) {
 		this.user = user;
@@ -52,7 +57,7 @@ public class Notice {
 	public JPanel getNotice(int important) {
 		notice = new JPanel();
 		notice.add(new JScrollPane(getTable(important)));
-		notice.setSize(new Dimension(800, 800));
+		notice.setPreferredSize(new Dimension(width , height-100));
 		notice.add(createNoticePanel());
 		CommonSetting.locationCenter(notice);
 		return notice;
@@ -61,7 +66,7 @@ public class Notice {
 	public JPanel getNotice(int important, int year, int month, int day) {
 		notice = new JPanel();
 		notice.add(new JScrollPane(getTable(important, year, month, day)));
-		notice.setSize(new Dimension(800, 800));
+		notice.setSize(new Dimension(width , height/2));
 		notice.add(createNoticePanel());
 		CommonSetting.locationCenter(notice);
 		return notice;

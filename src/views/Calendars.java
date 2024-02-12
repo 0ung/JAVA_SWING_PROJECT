@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,6 +34,10 @@ public class Calendars extends JPanel {
 	private int lastDay;
 	private JFrame frame;
 	private UserDTO user;
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public Calendars(JFrame jFrame, UserDTO user) {
 		this.user = user;
@@ -71,7 +76,7 @@ public class Calendars extends JPanel {
 		setDateTitle();
 		createDate();
 		printDate(keyYear, keyMonth);
-		setPreferredSize(new Dimension(600, 600)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
+		setPreferredSize(new Dimension(width,  height)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
 		CommonSetting.locationCenter(this);
 	}
 
