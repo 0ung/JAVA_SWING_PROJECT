@@ -3,6 +3,7 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -34,6 +35,9 @@ public class StudentAttendanceManagement extends JPanel {
 	private UserDTO user;
 	private UserService service = new UserService();
 	private AttendService attendService = new AttendService();
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public StudentAttendanceManagement(UserDTO user) {
 		this.user = user;
@@ -44,7 +48,9 @@ public class StudentAttendanceManagement extends JPanel {
 		this.setSize(new Dimension(400, 500));
 		this.setLayout(new BorderLayout());
 		JPanel tablePanel = new JPanel();
-		tablePanel.add(new JScrollPane(getStudent()));
+		JScrollPane js = new JScrollPane(getStudent());
+		js.setPreferredSize(new Dimension(width-50, height-90));
+		tablePanel.add(js);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(getApproval());
 
@@ -132,7 +138,7 @@ public class StudentAttendanceManagement extends JPanel {
 	private JButton getApproval() {
 		if (approval == null) {
 			approval = new JButton("출결 승인");
-			approval.setPreferredSize(new Dimension(100, 50));
+			approval.setPreferredSize(new Dimension(100, 40));
 			approval.setBorder(new RoundedBorder(20));
 			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e -> {

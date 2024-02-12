@@ -88,7 +88,7 @@ public class CodeHows extends JPanel {
 		//add(bottomPanel);
 		
 		// 패널 크기 설정
-		setPreferredSize(new Dimension(width , height));
+		//setPreferredSize(new Dimension(width , height));
 
 	}
 
@@ -361,8 +361,9 @@ public class CodeHows extends JPanel {
 
 	public JPanel getStudentMange() {
 		studentManage = new JPanel();
-		studentManage.setSize(new Dimension(width , height));
-		studentManage.add(new JScrollPane(getStudent()));
+		JScrollPane js = new JScrollPane(getStudent());
+		js.setPreferredSize(new Dimension(width-50, height-80));
+		studentManage.add(js);
 		return studentManage;
 
 	}

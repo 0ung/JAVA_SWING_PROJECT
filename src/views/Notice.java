@@ -58,25 +58,10 @@ public class Notice {
 	}
 
 	public JPanel getNotice(int important) {
-		notice = new JPanel();
-		notice.add(new JScrollPane(getTable(important)));
-		notice.setPreferredSize(new Dimension(width , height-100));
-		notice.add(createNoticePanel());
-		CommonSetting.locationCenter(notice);
-		return notice;
-	}
-
-	public JPanel getNotice(int important, int year, int month, int day) {
-		notice = new JPanel();
-		notice.add(new JScrollPane(getTable(important, year, month, day)));
-		notice.setSize(new Dimension(width , height/2));
-		notice.add(createNoticePanel());
-		CommonSetting.locationCenter(notice);
-		return notice;
-	}
-
-	public JPanel createNoticePanel() {
-		JPanel jPanel1 = new JPanel(new BorderLayout());
+		notice = new JPanel(new BorderLayout());
+		JScrollPane js = new JScrollPane(getTable(important));
+		
+		js.setPreferredSize(new Dimension(width-50, height-100));
 		JButton addButton = new JButton("생성");
 		addButton.addActionListener(new ActionListener() {
 			@Override
@@ -85,17 +70,53 @@ public class Notice {
 				setFieldsEditable(true);
 			}
 		});
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(addButton);
 		if (user.getAuthority() == 1) {
 			addButton.setVisible(false);
 		}
 		if (user.getAuthority() == 2) {
 			addButton.setVisible(true);
 		}
-		jPanel1.add(buttonPanel, BorderLayout.SOUTH);
-		return jPanel1;
+		
+		notice.add(js);
+		CommonSetting.locationCenter(notice);
+		notice.add(addButton, BorderLayout.SOUTH);
+		return notice;
 	}
+
+	public JPanel getNotice(int important, int year, int month, int day) {
+		notice = new JPanel();
+		JScrollPane js = new JScrollPane();
+		notice.add(new JScrollPane(getTable(important, year, month, day)));
+		
+		notice.setSize(new Dimension(width , height-150));
+		
+		CommonSetting.locationCenter(notice);
+		
+		
+		return notice;
+	}
+
+//	public JPanel createNoticePanel() {
+//		JPanel jPanel1 = new JPanel(new BorderLayout());
+//		JButton addButton = new JButton("생성");
+//		addButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				getCreateNotice().setVisible(true);
+//				setFieldsEditable(true);
+//			}
+//		});
+//		JPanel buttonPanel = new JPanel();
+//		buttonPanel.add(addButton);
+//		if (user.getAuthority() == 1) {
+//			addButton.setVisible(false);
+//		}
+//		if (user.getAuthority() == 2) {
+//			addButton.setVisible(true);
+//		}
+//		jPanel1.add(buttonPanel, BorderLayout.CENTER);
+//		return jPanel1;
+//	}
 
 	public JTable getTable(int important) {
 		noticeTable = new JTable();
