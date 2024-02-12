@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UserDAOImpl extends commonDAO implements UserDAO {
+public class UserDAOImpl extends CommonDAO implements UserDAO {
 
 	private void userSystem(String message, boolean err) {
 		if (err) {

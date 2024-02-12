@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import models.dto.AttendanceStatusDTO;
 
-public class AttendInfoDAOImpl extends commonDAO implements AttendInfoDAO{
+public class AttendInfoDAOImpl extends CommonDAO implements AttendInfoDAO{
 	
 	@Override
 	public void insertAttendInfo(AttendanceStatusDTO attendInfo) {

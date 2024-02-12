@@ -14,4 +14,6 @@ public interface AttendDAO {
 	public void deleteAttend(String userId);
 	public List<AttendanceStatusDTO> getClassAttendance(String userId);
 	public void updateClass(String userId,AttendanceStatusDTO user);
+	public List<AttendanceStatusDTO> readID(String userId);
+	public AttendanceStatusDTO calculateMonthlyAttendance(String userId, String yearMonth);
 }

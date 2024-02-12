@@ -305,7 +305,7 @@ public class CodeHows extends JPanel {
 		}
 		for (AttendanceStatusDTO board : attendBoards) {
 			Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(),
-					attendService.vlidaiton(board) };
+					attendService.validaiton(board) };
 			tableModel.addRow(row);
 		}
 

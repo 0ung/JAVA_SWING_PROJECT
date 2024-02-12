@@ -1,12 +1,13 @@
 package models.dao;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.dto.AttendanceStatusDTO;
 
-public class AttendDAOImpl extends commonDAO implements AttendDAO {
+public class AttendDAOImpl extends CommonDAO implements AttendDAO {
 
 	@Override
 	/* public void insertStartTime(AttendanceStatusDTO startTime) */
@@ -46,7 +47,7 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 			close();
 		}
 	}
-	
+
 	public List<AttendanceStatusDTO> getAttendBoards(AttendanceStatusDTO userId) {
 		List<AttendanceStatusDTO> attendBoards = new ArrayList<>();
 		connect();
@@ -54,10 +55,9 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId.getUserId());
-			
-			getPstmt().setString(2, userId.getYearMonthDay().substring(0,7) + "%");
+
+			getPstmt().setString(2, userId.getYearMonthDay().substring(0, 7) + "%");
 			setRs(getPstmt().executeQuery());
-		
 
 			while (getRs().next()) {
 				AttendanceStatusDTO board = new AttendanceStatusDTO();
@@ -86,14 +86,16 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 		close();
 
 	}
+
 	@Override
 	public List<AttendanceStatusDTO> getClassAttendance(String userId) {
 		connect();
 		List<AttendanceStatusDTO> list = new ArrayList<>();
-		String sql = "select * from attendancestatus where userId in (select userId from user where className = (select className from user where userId = ?) and authority = 1);";
+		String sql = "select * from attendancestatus where userId in (select userId from user where className = (select className from user where userId = ?) and authority = 1 and yearMonthDay = ?);";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
+			getPstmt().setString(2, LocalDate.now().toString());
 			setRs(getPstmt().executeQuery());
 			while (getRs().next()) {
 				AttendanceStatusDTO dto = new AttendanceStatusDTO();
@@ -128,6 +130,65 @@ public class AttendDAOImpl extends commonDAO implements AttendDAO {
 			e.printStackTrace();
 		}
 		close();
+	}
+	
+	@Override
+	public List<AttendanceStatusDTO> readID(String userId) {
+		List<AttendanceStatusDTO> list = new ArrayList<>();
+		connect();
+		String sql = "SELECT * FROM attendancestatus where userId = ? ";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, userId);
+			setRs(getPstmt().executeQuery());
+			while (getRs().next()) {
+				AttendanceStatusDTO dto = new AttendanceStatusDTO();
+				setPstmt(getConn().prepareStatement(sql));
+				dto.setUserId(getRs().getString("ㅜuserId"));
+				dto.setLateCnt(getRs().getInt("lateCnt"));
+				dto.setEarlyleaveCnt(getRs().getInt("earlyleaveCnt"));
+				dto.setOutingCnt(getRs().getInt("outingCnt"));
+				dto.setAbsentCnt(getRs().getInt("absentCnt")); // 결석
+				dto.setStartTime(getRs().getString("starttime"));
+				dto.setEndTime(getRs().getString("endTime"));
+				dto.setYearMonthDay(getRs().getString("yearMonthDay"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
+
+	@Override
+	public AttendanceStatusDTO calculateMonthlyAttendance(String userId, String yearMonth) {
+		AttendanceStatusDTO dto = new AttendanceStatusDTO();
+		connect();
+		// SQL 쿼리 수정
+		String sql = "SELECT userId, SUM(lateCnt) AS lateCnt, SUM(earlyleaveCnt) AS earlyLeaveCnt, SUM(outingCnt) AS outingCnt, SUM(absentCnt) AS absentCnt "
+				+ "FROM attendancestatus " + "WHERE userId = ? AND yearMonthDay like ?" + "GROUP BY userId";
+
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, userId);
+			getPstmt().setString(2, yearMonth + "%");
+			setRs(getPstmt().executeQuery());
+
+			if (getRs().next()) {
+				dto.setUserId(getRs().getString("userId"));
+				dto.setLateCnt(getRs().getInt("lateCnt"));
+				dto.setEarlyleaveCnt(getRs().getInt("earlyLeaveCnt"));
+				dto.setOutingCnt(getRs().getInt("outingCnt"));
+				dto.setAbsentCnt(getRs().getInt("absentCnt"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return dto;
 	}
 
 }
