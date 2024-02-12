@@ -168,8 +168,7 @@ public class ClassForm extends JDialog {
 						validationRoom(roomNumText);
 						validationTeacher(teacherText);
 						classDAO.insertClass(classNumText, teacherText, roomNumText, progressText);
-
-						JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+						JOptionPane.showMessageDialog(okButton, "생성이 완료되었습니다.");
 						dispose();
 					} catch (RuntimeException e2) {
 						JOptionPane.showMessageDialog(okButton, "입력이 올바르지 않습니다.");
@@ -220,17 +219,11 @@ public class ClassForm extends JDialog {
 					validationRoom(roomNumText);
 					validationTeacher(teacherText);
 					classDAO.updateClass(classNumText, roomNumText, progressText, teacherText);
-					JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+					JOptionPane.showMessageDialog(updateBtnPanel, "수정이 완료되었습니다.");
 					dispose();
 				} catch (RuntimeException e2) {
 					JOptionPane.showMessageDialog(updateButton, "입력이 올바르지 않습니다.");
 				}
-				// 입력된 값이 비어 있는지 확인
-//				if (classNumText.isEmpty() || roomNumText.isEmpty() || progressText.isEmpty()
-//						|| teacherText.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "모든 정보를 입력해주세요.");
-//					return;
-//				}
 
 			}
 		});
@@ -286,13 +279,6 @@ public class ClassForm extends JDialog {
 					textField.setText(placeholder);
 				}
 			}
-		});
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			ClassForm form = new ClassForm(Editable.UPDATE);
-			form.setVisible(true);
 		});
 	}
 }

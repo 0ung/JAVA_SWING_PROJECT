@@ -7,7 +7,6 @@ import models.dto.AttendanceStatusDTO;
 
 public interface AttendDAO {
 	
-	// public void insertStartTime(AttendanceStatusDTO startTime);
 	public void insertStartTime(String userId, String date, String startTime) throws SQLException;
 	public List<AttendanceStatusDTO> getAttendBoards(AttendanceStatusDTO uerId);
 	public void updateEndTime(String userId, String endTime, String yearMonthDay);

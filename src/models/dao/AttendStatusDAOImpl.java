@@ -53,7 +53,7 @@ public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
 					""";
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
-			getPstmt().setString(2, yearMonth);
+			getPstmt().setString(2, yearMonth+"%");
 			setRs(getPstmt().executeQuery());
 			if (getRs().next()) {
 				attendanceStatusDTO.setLateCnt(getRs().getInt("LateCount"));

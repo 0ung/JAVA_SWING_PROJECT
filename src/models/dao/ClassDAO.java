@@ -27,7 +27,6 @@ public class ClassDAO extends CommonDAO {
 			rs.next();
 			int count = rs.getInt("count");
 			if (count > 0) {
-				// 동일한 이름의 반이 이미 존재함
 				JOptionPane.showMessageDialog(null, "이미 동일한 이름의 반이 존재합니다.");
 				return;
 			}
@@ -37,9 +36,6 @@ public class ClassDAO extends CommonDAO {
 			pstmt.setString(3, roomNum);
 			pstmt.setString(4, progress);
 			pstmt.executeUpdate();
-
-			// 성공 메시지 표시
-			JOptionPane.showMessageDialog(null, "반 정보가 성공적으로 생성되었습니다.");
 
 		} catch (Exception e) {
 			e.printStackTrace();

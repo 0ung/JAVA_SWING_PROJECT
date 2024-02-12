@@ -135,6 +135,9 @@ public class RegistrationApprovalPanel extends JPanel {
 					int authority = service.checkAuth(model.getValueAt(i, 4).toString()); // '권한' 열이 4번 인덱스라고 가정
 					userDTO.setUserId(userId);
 					userDTO.setAuthority(authority);
+					if(authority == 3) {
+						service.deleteUser(userDTO);
+					}
 					service.updateAuth(userDTO);
 				}
 				JOptionPane.showMessageDialog(this, "승인이 완료되었습니다.");

@@ -77,7 +77,10 @@ public class UserService {
 		UserDTO user = userDAO.readID(userId);
 		return user.getAuthority();
 	}
-
+	
+	public void deleteUser(UserDTO user) {
+		userDAO.deleteUser(user.getUserId());
+	}
 	public ArrayList<UserDTO> getAuthMember() {
 		return userDAO.approvalUsers();
 	}

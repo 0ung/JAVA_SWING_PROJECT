@@ -10,7 +10,6 @@ import models.dto.AttendanceStatusDTO;
 public class AttendDAOImpl extends CommonDAO implements AttendDAO {
 
 	@Override
-	/* public void insertStartTime(AttendanceStatusDTO startTime) */
 	public void insertStartTime(String userId, String date, String startTime) throws SQLException {
 		connect();
 		String sql = "INSERT INTO attendanceStatus(userId,yearMonthDay, startTime) values ( ?, ?, ? ) ";
@@ -190,5 +189,4 @@ public class AttendDAOImpl extends CommonDAO implements AttendDAO {
 		}
 		return dto;
 	}
-
 }

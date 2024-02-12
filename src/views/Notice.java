@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -215,7 +214,7 @@ public class Notice {
 		JPanel bottomPanel = new JPanel(new BorderLayout()); // 새로운 컨테이너 패널 생성
 		bottomPanel.add(getInfoPanel(), BorderLayout.CENTER); // infoPanel을 bottomPanel 중앙에 추가
 
-		if (edit) {
+		if (edit && user.getAuthority() == 2 && dto.getUserId().equals(user.getUserId())) {
 			editBtn = new JButton("수정");
 			deleteBtn = new JButton("삭제");
 			editPanel = new JPanel(new FlowLayout()); // 수정 및 삭제 버튼을 우측에 배치

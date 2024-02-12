@@ -35,7 +35,8 @@ public class NoticeDAOImpl extends CommonDAO implements NoticeDAO{
 					from notice as n
 					join user as u
 				    on n.userId = u.userId
-				    where important = ?;
+				    where important = ?
+				    ORDER BY createTime DESC
 				""";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
