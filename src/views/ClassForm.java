@@ -29,6 +29,7 @@ public class ClassForm extends JDialog {
 	private String selectedClassName;
 	private JTextField teacher, roomNum, progress, classNum, classNameField;
 	private JPanel classPanel, roomPanel, progressPanel, teacherPanel, btnPanel;
+	
 
 	public ClassForm(Editable editable) {
 		super();

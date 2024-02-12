@@ -1,7 +1,9 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -16,11 +18,12 @@ public class TeacherMainPage extends JFrame {
 	private JPanel panel1, panel2, panel3;
 	private UserDTO user;
 	private JFrame main = this;
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
 	public TeacherMainPage(UserDTO user) {
 		this.user = user;
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		this.setSize(1800, 1400);
+		this.setSize(screen);
 		this.setResizable(false);
 		this.setTitle("강사 메인 페이지");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,10 +1,13 @@
 package views;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Toolkit;
 
 public class CommonSetting {
+
 	public static void locationCenter(Component component) {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Point centerPoint = ge.getCenterPoint();
@@ -13,4 +16,3 @@ public class CommonSetting {
 		component.setLocation(leftTopX, leftTopY);
 	}
 }
-

@@ -13,6 +13,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -63,6 +64,9 @@ public class CodeHows extends JPanel {
 	private UserService service = new UserService();
 	EtchedBorder eborder = new EtchedBorder();
 	private LocalDate thisMonth = LocalDate.now();
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public CodeHows(UserDTO user) {
 		this.user = user;
@@ -70,25 +74,21 @@ public class CodeHows extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
-		JPanel topPanel = new JPanel(new GridLayout(4,1));
-		JPanel blank = new JPanel();
-		JPanel blank2 = new JPanel();
+		//JPanel topPanel = new JPanel();
 		
 		
 		
 		loadImage();
-		topPanel.add(blank2);
-		topPanel.add(imagePane1);
-		topPanel.add(blank);
-		topPanel.add(getCheckButton());
+		add(imagePane1 , BorderLayout.NORTH);
+		add(getCheckButton(), BorderLayout.CENTER);
 		
-		JPanel bottomPanel = new JPanel(new BorderLayout());
-		bottomPanel.add(MonthlyAttendanceLog(true), BorderLayout.CENTER);
-		add(topPanel, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.CENTER);
+		//JPanel bottomPanel = new JPanel();
+		add(MonthlyAttendanceLog(true),  BorderLayout.SOUTH);
+		//add(topPanel);
+		//add(bottomPanel);
 		
 		// 패널 크기 설정
-		setPreferredSize(new Dimension(500, 1200));
+		//setPreferredSize(new Dimension(width , height));
 
 	}
 
@@ -96,7 +96,7 @@ public class CodeHows extends JPanel {
 		if (startCheck == null) {
 			startCheck = new JPanel();
 			start = new JButton("출근");
-			start.setPreferredSize(new Dimension(100, 80));
+			start.setPreferredSize(new Dimension(width/3, height/6));
 			// start.setBackground(Color.LIGHT_GRAY);
 
 			start.setBorder(new RoundedBorder(20));
@@ -107,7 +107,7 @@ public class CodeHows extends JPanel {
 			startCheck.add(start);
 
 			end = new JButton("퇴근");
-			end.setPreferredSize(new Dimension(100, 80));
+			end.setPreferredSize(new Dimension(width/3, height/6));
 			end.setBorder(new RoundedBorder(20));
 			end.setFont(new Font("맑은 고딕", getFont().BOLD, 20));
 			end.setForeground(Color.DARK_GRAY);
@@ -223,10 +223,10 @@ public class CodeHows extends JPanel {
 		super.paintComponent(g);
 		// 이미지가 있을 경우에만 그리기
 		if (image1 != null) {
-			g.drawImage(image1, 400, 500, this);
+			g.drawImage(image1, width/3, height/4, this);
 		}
 		if(image2 !=null) {
-			g.drawImage(image2, 400, 500, this);
+			g.drawImage(image2, width/3, height/4 , this);
 		}
 	}
 
@@ -361,8 +361,9 @@ public class CodeHows extends JPanel {
 
 	public JPanel getStudentMange() {
 		studentManage = new JPanel();
-		studentManage.setSize(new Dimension(400, 500));
-		studentManage.add(new JScrollPane(getStudent()));
+		JScrollPane js = new JScrollPane(getStudent());
+		js.setPreferredSize(new Dimension(width-50, height-80));
+		studentManage.add(js);
 		return studentManage;
 
 	}

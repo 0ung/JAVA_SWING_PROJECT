@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,22 +32,25 @@ public class ClassManage extends JPanel {
 	private JPanel createClass, deleteClass, updateClass;
 	private UserDTO user;
 	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public ClassManage(UserDTO user) {
 		this.user = user;
 		setLayout(new GridLayout(4, 2, 50, 60));
-		setSize(new Dimension(100, 200));
+		setSize(new Dimension(width/10, height/8));
 		initializeComponents();
 		updateClassComboBox();
 	}
 
 	private void initializeComponents() {
 		comboBox = new JComboBox<>(); // 초기화 위치 변경
-		comboBox.setPreferredSize(new Dimension(80, 60));
+		comboBox.setPreferredSize(new Dimension(width/10, height/8));
 		comboBox.setFont(new Font("맑은고딕", Font.PLAIN, 30));
 
 		comboBox2 = new JComboBox<>(); // 초기화 위치 변경
-		comboBox2.setPreferredSize(new Dimension(80, 60));
+		comboBox2.setPreferredSize(new Dimension(width/10, height/8));
 		comboBox2.setFont(new Font("맑은고딕", Font.PLAIN, 30));
 
 		yearCombo = new JComboBox<>();
@@ -73,7 +77,7 @@ public class ClassManage extends JPanel {
 			create = new JButton("생성하기");
 			create.setBackground(Color.WHITE);
 			create.setBorder(new RoundedBorder(30));
-			create.setPreferredSize(new Dimension(70, 50));
+			create.setPreferredSize(new Dimension(width/10, height/8));
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			create.addActionListener(e -> {
 				ClassForm classForm = new ClassForm(Editable.CREATE);
@@ -98,7 +102,7 @@ public class ClassManage extends JPanel {
 			delete = new JButton("삭제");
 			delete.setBackground(Color.WHITE);
 			delete.setBorder(new RoundedBorder(30));
-			delete.setPreferredSize(new Dimension(70, 50));
+			delete.setPreferredSize(new Dimension(width/10, height/8));
 			delete.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 
 			JLabel classDelete = new JLabel("반 삭제", JLabel.CENTER);
@@ -127,7 +131,7 @@ public class ClassManage extends JPanel {
 		if (updateClass == null) {
 			updateClass = new JPanel(new GridLayout(1, 3, 50, 50));
 			create = new JButton("수정");
-			create.setPreferredSize(new Dimension(70, 50));
+			create.setPreferredSize(new Dimension(width/10, height/8));
 			create.setBorder(new RoundedBorder(30));
 			create.setBackground(Color.WHITE);
 			create.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
@@ -180,10 +184,10 @@ public class ClassManage extends JPanel {
 		JLabel lblMonth = new JLabel("월");
 		JLabel lblDay = new JLabel("일자"); // 추가된 라벨
 
-		submit.setFont(new Font("맑은고딕", Font.PLAIN, 18));
+		submit.setFont(new Font("맑은고딕", Font.BOLD, 10));
 		submit.setBackground(Color.WHITE);
-		submit.setPreferredSize(new Dimension(60, 50));
-		submit.setBorder(new RoundedBorder(20)); // RoundedBorder는 사용자 정의 보더 클래스로 가정
+		submit.setPreferredSize(new Dimension(width/10, height/8));
+		submit.setBorder(new RoundedBorder(10)); // RoundedBorder는 사용자 정의 보더 클래스로 가정
 
 		// 저장버튼실행
 		submit.addActionListener(e -> {
