@@ -106,7 +106,7 @@ public class AttendService {
 		attendStatusDAO.updateClass(userId, user);
 	}
 
-	public String vlidaiton(AttendanceStatusDTO attendanceStatusDTO) {
+	public String validaiton(AttendanceStatusDTO attendanceStatusDTO) {
 		if (attendanceStatusDTO.getEarlyleaveCnt() == 1) {
 			return "조퇴";
 		} else if (attendanceStatusDTO.getLateCnt() == 1) {

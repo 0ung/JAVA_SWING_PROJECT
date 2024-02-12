@@ -2,10 +2,12 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -28,22 +30,24 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import models.dao.NoticeDAO;
 import models.dao.NoticeDAOImpl;
 import models.dto.NoticeDto;
 import models.dto.UserDTO;
 
 public class Notice {
 	private JDialog detailNotice, createNotice;
-	private JPanel titlePanel, createTimePanel, writerPanel, notice;
+	private JPanel titlePanel, createTimePanel, writerPanel, notice, editPanel;
 	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel;
 	private JTextArea contentTextArea;
 	private JTextField titleTextField, createTimeTextField, writerTextField;
 	private JComboBox<String> statusComboBox; // 상태를 선택하기 위한 콤보박스
-	private JButton jButton;
+	private JButton jButton, editBtn, deleteBtn;
 	private JTable noticeTable;
 	private UserDTO user;
 	private NoticeDto noticeDto;
 	private HashMap<Integer, Long> map = new HashMap<>();
+	private NoticeDAO noticeDAO = new NoticeDAOImpl();
 
 	public Notice(UserDTO user) {
 		this.user = user;
@@ -69,8 +73,8 @@ public class Notice {
 
 	public JPanel createNoticePanel() {
 		JPanel jPanel1 = new JPanel(new BorderLayout());
-		JButton jButton = new JButton("생성");
-		jButton.addActionListener(new ActionListener() {
+		JButton addButton = new JButton("생성");
+		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getCreateNotice().setVisible(true);
@@ -78,12 +82,12 @@ public class Notice {
 			}
 		});
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(jButton);
+		buttonPanel.add(addButton);
 		if (user.getAuthority() == 1) {
-			jButton.setVisible(false);
+			addButton.setVisible(false);
 		}
 		if (user.getAuthority() == 2) {
-			jButton.setVisible(true);
+			addButton.setVisible(true);
 		}
 		jPanel1.add(buttonPanel, BorderLayout.SOUTH);
 		return jPanel1;
@@ -207,11 +211,43 @@ public class Notice {
 		detailNotice.setAlwaysOnTop(true);
 		detailNotice.add(getTitlePanel(), BorderLayout.NORTH);
 		detailNotice.add(getContentPanel(), BorderLayout.CENTER);
-		detailNotice.add(getInfoPanel(), BorderLayout.SOUTH);
+
+		JPanel bottomPanel = new JPanel(new BorderLayout()); // 새로운 컨테이너 패널 생성
+		bottomPanel.add(getInfoPanel(), BorderLayout.CENTER); // infoPanel을 bottomPanel 중앙에 추가
+
+		if (edit) {
+			editBtn = new JButton("수정");
+			deleteBtn = new JButton("삭제");
+			editPanel = new JPanel(new FlowLayout()); // 수정 및 삭제 버튼을 우측에 배치
+			editBtn.addActionListener(e -> {
+				NoticeDto notice = new NoticeDto();
+				notice.setTitle(titleTextField.getText());
+				notice.setContent(contentTextArea.getText());
+				notice.setNoticeId(dto.getNoticeId());
+				noticeDAO.updateNoticeById(notice);
+				JOptionPane.showMessageDialog(detailNotice, "수정완료");
+				updateNoticeTable(1);
+				detailNotice.dispose();
+			});
+			deleteBtn.addActionListener(e -> {
+				NoticeDto notice = new NoticeDto();
+				notice.setTitle(writerTextField.getText());
+				notice.setNoticeId(dto.getNoticeId());
+				noticeDAO.deleteNoticeById(notice);
+				JOptionPane.showMessageDialog(detailNotice, "삭제완료");
+				updateNoticeTable(1);
+				detailNotice.dispose();
+			});
+			editPanel.add(editBtn);
+			editPanel.add(deleteBtn);
+			bottomPanel.add(editPanel, BorderLayout.SOUTH); // editPanel을 bottomPanel 하단에 추가
+		}
+
+		detailNotice.add(bottomPanel, BorderLayout.SOUTH); // 수정: bottomPanel을 대화상자 남쪽에 추가
 
 		// Set the dialog properties
 		detailNotice.setTitle("상세보기");
-		detailNotice.setDefaultCloseOperation(detailNotice.DISPOSE_ON_CLOSE);
+		detailNotice.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		detailNotice.setLocationRelativeTo(null); // Center on screen
 		titleTextField.setText(dto.getTitle());
 		contentTextArea.setText(dto.getContent());
@@ -219,6 +255,7 @@ public class Notice {
 		writerTextField.setText(dto.getUserName());
 
 		setStatusComboBoxEditable(edit);
+		setFieldsEditable(edit);
 		return detailNotice;
 	}
 
@@ -304,9 +341,11 @@ public class Notice {
 		// 새로운 데이터로 테이블 채우기
 		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
 		List<NoticeDto> list = daoImpl.readID(important);
-		for (NoticeDto notice : list) {
-			Object[] arr = { String.valueOf(notice.getNoticeId()), notice.getTitle(), notice.getUserName(),
-					notice.getCreateTime().toString() };
+		for (int i = 0; i < list.size(); i++) {
+			map.put(i + 1, list.get(i).getNoticeId());
+			Object[] arr = { String.valueOf(i + 1), // 가정: getNoticeId()가 long 또는 int 타입
+					list.get(i).getTitle(), list.get(i).getUserName(), // UserDTO에 getUserName()이 정의되어 있어야 함
+					list.get(i).getCreateTime().toString() };// SimpleDateFormat을 사용하여 포매팅할 수 있음
 			tableModel.addRow(arr);
 		}
 	}

@@ -6,7 +6,7 @@ import java.util.List;
 
 import models.dto.NoticeDto;
 
-public class NoticeDAOImpl extends commonDAO implements NoticeDAO {
+public class NoticeDAOImpl extends CommonDAO implements NoticeDAO{
 
 	@Override
 	public void insertNotice(NoticeDto notice) {
@@ -91,15 +91,13 @@ public class NoticeDAOImpl extends commonDAO implements NoticeDAO {
 	@Override
 	public void updateNoticeById(NoticeDto notice) {
 		connect();
-		String sql = "update notice set title = ?, content = ?,important =? where userId = ? and noitceId = ?";
+		String sql = "update notice set title = ?, content = ? where noticeId = ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, notice.getTitle());
 			getPstmt().setString(2, notice.getContent());
-			getPstmt().setBoolean(3, notice.isImportant());
-			getPstmt().setString(4, notice.getUserId());
-			getPstmt().setLong(5, notice.getNoticeId());
-			setRs(getPstmt().executeQuery());
+			getPstmt().setLong(3, notice.getNoticeId());
+			getPstmt().executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -110,11 +108,10 @@ public class NoticeDAOImpl extends commonDAO implements NoticeDAO {
 	@Override
 	public void deleteNoticeById(NoticeDto notice) {
 		connect();
-		String sql = "delete from notice where userId =? and noticeId= ?";
+		String sql = "delete from notice where noticeId= ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, notice.getUserId());
-			getPstmt().setLong(2, notice.getNoticeId());
+			getPstmt().setLong(1, notice.getNoticeId());
 			getPstmt().execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

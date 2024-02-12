@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import models.dao.AttendStatusDAO;
-import models.dao.AttendanceCheckDAO;
-import models.dao.AttendanceCheckDAOImpl;
-import models.dao.AvailableDayDAO;
+import models.dao.AttendDAO;
+import models.dao.AttendDAOImpl;
+import models.dao.AttendStatusDAOImpl;
+import models.dao.AttendStautsDAO;
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
@@ -30,9 +30,8 @@ public class AttendStatus extends JPanel {
 	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel,
 			attendanceRateLabel;;
 	EtchedBorder eborder = new EtchedBorder();
-	private AttendStatusDAO attendStatusDAO = new AttendStatusDAO();
-	private AttendanceCheckDAO checkDAO = new AttendanceCheckDAOImpl();
-	private AvailableDayDAO dayDAO = new AvailableDayDAO();
+	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
+	private AttendDAO checkDAO = new AttendDAOImpl();
 
 	private UserDTO user;
 
@@ -93,7 +92,7 @@ public class AttendStatus extends JPanel {
 
 		AttendanceStatusDTO dto = checkDAO.calculateMonthlyAttendance(userId, yearMonth);
 		AttendanceStatusDTO statusDTO = attendStatusDAO.calculateAttendanceRate(userId, yearMonth);
-		AvailableDayDTO dayDTO = dayDAO.readClassName(user.getClassName(), yearMonth);
+		AvailableDayDTO dayDTO = attendStatusDAO.readClassName(user.getClassName(), yearMonth);
 
 		cnt1Label.setText(dto.getLateCnt() + "");
 		cnt2Label.setText(dto.getAbsentCnt() + "");

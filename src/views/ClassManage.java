@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import constant.Editable;
-import models.dao.AvailableDayDAO;
+import models.dao.AttendStatusDAOImpl;
+import models.dao.AttendStautsDAO;
 import models.dao.ClassDAO;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
@@ -28,8 +29,8 @@ public class ClassManage extends JPanel {
 	private JButton create, delete;
 	private JComboBox<String> comboBox, comboBox2, yearCombo, monthCombo;
 	private JPanel createClass, deleteClass, updateClass;
-	private AvailableDayDAO availableDayDAO = new AvailableDayDAO();
 	private UserDTO user;
+	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
 
 	public ClassManage(UserDTO user) {
 		this.user = user;
@@ -196,12 +197,13 @@ public class ClassManage extends JPanel {
 			builder.append("-");
 			builder.append(month);
 			dayDTO.setAvailableYearMonth(builder.toString());
-		    int confirm = JOptionPane.showConfirmDialog(this, "한번 입력된 날짜는 수정이 불가합니다. 계속하시겠습니까?", "경고!", JOptionPane.YES_NO_OPTION);
-		    // 사용자가 '예'를 선택한 경우
-		    if (confirm == JOptionPane.YES_OPTION) {
-		        availableDayDAO.insertDay(dayDTO); // 데이터 저장
-		        JOptionPane.showMessageDialog(this, "날짜가 저장되었습니다."); // 저장 완료 메시지 표시
-		    }
+			int confirm = JOptionPane.showConfirmDialog(this, "한번 입력된 날짜는 수정이 불가합니다. 계속하시겠습니까?", "경고!",
+					JOptionPane.YES_NO_OPTION);
+			// 사용자가 '예'를 선택한 경우
+			if (confirm == JOptionPane.YES_OPTION) {
+				attendStatusDAO.insertDay(dayDTO); // 데이터 저장
+				JOptionPane.showMessageDialog(this, "날짜가 저장되었습니다."); // 저장 완료 메시지 표시
+			}
 		});
 
 		// 컴포넌트를 패널에 추가

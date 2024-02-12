@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import lombok.Getter;
 import lombok.Setter;
 
-public class commonDAO {
+public class CommonDAO {
 	private static final String url = "jdbc:mysql://222.119.100.89:3382/attendance";
 	private static final String user = "attendance";
 	private static final String password = "codehows213";
