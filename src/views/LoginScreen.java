@@ -37,10 +37,9 @@ public class LoginScreen extends JFrame {
 
 		JPanel title = new JPanel();
 
-		// title 컨테이너에 들어갈 컴포넌트를 만들어 보자.
 		JLabel login = new JLabel("로그인 화면");
 
-		login.setForeground(new Color(169, 198, 127));
+		login.setForeground(new Color(72,99,63));
 		login.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 
 		title.add(login);
@@ -110,7 +109,6 @@ public class LoginScreen extends JFrame {
 
 		setVisible(true);
 
-		// 이벤트 처리
 		jLogin.addActionListener(new ActionListener() {
 
 			@Override
@@ -152,7 +150,7 @@ public class LoginScreen extends JFrame {
 
 				JoinScreen j = new JoinScreen();
 				j.setVisible(true);
-				dispose(); // 현재의 frame을 종료시키는 메서드.
+				dispose();
 
 			}
 		});

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import models.dto.UserDTO;
 
 public class StudentMainPage extends JFrame {
-	private JPanel info, currentAttendance, monthLog, calendar, importantNotice, codeHows;
+	private JPanel info, currentAttendance, calendar, importantNotice, codeHows;
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private JFrame main = this;
 	private UserDTO user;
@@ -41,7 +41,7 @@ public class StudentMainPage extends JFrame {
 		this.add(jPanel3);
 		this.add(jPanel);
 	}
-	
+
 	public JPanel getInfo() {
 		if (info == null) {
 			info = new JPanel();

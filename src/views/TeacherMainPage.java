@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -148,9 +150,9 @@ public class TeacherMainPage extends JFrame {
 	public JPanel getclassManage() {
 		if (classManage == null) {
 
-			classManage = new JPanel();
-			classManage.add(getTitleLabel4()); 
-			classManage.add(new ClassManage(user));
+			classManage = new JPanel(new BorderLayout());
+			classManage.add(getTitleLabel4(),BorderLayout.NORTH); 
+			classManage.add(new ClassManage(user),BorderLayout.SOUTH);
 
 		}
 		return classManage;

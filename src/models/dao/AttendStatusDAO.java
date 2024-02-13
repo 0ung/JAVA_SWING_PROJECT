@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 
-public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
+public class AttendStatusDAO extends CommonDAO{
 
-	@Override
 	public void insertAttendance(AttendanceStatusDTO data) {
 		try {
 			connect();
@@ -34,7 +33,6 @@ public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
 		}
 	}
 
-	@Override
 	public AttendanceStatusDTO calculateAttendanceRate(String userId, String yearMonth) {
 		connect();
 		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
@@ -72,7 +70,6 @@ public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
 		return attendanceStatusDTO;
 	}
 
-	@Override
 	public void insertDay(AvailableDayDTO dayDTO) {
 		connect();
 		String sql = "insert into availableday(availableYearMonth,className,availableDay) values (?,?,?)";
@@ -88,7 +85,6 @@ public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
 		close();
 	};
 
-	@Override
 	public AvailableDayDTO readClassName(String className, String available) {
 		AvailableDayDTO availableDayDTO = new AvailableDayDTO();
 		connect();
@@ -103,8 +99,9 @@ public class AttendStatusDAOImpl extends CommonDAO implements AttendStautsDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
-		close();
 		return availableDayDTO;
 	}
 }

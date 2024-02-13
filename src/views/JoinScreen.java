@@ -3,7 +3,7 @@ package views;
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
 import models.dao.ClassDAO;
-import models.dao.ClassDAOImpl;
+import models.dao.ClassDAO;
 import models.service.UserService;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class JoinScreen extends JFrame {
 	private JComboBox<String> className;
 	private String inId = null, inPassword = null, inPassword2 = null, inUserName = null, inClassName = null;
 	private UserService joinService = new UserService();
-	private final ClassDAO classDAO = new ClassDAOImpl();
+	private final ClassDAO classDAO = new ClassDAO();
 
 	public JoinScreen() {
 		initializeUI();
@@ -27,12 +27,10 @@ public class JoinScreen extends JFrame {
 
 	private JPanel createJoinPanel() {
 		setTitle("회원가입 화면");
-		// setSize(400, 800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 
-		// 탭에 추가될 패널을 생성
 		JPanel signUpPanel = new JPanel(new BorderLayout());
 		JLabel title = new JLabel("회원가입", JLabel.CENTER);
 		title.setForeground(new Color(5, 0, 153));
@@ -48,7 +46,6 @@ public class JoinScreen extends JFrame {
 		for (String string : list) {
 			className.addItem(string);
 		}
-		// 폼 패널
 		JPanel formPanel = new JPanel(new GridLayout(5, 1, 10, 10));
 		formPanel.add(createInputPanel("아이디 :", id));
 		formPanel.add(createInputPanel("비밀번호 :", password));
@@ -57,7 +54,6 @@ public class JoinScreen extends JFrame {
 		formPanel.add(createInputPanel("반 :", className));
 		signUpPanel.add(formPanel, BorderLayout.CENTER);
 
-		// 버튼 패널
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton join = new JButton("회원가입");
 		join.setBorder(new RoundedBorder(10));
@@ -71,10 +67,12 @@ public class JoinScreen extends JFrame {
 		buttonPanel.add(cancel);
 		signUpPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-		// 이벤트 처리
-
 		join.addActionListener(e -> handleJoin());
-		cancel.addActionListener(e -> dispose());
+		cancel.addActionListener((e) -> {
+			LoginScreen screen = new LoginScreen();
+			screen.setVisible(true);
+			dispose();
+		});
 		return signUpPanel;
 	}
 

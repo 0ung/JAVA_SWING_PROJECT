@@ -30,22 +30,20 @@ public class Information extends JPanel {
 		this.user = user;
 		this.info = service.getInfo(user.getUserId());
 		this.setPreferredSize(new Dimension(width, height));
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 세로로 정렬
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(getTitleLabel());
 		this.add(getPuserName());
 		this.add(getPclassName());
 		this.add(getPprogress());
 		this.add(getProomNum());
 		this.add(getPteacherName());
-		
-		    
 
 	}
-	
+
 	public JPanel getTitleLabel() {
-		if(ptitle == null) {
+		if (ptitle == null) {
 			ptitle = new JPanel();
-			
+
 			titleLabel = new JLabel();
 			titleLabel.setText(user.getUserName() + "의 정보");
 			titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));

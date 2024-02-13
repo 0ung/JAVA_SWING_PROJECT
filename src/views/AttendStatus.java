@@ -15,9 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import models.dao.AttendDAO;
-import models.dao.AttendDAOImpl;
-import models.dao.AttendStatusDAOImpl;
-import models.dao.AttendStautsDAO;
+import models.dao.AttendStatusDAO;
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
@@ -27,17 +25,17 @@ public class AttendStatus extends JPanel {
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
 	private JLabel late;
-    private JLabel earlyLeave;
-    private JLabel outStanding;
-    private JLabel cnt1Label;
-    private JLabel cnt2Label;
-    private JLabel cnt3Label;
-    private JLabel cnt4Label;
-    private JLabel titleLabel;
-    private JLabel attendanceRateLabel;
+	private JLabel earlyLeave;
+	private JLabel outStanding;
+	private JLabel cnt1Label;
+	private JLabel cnt2Label;
+	private JLabel cnt3Label;
+	private JLabel cnt4Label;
+	private JLabel titleLabel;
+	private JLabel attendanceRateLabel;
 	EtchedBorder eborder = new EtchedBorder();
-	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
-	private AttendDAO checkDAO = new AttendDAOImpl();
+	private AttendStatusDAO attendStatusDAO = new AttendStatusDAO();
+	private AttendDAO checkDAO = new AttendDAO();
 	private UserDTO user;
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private int width = (int) screen.getWidth() / 3;
@@ -49,7 +47,7 @@ public class AttendStatus extends JPanel {
 		this.setLayout(new BorderLayout());
 
 		JPanel topSpacer = new JPanel();
-		topSpacer.setPreferredSize(new Dimension(this.getWidth(), 70)); // 상단 공간의 높이 설정
+		topSpacer.setPreferredSize(new Dimension(this.getWidth(), 70));
 		topSpacer.setOpaque(false);
 		titleLabel = new JLabel();
 		titleLabel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
@@ -76,29 +74,22 @@ public class AttendStatus extends JPanel {
 		attendanceRateLabel.setHorizontalAlignment(JLabel.CENTER);
 		lowerPanel.add(attendanceRateLabel);
 
-		lowerPanel.add(new JLabel("")); // 빈 라벨 추가
-		lowerPanel.add(new JLabel("")); // 빈 라벨 추가
-		lowerPanel.add(new JLabel("")); // 빈 라벨 추가
+		lowerPanel.add(new JLabel(""));
+		lowerPanel.add(new JLabel(""));
+		lowerPanel.add(new JLabel(""));
 
-		// this.add(upperPanel2,BorderLayout.NORTH);
 		this.add(topSpacer, BorderLayout.NORTH);
 		this.add(upperPanel, BorderLayout.CENTER);
 		this.add(lowerPanel, BorderLayout.SOUTH);
 
-		// this.add(lowerPanel2,BorderLayout.SOUTH);
-
-		totalAttendance(user.getUserId()); // 영웅님 꺼랑 연결
+		totalAttendance(user.getUserId());
 	}
 
-	// dao에 있는 count 값을 가져와서 각 패널에 레이블로 넣어주기
 	public void totalAttendance(String userId) {
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		String yearMonth = currentDate.format(formatter);
-
-//		String yearMonth = "2024-03"; // date 또는 Calendar에서 year, month 가져와서 year-month 형식으로 저장하기
-//		AttendanceCheckDAOImpl a = new AttendanceCheckDAOImpl();
 
 		AttendanceStatusDTO dto = checkDAO.calculateMonthlyAttendance(userId, yearMonth);
 		AttendanceStatusDTO statusDTO = attendStatusDAO.calculateAttendanceRate(userId, yearMonth);
@@ -111,8 +102,7 @@ public class AttendStatus extends JPanel {
 
 		titleLabel.setText(user.getUserName() + "의 " + currentDate.getMonthValue() + "월 " + " 출결 상황판");
 		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		attendanceRateLabel
-				.setText("전체 출석률: " + String.format("%.2f%%", calculate(dto, dayDTO.getAvailableDay())));
+		attendanceRateLabel.setText("전체 출석률: " + String.format("%.2f%%", calculate(dto, dayDTO.getAvailableDay())));
 
 	}
 
@@ -139,7 +129,7 @@ public class AttendStatus extends JPanel {
 	public JPanel getAbsentCnt() {
 		if (absentCnt == null) {
 			absentCnt = new JPanel();
-            JLabel absent = new JLabel("결석", JLabel.CENTER);
+			JLabel absent = new JLabel("결석", JLabel.CENTER);
 			absent.setPreferredSize(new Dimension(width / 8, width / 8));
 			absent.setBorder(eborder);
 			absent.setBackground(Color.pink);

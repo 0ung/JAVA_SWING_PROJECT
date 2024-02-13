@@ -16,9 +16,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import exception.InvalidIdPasswordExecption;
 import exception.MisMatchTypeExecption;
 import models.dao.AttendDAO;
-import models.dao.AttendDAOImpl;
+import models.dao.AttendDAO;
 import models.dao.UserDAO;
-import models.dao.UserDAOImpl;
+import models.dao.UserDAO;
 import models.dto.AttendanceStatusDTO;
 import models.dto.UserDTO;
 import models.dto.UserInfoDTO;
@@ -26,9 +26,9 @@ import models.dto.UserInfoDTO;
 public class UserService {
 	private Pattern idPattern = Pattern.compile("^010\\d{8}$");
 	private Pattern userNamePattern = Pattern.compile("^[가-힣]{2,5}$");
-	private UserDAO userDAO = new UserDAOImpl();
+	private UserDAO userDAO = new UserDAO();
 	private String workingDir = System.getProperty("user.dir") + "/AttendanceManage/";
-	private AttendDAO checkDAO = new AttendDAOImpl();
+	private AttendDAO checkDAO = new AttendDAO();
 	private AttendService service = new AttendService();
 	
 	public void validationId(String id) throws MisMatchTypeExecption, NullPointerException {
