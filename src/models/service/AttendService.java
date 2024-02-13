@@ -10,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 import models.dao.AttendDAO;
-import models.dao.AttendDAOImpl;
+import models.dao.AttendDAO;
 import models.dto.AttendanceStatusDTO;
 
 public class AttendService {
-	private AttendDAOImpl attendStatusDAO = new AttendDAOImpl();
+	private AttendDAO attendStatusDAO = new AttendDAO();
 
 	public List<String> setTime() {
 
@@ -55,10 +55,6 @@ public class AttendService {
 
 	public List<AttendanceStatusDTO> getAttendTime(AttendanceStatusDTO userId) {
 		return attendStatusDAO.getAttendBoards(userId);
-	}
-
-	private String[] splitTime(String time) {
-		return time.split(" ");
 	}
 
 	public int attendAlgorithm(AttendanceStatusDTO attendanceStatusDTO) throws ParseException {
@@ -106,7 +102,7 @@ public class AttendService {
 		attendStatusDAO.updateClass(userId, user);
 	}
 
-	public String vlidaiton(AttendanceStatusDTO attendanceStatusDTO) {
+	public String validaiton(AttendanceStatusDTO attendanceStatusDTO) {
 		if (attendanceStatusDTO.getEarlyleaveCnt() == 1) {
 			return "조퇴";
 		} else if (attendanceStatusDTO.getLateCnt() == 1) {

@@ -1,4 +1,4 @@
-package views;
+  package views;
 
 import java.awt.BorderLayout;
 
@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,9 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import exception.InvalidIdPasswordExecption;
 import models.service.UserService;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginScreen extends JFrame {
 	String choice = null;
@@ -32,10 +37,9 @@ public class LoginScreen extends JFrame {
 
 		JPanel title = new JPanel();
 
-		// title 컨테이너에 들어갈 컴포넌트를 만들어 보자.
 		JLabel login = new JLabel("로그인 화면");
 
-		login.setForeground(new Color(5, 0, 153));
+		login.setForeground(new Color(72,99,63));
 		login.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 
 		title.add(login);
@@ -71,15 +75,15 @@ public class LoginScreen extends JFrame {
 
 		JPanel loginPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton jLogin = new JButton("로그인");
-		jLogin.setForeground(Color.WHITE); 
+		jLogin.setForeground(Color.darkGray); 
 		jLogin.setBorder(new RoundedBorder(10));
-		jLogin.setBackground(Color.DARK_GRAY);
+		jLogin.setBackground(new Color(198, 232, 149));
 
 		JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton join = new JButton("회원가입");
-		join.setForeground(Color.WHITE); 
+		join.setForeground(Color.darkGray); 
 		join.setBorder(new RoundedBorder(10));
-		join.setBackground(Color.DARK_GRAY);
+		join.setBackground(new Color(198, 232, 149));
 
 		loginPanel.add(jLogin);
 		joinPanel.add(join);
@@ -105,7 +109,6 @@ public class LoginScreen extends JFrame {
 
 		setVisible(true);
 
-		// 이벤트 처리
 		jLogin.addActionListener(new ActionListener() {
 
 			@Override
@@ -133,8 +136,7 @@ public class LoginScreen extends JFrame {
 						break;
 					}
 				} catch (NullPointerException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(jp2, e1.getCause());
+					JOptionPane.showMessageDialog(jp2, "입력이 없습니다. 확인 부탁바랍니다.");
 				} catch (InvalidIdPasswordExecption e1) {
 					JOptionPane.showMessageDialog(jp2, "아이디 or 비밀번호가 일치하지 않습니다.");
 				}
@@ -148,7 +150,7 @@ public class LoginScreen extends JFrame {
 
 				JoinScreen j = new JoinScreen();
 				j.setVisible(true);
-				dispose(); // 현재의 frame을 종료시키는 메서드.
+				dispose();
 
 			}
 		});
@@ -163,8 +165,4 @@ public class LoginScreen extends JFrame {
 		this.setLocation(leftTopX, leftTopY);
 	}
 
-	public static void main(String[] args) {
-		LoginScreen loginScreen = new LoginScreen();
-		loginScreen.setVisible(true);
-	}
 }

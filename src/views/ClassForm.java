@@ -1,33 +1,21 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import constant.Editable;
+import models.dao.ClassDAO;
+import models.dao.ClassDAO;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import constant.Editable;
-import models.dao.ClassDAO;
-
 public class ClassForm extends JDialog {
 
-	private String selectedClassName;
-	private JTextField teacher, roomNum, progress, classNum, classNameField;
+	private JTextField teacher, roomNum, progress, classNum;
 	private JPanel classPanel, roomPanel, progressPanel, teacherPanel, btnPanel;
 
 	public ClassForm(Editable editable) {
@@ -35,8 +23,6 @@ public class ClassForm extends JDialog {
 		setTitle("클래스 폼");
 		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-		// 패널 추가
 		switch (editable) {
 		case CREATE:
 			add(getClassNum());
@@ -59,7 +45,7 @@ public class ClassForm extends JDialog {
 		setLayout(new GridLayout(5, 1));
 		setSize(new Dimension(500, 600));
 
-		setLocationRelativeTo(null); // 화면 중앙에 위치
+		setLocationRelativeTo(null);
 
 		placeholder(classNum, "?반 형식으로 입력하세요");
 		placeholder(roomNum, "?호실 형식으로 입력하세요");
@@ -148,13 +134,11 @@ public class ClassForm extends JDialog {
 
 		if (btnPanel == null) {
 			btnPanel = new JPanel();
-			btnPanel.setLayout(new GridLayout(1, 2, 10, 10)); // 버튼을 옆으로 배치하기 위해 GridLayout 사용
 
 			JButton okButton = new JButton("확인");
-			// 확인 버튼의 폰트 크기 설정
 			okButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-			// 버튼의 크기 설정
-			okButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
+			okButton.setPreferredSize(new Dimension(80, 50));
+			okButton.setBackground(new Color(237, 248, 221));
 
 			okButton.addActionListener(new ActionListener() {
 				@Override
@@ -168,27 +152,23 @@ public class ClassForm extends JDialog {
 						validationRoom(roomNumText);
 						validationTeacher(teacherText);
 						classDAO.insertClass(classNumText, teacherText, roomNumText, progressText);
-
-						JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+						JOptionPane.showMessageDialog(okButton, "생성이 완료되었습니다.");
 						dispose();
 					} catch (RuntimeException e2) {
 						JOptionPane.showMessageDialog(okButton, "입력이 올바르지 않습니다.");
 					}
-
-					// 다이얼로그 닫기
 					dispose();
 				}
 			});
 
 			JButton cancelButton = new JButton("취소");
-			// 취소 버튼의 폰트 크기 설정
+
 			cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-			// 버튼의 크기 설정
-			cancelButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
+			cancelButton.setPreferredSize(new Dimension(80, 50));
+			cancelButton.setBackground(new Color(237, 248, 221));
 			cancelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// 다이얼로그 닫기
 					dispose();
 				}
 			});
@@ -202,15 +182,14 @@ public class ClassForm extends JDialog {
 	private JPanel getUpdateBtnPanel() {
 		ClassDAO classDAO = new ClassDAO();
 		JPanel updateBtnPanel = new JPanel();
-		updateBtnPanel.setLayout(new GridLayout(1, 1, 10, 10)); // 수정 버튼을 추가하기 위해 1개의 열로 설정
 
-		JButton updateButton = new JButton("수정"); // 수정 버튼 생성
-		updateButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
-		updateButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
+		JButton updateButton = new JButton("수정");
+		updateButton.setBackground(new Color(237, 248, 221));
+		updateButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		updateButton.setPreferredSize(new Dimension(100, 50));
 		updateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 입력된 반 정보 가져오기
 				String classNumText = classNum.getText();
 				String roomNumText = roomNum.getText();
 				String progressText = progress.getText();
@@ -220,39 +199,32 @@ public class ClassForm extends JDialog {
 					validationRoom(roomNumText);
 					validationTeacher(teacherText);
 					classDAO.updateClass(classNumText, roomNumText, progressText, teacherText);
-					JOptionPane.showMessageDialog(null, "수정이 완료되었습니다.");
+					JOptionPane.showMessageDialog(updateBtnPanel, "수정이 완료되었습니다.");
 					dispose();
 				} catch (RuntimeException e2) {
 					JOptionPane.showMessageDialog(updateButton, "입력이 올바르지 않습니다.");
 				}
-				// 입력된 값이 비어 있는지 확인
-//				if (classNumText.isEmpty() || roomNumText.isEmpty() || progressText.isEmpty()
-//						|| teacherText.isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "모든 정보를 입력해주세요.");
-//					return;
-//				}
 
 			}
 		});
 
-		JButton cancelButton = new JButton("취소"); // 취소 버튼 생성
-		cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
-		cancelButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
+		JButton cancelButton = new JButton("취소");
+		cancelButton.setBackground(new Color(237, 248, 221));
+		cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		cancelButton.setPreferredSize(new Dimension(100, 50));
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 다이얼로그 닫기
 				dispose();
 			}
 		});
 
-		updateBtnPanel.add(updateButton); // 수정 버튼 패널에 추가
+		updateBtnPanel.add(updateButton);
 		updateBtnPanel.add(cancelButton);
 		return updateBtnPanel;
 	}
 
 	public void setClassInfo(String className) {
-		// DAO를 사용하여 DB에서 해당 반의 정보 가져오기
 		ClassDAO classDAO = new ClassDAO();
 		String[] classInfo = classDAO.getClassInfo(className);
 
@@ -262,7 +234,6 @@ public class ClassForm extends JDialog {
 			roomNum.setText(classInfo[2]);
 			progress.setText(classInfo[3]);
 		} else {
-			// 해당 반의 정보가 없는 경우 예외 처리
 			JOptionPane.showMessageDialog(null, "해당 반의 정보를 가져올 수 없습니다.");
 		}
 	}
@@ -286,13 +257,6 @@ public class ClassForm extends JDialog {
 					textField.setText(placeholder);
 				}
 			}
-		});
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			ClassForm form = new ClassForm(Editable.UPDATE);
-			form.setVisible(true);
 		});
 	}
 }

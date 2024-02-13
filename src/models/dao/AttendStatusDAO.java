@@ -7,49 +7,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.dto.AttendanceStatusDTO;
+import models.dto.AvailableDayDTO;
 
-public class AttendStatusDAO {
-
-	private commonDAO dao;
-
-	public AttendStatusDAO() {
-		dao = new commonDAO();
-	}
+public class AttendStatusDAO extends CommonDAO{
 
 	public void insertAttendance(AttendanceStatusDTO data) {
 		try {
-
-			dao.connect();
+			connect();
 			String sql = "INSERT INTO attendance (userId, lateCnt, earlyLeaveCnt, outingCnt, absentCnt, startTime, endTime, yearMonthDay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-			dao.setPstmt(dao.getConn().prepareStatement(sql));
-
-			dao.getPstmt().setString(1, data.getUserId());
-			dao.getPstmt().setInt(2, data.getLateCnt());
-			dao.getPstmt().setInt(3, data.getEarlyleaveCnt());
-			dao.getPstmt().setInt(4, data.getOutingCnt());
-			dao.getPstmt().setInt(5, data.getAbsentCnt());
-			dao.getPstmt().setString(6, data.getStartTime());
-			dao.getPstmt().setString(7, data.getEndTime());
-			dao.getPstmt().setString(8, data.getYearMonthDay());
-			dao.getPstmt().executeUpdate();
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, data.getUserId());
+			getPstmt().setInt(2, data.getLateCnt());
+			getPstmt().setInt(3, data.getEarlyleaveCnt());
+			getPstmt().setInt(4, data.getOutingCnt());
+			getPstmt().setInt(5, data.getAbsentCnt());
+			getPstmt().setString(6, data.getStartTime());
+			getPstmt().setString(7, data.getEndTime());
+			getPstmt().setString(8, data.getYearMonthDay());
+			getPstmt().executeUpdate();
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
-
 		} finally {
-
-			dao.close();
-
+			close();
 		}
 	}
 
 	public AttendanceStatusDTO calculateAttendanceRate(String userId, String yearMonth) {
+		connect();
 		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:mysql://222.119.100.89:3382/attendance", "attendance",
-					"codehows213");
 			String sql = """
 						SELECT
 					    SUM(CASE WHEN `attendancestatus`.`lateCnt` > 0 THEN 1 ELSE 0 END) AS `LateCount`,
@@ -62,15 +49,15 @@ public class AttendStatusDAO {
 					    `userId` = ?
 					    AND `yearMonthDay` LIKE ?
 					""";
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, userId);
-			statement.setString(2, yearMonth);
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				attendanceStatusDTO.setLateCnt(resultSet.getInt("LateCount"));
-				attendanceStatusDTO.setEarlyleaveCnt(resultSet.getInt("EarlyLeaveCount"));
-				attendanceStatusDTO.setOutingCnt(resultSet.getInt("OutingCount"));
-				attendanceStatusDTO.setAbsentCnt(resultSet.getInt("AbsentCount"));
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, userId);
+			getPstmt().setString(2, yearMonth+"%");
+			setRs(getPstmt().executeQuery());
+			if (getRs().next()) {
+				attendanceStatusDTO.setLateCnt(getRs().getInt("LateCount"));
+				attendanceStatusDTO.setEarlyleaveCnt(getRs().getInt("EarlyLeaveCount"));
+				attendanceStatusDTO.setOutingCnt(getRs().getInt("OutingCount"));
+				attendanceStatusDTO.setAbsentCnt(getRs().getInt("AbsentCount"));
 			}
 
 		} catch (NumberFormatException e1) {
@@ -78,8 +65,43 @@ public class AttendStatusDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			dao.close();
+			close();
 		}
 		return attendanceStatusDTO;
+	}
+
+	public void insertDay(AvailableDayDTO dayDTO) {
+		connect();
+		String sql = "insert into availableday(availableYearMonth,className,availableDay) values (?,?,?)";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, dayDTO.getAvailableYearMonth());
+			getPstmt().setString(2, dayDTO.getClassName());
+			getPstmt().setInt(3, dayDTO.getAvailableDay());
+			getPstmt().execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+	};
+
+	public AvailableDayDTO readClassName(String className, String available) {
+		AvailableDayDTO availableDayDTO = new AvailableDayDTO();
+		connect();
+		String sql = "select * from availableday where className = ? and availableYearMonth =?";
+		try {
+			setPstmt(getConn().prepareStatement(sql));
+			getPstmt().setString(1, className);
+			getPstmt().setString(2, available);
+			setRs(getPstmt().executeQuery());
+			while (getRs().next()) {
+				availableDayDTO.setAvailableDay(getRs().getInt("availableDay"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return availableDayDTO;
 	}
 }

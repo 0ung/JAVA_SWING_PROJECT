@@ -1,7 +1,11 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +16,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,65 +33,86 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import models.dao.NoticeDAOImpl;
+import models.dao.NoticeDAO;
+import models.dao.NoticeDAO;
 import models.dto.NoticeDto;
 import models.dto.UserDTO;
 
 public class Notice {
 	private JDialog detailNotice, createNotice;
-	private JPanel titlePanel, createTimePanel, writerPanel, notice;
-	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel;
+	private JPanel titlePanel, createTimePanel, writerPanel, notice, editPanel, ptitle;
+	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel, titleLabel2;
 	private JTextArea contentTextArea;
 	private JTextField titleTextField, createTimeTextField, writerTextField;
-	private JComboBox<String> statusComboBox; // 상태를 선택하기 위한 콤보박스
-	private JButton jButton;
+	private JComboBox<String> statusComboBox;
+	private JButton jButton, editBtn, deleteBtn;
 	private JTable noticeTable;
 	private UserDTO user;
 	private NoticeDto noticeDto;
 	private HashMap<Integer, Long> map = new HashMap<>();
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
+	private NoticeDAO noticeDAO = new NoticeDAO();
 
 	public Notice(UserDTO user) {
 		this.user = user;
 	}
 
 	public JPanel getNotice(int important) {
-		notice = new JPanel();
-		notice.add(new JScrollPane(getTable(important)));
-		notice.setSize(new Dimension(800, 800));
-		notice.add(createNoticePanel());
-		CommonSetting.locationCenter(notice);
-		return notice;
-	}
+		notice = new JPanel(new BorderLayout());
+		JScrollPane js = new JScrollPane(getTable(important));
 
-	public JPanel getNotice(int important, int year, int month, int day) {
-		notice = new JPanel();
-		notice.add(new JScrollPane(getTable(important, year, month, day)));
-		notice.setSize(new Dimension(800, 800));
-		notice.add(createNoticePanel());
-		CommonSetting.locationCenter(notice);
-		return notice;
-	}
-
-	public JPanel createNoticePanel() {
-		JPanel jPanel1 = new JPanel(new BorderLayout());
-		JButton jButton = new JButton("생성");
-		jButton.addActionListener(new ActionListener() {
+		js.setPreferredSize(new Dimension(width - 50, height - 100));
+		JButton addButton = new JButton("공지사항 생성");
+		addButton.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		addButton.setBackground(new Color(237, 248, 221));
+		addButton.setPreferredSize(new Dimension(100, 40));
+		addButton.setBorder(BorderFactory.createLineBorder(new Color(198, 232, 149)));
+		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getCreateNotice().setVisible(true);
 				setFieldsEditable(true);
 			}
 		});
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(jButton);
 		if (user.getAuthority() == 1) {
-			jButton.setVisible(false);
+			addButton.setVisible(false);
 		}
 		if (user.getAuthority() == 2) {
-			jButton.setVisible(true);
+			addButton.setVisible(true);
 		}
-		jPanel1.add(buttonPanel, BorderLayout.SOUTH);
-		return jPanel1;
+
+		notice.add(js);
+		CommonSetting.locationCenter(notice);
+		notice.add(addButton, BorderLayout.SOUTH);
+		return notice;
+	}
+
+	public JPanel getNotice(int important, int year, int month, int day) {
+		notice = new JPanel();
+		notice.add(getTitleLabel());
+		JScrollPane js = new JScrollPane();
+		notice.add(new JScrollPane(getTable(important, year, month, day)));
+
+		notice.setSize(new Dimension(width, height - 150));
+
+		CommonSetting.locationCenter(notice);
+
+		return notice;
+	}
+
+	public JPanel getTitleLabel() {
+		if (ptitle == null) {
+			ptitle = new JPanel(new FlowLayout());
+
+			titleLabel2 = new JLabel();
+			titleLabel2.setText("중요 공지 사항");
+			titleLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			ptitle.add(titleLabel);
+
+		}
+		return ptitle;
 	}
 
 	public JTable getTable(int important) {
@@ -102,13 +128,15 @@ public class Notice {
 		tableModel.addColumn("글쓴이");
 		tableModel.addColumn("등록일자");
 
-		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
-		List<NoticeDto> list = daoImpl.readID(important); // 가정: readID가 List<NoticeDto>를 반환
+		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+		cellRenderer.setBackground(new Color(237, 248, 221));
+
+		NoticeDAO daoImpl = new NoticeDAO();
+		List<NoticeDto> list = daoImpl.readID(important);
 		for (int i = 0; i < list.size(); i++) {
 			map.put(i + 1, list.get(i).getNoticeId());
-			Object[] arr = { String.valueOf(i + 1), // 가정: getNoticeId()가 long 또는 int 타입
-					list.get(i).getTitle(), list.get(i).getUserName(), // UserDTO에 getUserName()이 정의되어 있어야 함
-					list.get(i).getCreateTime().toString() };// SimpleDateFormat을 사용하여 포매팅할 수 있음
+			Object[] arr = { String.valueOf(i + 1), list.get(i).getTitle(), list.get(i).getUserName(),
+					list.get(i).getCreateTime().toString() };
 			tableModel.addRow(arr);
 		}
 		noticeTable.setModel(tableModel);
@@ -118,6 +146,7 @@ public class Notice {
 
 	public JTable getTable(int important, int year, int month, int day) {
 		noticeTable = new JTable();
+
 		DefaultTableModel tableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -129,19 +158,18 @@ public class Notice {
 		tableModel.addColumn("글쓴이");
 		tableModel.addColumn("등록일자");
 
-		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
+		NoticeDAO daoImpl = new NoticeDAO();
 		// 날짜 포매팅
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, day);
 		String formattedDate = sdf.format(cal.getTime());
 
-		List<NoticeDto> list = daoImpl.readbyday(formattedDate); // 가정: readID가 List<NoticeDto>를 반환
+		List<NoticeDto> list = daoImpl.readbyday(formattedDate);
 		for (int i = 0; i < list.size(); i++) {
 			map.put(i + 1, list.get(i).getNoticeId());
-			Object[] arr = { String.valueOf(i + 1), // 가정: getNoticeId()가 long 또는 int 타입
-					list.get(i).getTitle(), list.get(i).getUserName(), // UserDTO에 getUserName()이 정의되어 있어야 함
-					list.get(i).getCreateTime().toString() };// SimpleDateFormat을 사용하여 포매팅할 수 있음
+			Object[] arr = { String.valueOf(i + 1), list.get(i).getTitle(), list.get(i).getUserName(),
+					list.get(i).getCreateTime().toString() };
 			tableModel.addRow(arr);
 		}
 		noticeTable.setModel(tableModel);
@@ -154,6 +182,7 @@ public class Notice {
 		noticeTable.setRowHeight(25);
 		noticeTable.getTableHeader().setReorderingAllowed(false);
 		noticeTable.getTableHeader().setResizingAllowed(false);
+		noticeTable.getTableHeader().setBackground(new Color(237, 248, 221));
 
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,7 +198,7 @@ public class Notice {
 				int a = noticeTable.getSelectedRow();
 				String noticeIdStr = (String) noticeTable.getValueAt(a, 0);
 				int noticeId = Integer.parseInt(noticeIdStr);
-				NoticeDAOImpl impl = new NoticeDAOImpl();
+				NoticeDAO impl = new NoticeDAO();
 				NoticeDto noticeDetail = new NoticeDto();
 				noticeDetail = impl.getNoticeDetailById(map.get(noticeId));
 				String userName = (String) noticeTable.getValueAt(a, 2);
@@ -196,7 +225,7 @@ public class Notice {
 		createTimeTextField.setText(LocalDate.now() + "");
 		writerTextField.setText(user.getUserName());
 		createNotice.setDefaultCloseOperation(createNotice.DISPOSE_ON_CLOSE);
-		createNotice.setLocationRelativeTo(null); // Center on screen
+		createNotice.setLocationRelativeTo(null);
 		return createNotice;
 	}
 
@@ -207,18 +236,52 @@ public class Notice {
 		detailNotice.setAlwaysOnTop(true);
 		detailNotice.add(getTitlePanel(), BorderLayout.NORTH);
 		detailNotice.add(getContentPanel(), BorderLayout.CENTER);
-		detailNotice.add(getInfoPanel(), BorderLayout.SOUTH);
 
-		// Set the dialog properties
+		JPanel bottomPanel = new JPanel(new BorderLayout());
+		bottomPanel.add(getInfoPanel(), BorderLayout.CENTER);
+
+		if (edit && user.getAuthority() == 2 && dto.getUserId().equals(user.getUserId())) {
+			editBtn = new JButton("수정");
+			deleteBtn = new JButton("삭제");
+			editBtn.setBackground(new Color(237, 248, 221));
+			deleteBtn.setBackground(new Color(237, 248, 221));
+			editPanel = new JPanel(new FlowLayout());
+			editBtn.addActionListener(e -> {
+				NoticeDto notice = new NoticeDto();
+				notice.setTitle(titleTextField.getText());
+				notice.setContent(contentTextArea.getText());
+				notice.setNoticeId(dto.getNoticeId());
+				noticeDAO.updateNoticeById(notice);
+				JOptionPane.showMessageDialog(detailNotice, "수정완료");
+				updateNoticeTable(1);
+				detailNotice.dispose();
+			});
+			deleteBtn.addActionListener(e -> {
+				NoticeDto notice = new NoticeDto();
+				notice.setTitle(writerTextField.getText());
+				notice.setNoticeId(dto.getNoticeId());
+				noticeDAO.deleteNoticeById(notice);
+				JOptionPane.showMessageDialog(detailNotice, "삭제완료");
+				updateNoticeTable(1);
+				detailNotice.dispose();
+			});
+			editPanel.add(editBtn);
+			editPanel.add(deleteBtn);
+			bottomPanel.add(editPanel, BorderLayout.SOUTH);
+		}
+
+		detailNotice.add(bottomPanel, BorderLayout.SOUTH);
+
 		detailNotice.setTitle("상세보기");
-		detailNotice.setDefaultCloseOperation(detailNotice.DISPOSE_ON_CLOSE);
-		detailNotice.setLocationRelativeTo(null); // Center on screen
+		detailNotice.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		detailNotice.setLocationRelativeTo(null);
 		titleTextField.setText(dto.getTitle());
 		contentTextArea.setText(dto.getContent());
 		createTimeTextField.setText(dto.getCreateTime() + "");
 		writerTextField.setText(dto.getUserName());
 
 		setStatusComboBoxEditable(edit);
+		setFieldsEditable(edit);
 		return detailNotice;
 	}
 
@@ -230,7 +293,6 @@ public class Notice {
 		return dialog;
 	}
 
-	// 콤보박스 띄우는지 여부 확인
 	public void setStatusComboBoxEditable(boolean editable) {
 		statusComboBox.setVisible(editable);
 		jButton.setVisible(editable);
@@ -248,34 +310,29 @@ public class Notice {
 		titlePanel = new JPanel();
 		titleLabel = new JLabel("제목:");
 		titleTextField = new JTextField(20);
-		titleTextField.setEditable(false); // Make it non-editable
+		titleTextField.setEditable(false);
 		titlePanel.add(titleLabel);
 		titlePanel.add(titleTextField);
 
-		// 콤보 박스
 		statusLabel = new JLabel("선택:");
-		statusComboBox = new JComboBox<>(new String[] { "중요한 게시물", "켈린더 게시물" }); // 콤보박스 항목 초기화
+		statusComboBox = new JComboBox<>(new String[] { "중요한 게시물", "켈린더 게시물" });
 		titlePanel.add(statusLabel);
 		titlePanel.add(statusComboBox);
 
-		// 저장 버튼
 		jButton = new JButton();
 		jButton.setText("저장");
+		jButton.setBackground(new Color(237, 248, 221));
 		titlePanel.add(jButton);
 		jButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				noticeDto = new NoticeDto();
-				// 사용자 입력값을 NoticeDto 객체에 설정
 				noticeDto.setUserId(user.getUserId());
 				noticeDto.setTitle(titleTextField.getText());
 				noticeDto.setContent(contentTextArea.getText());
-				// 선택된 콤보박스 항목에 따라 important 값 설정
 				noticeDto.setImportant(statusComboBox.getSelectedIndex() == 0);
-				// 예를 들어 "중요한 게시물"이 첫 번째 항목일 경우 1로저장됨
-				NoticeDAOImpl dao = new NoticeDAOImpl();
+				NoticeDAO dao = new NoticeDAO();
 				dao.insertNotice(noticeDto);
-				// 저장 후 알림
 				JOptionPane.showMessageDialog(createNotice, "공지가 성공적으로 저장되었습니다.");
 				updateNoticeTable(1);
 				createNotice.dispose();
@@ -299,14 +356,14 @@ public class Notice {
 
 	public void updateNoticeTable(int important) {
 		DefaultTableModel tableModel = (DefaultTableModel) noticeTable.getModel();
-		tableModel.setRowCount(0); // 기존 데이터를 모두 삭제
-
-		// 새로운 데이터로 테이블 채우기
-		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
+		tableModel.setRowCount(0); 
+		NoticeDAO daoImpl = new NoticeDAO();
 		List<NoticeDto> list = daoImpl.readID(important);
-		for (NoticeDto notice : list) {
-			Object[] arr = { String.valueOf(notice.getNoticeId()), notice.getTitle(), notice.getUserName(),
-					notice.getCreateTime().toString() };
+		for (int i = 0; i < list.size(); i++) {
+			map.put(i + 1, list.get(i).getNoticeId());
+			Object[] arr = { String.valueOf(i + 1), 
+					list.get(i).getTitle(), list.get(i).getUserName(), 
+					list.get(i).getCreateTime().toString() };
 			tableModel.addRow(arr);
 		}
 	}
