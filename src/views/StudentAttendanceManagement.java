@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -45,11 +46,11 @@ public class StudentAttendanceManagement extends JPanel {
 	}
 
 	private void drawUI() {
-		this.setSize(new Dimension(400, 500));
+		this.setSize(new Dimension(width,height));
 		this.setLayout(new BorderLayout());
 		JPanel tablePanel = new JPanel();
 		JScrollPane js = new JScrollPane(getStudent());
-		js.setPreferredSize(new Dimension(width-50, height-90));
+		js.setPreferredSize(new Dimension(width-50, height-130));
 		tablePanel.add(js);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(getApproval());
@@ -69,6 +70,7 @@ public class StudentAttendanceManagement extends JPanel {
 				}
 			};
 			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
+			student.getTableHeader().setBackground(new Color(237, 248, 221));
 
 			model.addColumn("번호");
 			model.addColumn("아이디");
@@ -138,9 +140,9 @@ public class StudentAttendanceManagement extends JPanel {
 	private JButton getApproval() {
 		if (approval == null) {
 			approval = new JButton("출결 승인");
+			approval.setBackground(new Color(237, 248, 221));
 			approval.setPreferredSize(new Dimension(100, 40));
-			approval.setBorder(new RoundedBorder(20));
-			approval.setBackground(Color.WHITE);
+			approval.setBorder(new RoundedBorder(10));
 			approval.addActionListener(e -> {
 				DefaultTableModel model = (DefaultTableModel) student.getModel();
 				int rowCount = model.getRowCount(); // 테이블의 행 수를 가져옵니다.

@@ -1,28 +1,17 @@
-package views;
+ package views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import constant.Editable;
+import models.dao.ClassDAO;
+import models.dao.ClassDAOImpl;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import constant.Editable;
-import models.dao.ClassDAO;
 
 public class ClassForm extends JDialog {
 
@@ -145,17 +134,17 @@ public class ClassForm extends JDialog {
 	};
 
 	private JPanel getBtnPanel() {
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 
 		if (btnPanel == null) {
 			btnPanel = new JPanel();
-			btnPanel.setLayout(new GridLayout(1, 2, 10, 10)); // 버튼을 옆으로 배치하기 위해 GridLayout 사용
-
+			
 			JButton okButton = new JButton("확인");
 			// 확인 버튼의 폰트 크기 설정
 			okButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			// 버튼의 크기 설정
-			okButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
+			okButton.setPreferredSize(new Dimension(80, 50)); // 원하는 크기로 설정
+			okButton.setBackground(new Color(237, 248, 221));
 
 			okButton.addActionListener(new ActionListener() {
 				@Override
@@ -181,10 +170,12 @@ public class ClassForm extends JDialog {
 			});
 
 			JButton cancelButton = new JButton("취소");
+			
 			// 취소 버튼의 폰트 크기 설정
 			cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 			// 버튼의 크기 설정
-			cancelButton.setPreferredSize(new Dimension(100, 50)); // 원하는 크기로 설정
+			cancelButton.setPreferredSize(new Dimension(80, 50)); // 원하는 크기로 설정
+			cancelButton.setBackground(new Color(237, 248, 221));
 			cancelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -200,11 +191,11 @@ public class ClassForm extends JDialog {
 	}
 
 	private JPanel getUpdateBtnPanel() {
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 		JPanel updateBtnPanel = new JPanel();
-		updateBtnPanel.setLayout(new GridLayout(1, 1, 10, 10)); // 수정 버튼을 추가하기 위해 1개의 열로 설정
 
 		JButton updateButton = new JButton("수정"); // 수정 버튼 생성
+		updateButton.setBackground(new Color(237, 248, 221));
 		updateButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
 		updateButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
 		updateButton.addActionListener(new ActionListener() {
@@ -230,6 +221,7 @@ public class ClassForm extends JDialog {
 		});
 
 		JButton cancelButton = new JButton("취소"); // 취소 버튼 생성
+		cancelButton.setBackground(new Color(237, 248, 221));
 		cancelButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20)); // 버튼 폰트 설정
 		cancelButton.setPreferredSize(new Dimension(100, 50)); // 버튼 크기 설정
 		cancelButton.addActionListener(new ActionListener() {
@@ -247,7 +239,7 @@ public class ClassForm extends JDialog {
 
 	public void setClassInfo(String className) {
 		// DAO를 사용하여 DB에서 해당 반의 정보 가져오기
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 		String[] classInfo = classDAO.getClassInfo(className);
 
 		if (classInfo != null) {

@@ -1,9 +1,11 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,6 +16,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,8 +40,8 @@ import models.dto.UserDTO;
 
 public class Notice {
 	private JDialog detailNotice, createNotice;
-	private JPanel titlePanel, createTimePanel, writerPanel, notice, editPanel;
-	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel;
+	private JPanel titlePanel, createTimePanel, writerPanel, notice, editPanel, ptitle;
+	private JLabel titleLabel, createTimeLabel, writerLabel, statusLabel, titleLabel2;
 	private JTextArea contentTextArea;
 	private JTextField titleTextField, createTimeTextField, writerTextField;
 	private JComboBox<String> statusComboBox; // 상태를 선택하기 위한 콤보박스
@@ -61,7 +64,11 @@ public class Notice {
 		JScrollPane js = new JScrollPane(getTable(important));
 		
 		js.setPreferredSize(new Dimension(width-50, height-100));
-		JButton addButton = new JButton("생성");
+		JButton addButton = new JButton("공지사항 생성");
+		addButton.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		addButton.setBackground(new Color(237, 248, 221));
+		addButton.setPreferredSize(new Dimension(100, 40));
+		addButton.setBorder(BorderFactory.createLineBorder(new Color(198, 232, 149)));
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -84,6 +91,7 @@ public class Notice {
 
 	public JPanel getNotice(int important, int year, int month, int day) {
 		notice = new JPanel();
+		notice.add(getTitleLabel());
 		JScrollPane js = new JScrollPane();
 		notice.add(new JScrollPane(getTable(important, year, month, day)));
 		
@@ -116,6 +124,19 @@ public class Notice {
 //		jPanel1.add(buttonPanel, BorderLayout.CENTER);
 //		return jPanel1;
 //	}
+	
+	public JPanel getTitleLabel() {
+		if(ptitle == null) {
+			ptitle = new JPanel(new FlowLayout());
+			
+			titleLabel2 = new JLabel();
+			titleLabel2.setText("중요 공지 사항");
+			titleLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			ptitle.add(titleLabel);
+
+		}
+		return ptitle;
+	}
 
 	public JTable getTable(int important) {
 		noticeTable = new JTable();
@@ -129,6 +150,9 @@ public class Notice {
 		tableModel.addColumn("제목");
 		tableModel.addColumn("글쓴이");
 		tableModel.addColumn("등록일자");
+		
+		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+		cellRenderer.setBackground(new Color(237, 248, 221));
 
 		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
 		List<NoticeDto> list = daoImpl.readID(important); // 가정: readID가 List<NoticeDto>를 반환
@@ -146,6 +170,8 @@ public class Notice {
 
 	public JTable getTable(int important, int year, int month, int day) {
 		noticeTable = new JTable();
+		
+		
 		DefaultTableModel tableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -157,6 +183,7 @@ public class Notice {
 		tableModel.addColumn("글쓴이");
 		tableModel.addColumn("등록일자");
 
+		
 		NoticeDAOImpl daoImpl = new NoticeDAOImpl();
 		// 날짜 포매팅
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -182,6 +209,7 @@ public class Notice {
 		noticeTable.setRowHeight(25);
 		noticeTable.getTableHeader().setReorderingAllowed(false);
 		noticeTable.getTableHeader().setResizingAllowed(false);
+		noticeTable.getTableHeader().setBackground(new Color(237, 248, 221)); 
 
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -242,6 +270,8 @@ public class Notice {
 		if (edit && user.getAuthority() == 2 && dto.getUserId().equals(user.getUserId())) {
 			editBtn = new JButton("수정");
 			deleteBtn = new JButton("삭제");
+			editBtn.setBackground(new Color(237, 248, 221));
+			deleteBtn.setBackground(new Color(237, 248, 221));
 			editPanel = new JPanel(new FlowLayout()); // 수정 및 삭제 버튼을 우측에 배치
 			editBtn.addActionListener(e -> {
 				NoticeDto notice = new NoticeDto();
@@ -322,6 +352,7 @@ public class Notice {
 		// 저장 버튼
 		jButton = new JButton();
 		jButton.setText("저장");
+		jButton.setBackground(new Color(237, 248, 221));
 		titlePanel.add(jButton);
 		jButton.addActionListener(new ActionListener() {
 			@Override
