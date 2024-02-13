@@ -108,7 +108,7 @@ public class AttendStatus extends JPanel {
 
 	private double calculate(AttendanceStatusDTO statusDTO, int availableDay) {
 		double cnt = statusDTO.getAbsentCnt()
-				+ (statusDTO.getEarlyleaveCnt() + statusDTO.getOutingCnt() + statusDTO.getLateCnt()) / 3.0;
+				+ (statusDTO.getEarlyleaveCnt() + statusDTO.getOutingCnt() + statusDTO.getLateCnt()) / 3;
 		double result = (availableDay - cnt) / availableDay * 100;
 		return result;
 	}

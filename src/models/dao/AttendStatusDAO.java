@@ -1,15 +1,11 @@
 package models.dao;
 
-import java.sql.Connection;
-
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import models.dto.AttendanceStatusDTO;
 import models.dto.AvailableDayDTO;
 
-public class AttendStatusDAO extends CommonDAO{
+public class AttendStatusDAO extends CommonDAO {
 
 	public void insertAttendance(AttendanceStatusDTO data) {
 		try {
@@ -51,7 +47,7 @@ public class AttendStatusDAO extends CommonDAO{
 					""";
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
-			getPstmt().setString(2, yearMonth+"%");
+			getPstmt().setString(2, yearMonth + "%");
 			setRs(getPstmt().executeQuery());
 			if (getRs().next()) {
 				attendanceStatusDTO.setLateCnt(getRs().getInt("LateCount"));
@@ -70,18 +66,15 @@ public class AttendStatusDAO extends CommonDAO{
 		return attendanceStatusDTO;
 	}
 
-	public void insertDay(AvailableDayDTO dayDTO) {
+	public void insertDay(AvailableDayDTO dayDTO) throws SQLException {
 		connect();
 		String sql = "insert into availableday(availableYearMonth,className,availableDay) values (?,?,?)";
-		try {
-			setPstmt(getConn().prepareStatement(sql));
-			getPstmt().setString(1, dayDTO.getAvailableYearMonth());
-			getPstmt().setString(2, dayDTO.getClassName());
-			getPstmt().setInt(3, dayDTO.getAvailableDay());
-			getPstmt().execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		setPstmt(getConn().prepareStatement(sql));
+		getPstmt().setString(1, dayDTO.getAvailableYearMonth());
+		getPstmt().setString(2, dayDTO.getClassName());
+		getPstmt().setInt(3, dayDTO.getAvailableDay());
+		getPstmt().execute();
+
 		close();
 	};
 

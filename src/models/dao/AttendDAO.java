@@ -124,15 +124,16 @@ public class AttendDAO extends CommonDAO{
 	public List<AttendanceStatusDTO> readID(String userId) {
 		List<AttendanceStatusDTO> list = new ArrayList<>();
 		connect();
-		String sql = "SELECT * FROM attendancestatus where userId = ? ";
+		String sql = "SELECT * FROM attendancestatus where userId = ? and yearMonthDay like ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
 			getPstmt().setString(1, userId);
+			getPstmt().setString(2, LocalDate.now().toString().subSequence(0, 7).toString() + "%");
 			setRs(getPstmt().executeQuery());
 			while (getRs().next()) {
 				AttendanceStatusDTO dto = new AttendanceStatusDTO();
 				setPstmt(getConn().prepareStatement(sql));
-				dto.setUserId(getRs().getString("ㅜuserId"));
+				dto.setUserId(getRs().getString("userId"));
 				dto.setLateCnt(getRs().getInt("lateCnt"));
 				dto.setEarlyleaveCnt(getRs().getInt("earlyleaveCnt"));
 				dto.setOutingCnt(getRs().getInt("outingCnt"));

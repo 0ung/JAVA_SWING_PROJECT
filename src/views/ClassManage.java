@@ -197,8 +197,12 @@ public class ClassManage extends JPanel {
 			int confirm = JOptionPane.showConfirmDialog(this, "한번 입력된 날짜는 수정이 불가합니다. 계속하시겠습니까?", "경고!",
 					JOptionPane.YES_NO_OPTION);
 			if (confirm == JOptionPane.YES_OPTION) {
-				attendStatusDAO.insertDay(dayDTO);
-				JOptionPane.showMessageDialog(this, "날짜가 저장되었습니다.");
+				try {
+					attendStatusDAO.insertDay(dayDTO);
+					JOptionPane.showMessageDialog(this, "날짜가 저장되었습니다.");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(this, "이미 저장되었습니다.");
+				}
 			}
 		});
 

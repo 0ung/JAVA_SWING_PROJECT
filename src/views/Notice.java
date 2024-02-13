@@ -64,7 +64,7 @@ public class Notice {
 		notice = new JPanel(new BorderLayout());
 		JScrollPane js = new JScrollPane(getTable(important));
 
-		js.setPreferredSize(new Dimension(width - 50, height - 200));
+		js.setPreferredSize(new Dimension(width - 50, height - 130));
 		JButton addButton = new JButton("공지사항 생성");
 		addButton.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		addButton.setBackground(new Color(237, 248, 221));
@@ -93,7 +93,6 @@ public class Notice {
 
 	public JPanel getNotice(int important, int year, int month, int day) {
 		notice = new JPanel();
-		notice.add(getTitleLabel());
 		JScrollPane js = new JScrollPane();
 		notice.add(new JScrollPane(getTable(important, year, month, day)));
 
@@ -102,19 +101,6 @@ public class Notice {
 		CommonSetting.locationCenter(notice);
 
 		return notice;
-	}
-
-	public JPanel getTitleLabel() {
-		if (ptitle == null) {
-			ptitle = new JPanel(new FlowLayout());
-
-			titleLabel2 = new JLabel();
-			titleLabel2.setText("중요 공지 사항");
-			titleLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-			ptitle.add(titleLabel);
-
-		}
-		return ptitle;
 	}
 
 	public JTable getTable(int important) {

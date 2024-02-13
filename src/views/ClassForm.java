@@ -48,7 +48,7 @@ public class ClassForm extends JDialog {
 		setLocationRelativeTo(null);
 
 		placeholder(classNum, "?반 형식으로 입력하세요");
-		placeholder(roomNum, "?호실 형식으로 입력하세요");
+		placeholder(roomNum, "?호 형식으로 입력하세요");
 		placeholder(teacher, "강사님 이름을 입력하세요");
 		placeholder(progress, "진도 상태를 입력하세요");
 	}
