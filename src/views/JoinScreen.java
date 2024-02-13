@@ -57,14 +57,12 @@ public class JoinScreen extends JFrame {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton join = new JButton("회원가입");
 		join.setBorder(new RoundedBorder(10));
-		join.setForeground(Color.WHITE);
-		join.setBackground(Color.DARK_GRAY);
+		join.setForeground(Color.DARK_GRAY);
 		join.setBorder(new RoundedBorder(10));
 		join.setBackground(new Color(198, 232, 149));
 		JButton cancel = new JButton("취소");
 		cancel.setBorder(new RoundedBorder(10));
-		cancel.setBackground(Color.DARK_GRAY);
-		cancel.setForeground(Color.WHITE);
+		cancel.setForeground(Color.DARK_GRAY);
 		cancel.setBorder(new RoundedBorder(10));
 		cancel.setBackground(new Color(198, 232, 149));
 		buttonPanel.add(join);
