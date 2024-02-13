@@ -239,9 +239,9 @@ public class Notice {
 				notice.setTitle(titleTextField.getText());
 				notice.setContent(contentTextArea.getText());
 				notice.setNoticeId(dto.getNoticeId());
-				noticeDAO.updateNoticeById(notice);
 				try {
 					validationNotice(notice);
+					noticeDAO.updateNoticeById(notice);
 					JOptionPane.showMessageDialog(detailNotice, "수정완료");
 					updateNoticeTable(1);
 					detailNotice.dispose();
