@@ -25,13 +25,12 @@ import java.util.List;
 
 public class CodeHows extends JPanel {
 
-	private Image image1, image2;
-	private JPanel startCheck, monthlyPanel, monthlyPanel1, studentManage, imagePane1;
+	private Image image1,image2;
+	private JPanel startCheck, monthlyPanel, monthlyPanel1, studentManage, imagePane1, ptitle;
 	private JButton start, end;
 	private UserDTO user;
 	private AttendService attendService = new AttendService();
-	private JLabel label1, label2;
-
+	private JLabel label1, label2, titleLabel;
 	private JTable jTable;
 	private JButton before, next;
 	private JDialog combined;
@@ -55,7 +54,6 @@ public class CodeHows extends JPanel {
 		loadImage();
 		add(imagePane1 , BorderLayout.NORTH);
 		add(getCheckButton(), BorderLayout.CENTER);
-		
 		//JPanel bottomPanel = new JPanel();
 		add(MonthlyAttendanceLog(), BorderLayout.SOUTH);
 		//add(topPanel);
@@ -70,7 +68,7 @@ public class CodeHows extends JPanel {
 		if (startCheck == null) {
 			startCheck = new JPanel();
 			start = new JButton("출근");
-			start.setPreferredSize(new Dimension(width/3, height/6));
+			start.setPreferredSize(new Dimension(width/3, height/7));
 			// start.setBackground(Color.LIGHT_GRAY);
 
 			start.setBorder(new RoundedBorder(20));
@@ -81,7 +79,7 @@ public class CodeHows extends JPanel {
 			startCheck.add(start);
 
 			end = new JButton("퇴근");
-			end.setPreferredSize(new Dimension(width/3, height/6));
+			end.setPreferredSize(new Dimension(width/3, height/7));
 			end.setBorder(new RoundedBorder(20));
 			end.setFont(new Font("맑은 고딕", getFont().BOLD, 20));
 			end.setForeground(Color.DARK_GRAY);
@@ -89,6 +87,7 @@ public class CodeHows extends JPanel {
 			// end.setOpaque(false);
 
 			startCheck.add(end);
+			//startCheck.add(getTitleLabel());
 
 			start.addActionListener(new ActionListener() {
 
@@ -122,6 +121,19 @@ public class CodeHows extends JPanel {
 		}
 		return startCheck;
 
+	}
+	
+	public JPanel getTitleLabel() {
+		if(ptitle == null) {
+			ptitle = new JPanel(new FlowLayout());
+			
+			titleLabel = new JLabel();
+			titleLabel.setText(user.getUserName() + "의 한달 기록");
+			titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			ptitle.add(titleLabel);
+
+		}
+		return ptitle;
 	}
 
 	private void loadImage() {
@@ -205,7 +217,6 @@ public class CodeHows extends JPanel {
 		monthlyPanel = new JPanel(new BorderLayout());
 
 		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
-
 		monthlyPanel.add(new JScrollPane(getJTable()));
 		// 버튼을 담은 패널 생성
 		JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -333,6 +344,7 @@ public class CodeHows extends JPanel {
 
 		// 헤더의 높낮이 조절
 		jTable.getTableHeader().setPreferredSize(new java.awt.Dimension(30, 30));
+		jTable.getTableHeader().setBackground(new Color(237, 248, 221));
 
 		// 헤더에 테두리 추가
 		jTable.getTableHeader().setBorder(eborder);
@@ -381,6 +393,7 @@ public class CodeHows extends JPanel {
 
 			};
 			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
+			student.getTableHeader().setBackground(new Color(237, 248, 221));
 			student.setRowHeight(25);
 			model.addColumn("번호");
 			model.addColumn("아아디");
@@ -431,6 +444,8 @@ public class CodeHows extends JPanel {
 		combined.setLocation(X, Y);
 
 		JButton excel = new JButton("Excel");
+		excel.setBackground(Color.DARK_GRAY);
+		excel.setForeground(Color.white);
 		monthlyPanel1 = new JPanel(new BorderLayout());
 		monthlyPanel1.add(new JScrollPane(getJTable(userId)));
 
