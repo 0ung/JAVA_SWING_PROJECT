@@ -26,8 +26,15 @@ public class AttendStatus extends JPanel {
 
 	private JPanel upperPanel, lowerPanel;
 	private JPanel lateCnt, absentCnt, earlyLeaveCnt, outStandingCnt, cnt1, cnt2, cnt3, cnt4;
-	private JLabel late, absent, earlyLeave, outStanding, cnt1Label, cnt2Label, cnt3Label, cnt4Label, titleLabel,
-			attendanceRateLabel;
+	private JLabel late;
+    private JLabel earlyLeave;
+    private JLabel outStanding;
+    private JLabel cnt1Label;
+    private JLabel cnt2Label;
+    private JLabel cnt3Label;
+    private JLabel cnt4Label;
+    private JLabel titleLabel;
+    private JLabel attendanceRateLabel;
 	EtchedBorder eborder = new EtchedBorder();
 	private AttendStautsDAO attendStatusDAO = new AttendStatusDAOImpl();
 	private AttendDAO checkDAO = new AttendDAOImpl();
@@ -105,7 +112,7 @@ public class AttendStatus extends JPanel {
 		titleLabel.setText(user.getUserName() + "의 " + currentDate.getMonthValue() + "월 " + " 출결 상황판");
 		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		attendanceRateLabel
-				.setText("전체 출석률: " + String.format("%.2f%%", calculate(statusDTO, dayDTO.getAvailableDay())));
+				.setText("전체 출석률: " + String.format("%.2f%%", calculate(dto, dayDTO.getAvailableDay())));
 
 	}
 
@@ -132,7 +139,7 @@ public class AttendStatus extends JPanel {
 	public JPanel getAbsentCnt() {
 		if (absentCnt == null) {
 			absentCnt = new JPanel();
-			absent = new JLabel("결석", JLabel.CENTER);
+            JLabel absent = new JLabel("결석", JLabel.CENTER);
 			absent.setPreferredSize(new Dimension(width / 8, width / 8));
 			absent.setBorder(eborder);
 			absent.setBackground(Color.pink);

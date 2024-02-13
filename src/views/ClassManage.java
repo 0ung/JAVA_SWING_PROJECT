@@ -1,29 +1,19 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import constant.Editable;
 import models.dao.AttendStatusDAOImpl;
 import models.dao.AttendStautsDAO;
 import models.dao.ClassDAO;
+import models.dao.ClassDAOImpl;
 import models.dto.AvailableDayDTO;
 import models.dto.UserDTO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ClassManage extends JPanel {
 
@@ -63,7 +53,7 @@ public class ClassManage extends JPanel {
 	}
 
 	private void updateClassComboBox() {
-		ClassDAO classDAO = new ClassDAO();
+		ClassDAO classDAO = new ClassDAOImpl();
 		ArrayList<String> classList = classDAO.fetchAllClasses();
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(classList.toArray(new String[0]));
 		comboBox.setModel(model);
@@ -116,7 +106,7 @@ public class ClassManage extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String selectedClass = (String) comboBox.getSelectedItem();
-					ClassDAO classDAO = new ClassDAO();
+					ClassDAO classDAO = new ClassDAOImpl();
 					classDAO.deleteClass(selectedClass);
 					JOptionPane.showMessageDialog(ClassManage.this, "반 정보가 삭제되었습니다.");
 					updateClassComboBox(); // 삭제 후 comboBox 항목 갱신

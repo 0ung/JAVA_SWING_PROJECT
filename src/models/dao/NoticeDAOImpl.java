@@ -1,10 +1,10 @@
 package models.dao;
 
+import models.dto.NoticeDto;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import models.dto.NoticeDto;
 
 public class NoticeDAOImpl extends CommonDAO implements NoticeDAO{
 
@@ -128,7 +128,6 @@ public class NoticeDAOImpl extends CommonDAO implements NoticeDAO{
 		String sql = "SELECT n.noticeId, n.userId, n.title, n.content, n.createTime, u.userName from notice as n join user as u on n.userId = u.userId where important = 0 and createTime like ?";
 		try {
 			setPstmt(getConn().prepareStatement(sql));
-			System.out.println(date);
 			getPstmt().setString(1, date + "%");
 			setRs(getPstmt().executeQuery());
 			while (getRs().next()) {

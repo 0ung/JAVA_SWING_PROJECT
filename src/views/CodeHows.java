@@ -1,19 +1,16 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
+import models.dto.AttendanceStatusDTO;
+import models.dto.UserDTO;
+import models.service.AttendService;
+import models.service.UserService;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,28 +23,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
-import models.dto.AttendanceStatusDTO;
-import models.dto.UserDTO;
-import models.service.AttendService;
-import models.service.UserService;
-
 public class CodeHows extends JPanel {
 
 	private Image image1,image2;
@@ -56,7 +31,6 @@ public class CodeHows extends JPanel {
 	private UserDTO user;
 	private AttendService attendService = new AttendService();
 	private JLabel label1, label2, titleLabel;
-	
 	private JTable jTable;
 	private JButton before, next;
 	private JDialog combined;
@@ -70,9 +44,8 @@ public class CodeHows extends JPanel {
 
 	public CodeHows(UserDTO user) {
 		this.user = user;
-
-		
 		this.setLayout(new BorderLayout());
+
 		
 		//JPanel topPanel = new JPanel();
 		
@@ -82,7 +55,7 @@ public class CodeHows extends JPanel {
 		add(imagePane1 , BorderLayout.NORTH);
 		add(getCheckButton(), BorderLayout.CENTER);
 		//JPanel bottomPanel = new JPanel();
-		add(MonthlyAttendanceLog(true),  BorderLayout.SOUTH);
+		add(MonthlyAttendanceLog(), BorderLayout.SOUTH);
 		//add(topPanel);
 		//add(bottomPanel);
 		
@@ -129,7 +102,7 @@ public class CodeHows extends JPanel {
 							start.setEnabled(false);
 							end.setEnabled(false);
 						}
-						updateToTable((DefaultTableModel) getJTable(true, null).getModel());
+						updateToTable((DefaultTableModel) jTable.getModel());
 					}
 				}
 			});
@@ -138,7 +111,7 @@ public class CodeHows extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					// attendService.endTime();
 					attendService.updateEndTime(user.getUserId());
-					updateToTable((DefaultTableModel) getJTable(true, null).getModel());
+					updateToTable((DefaultTableModel) jTable.getModel());
 					end.setEnabled(false);
 					start.setEnabled(false);
 
@@ -165,33 +138,29 @@ public class CodeHows extends JPanel {
 
 	private void loadImage() {
 		try {
-			
-			
+
 			// Loading the first image
-            String imagePath1 = System.getProperty("user.dir") + File.separator + "image" + File.separator + "logo1.png";
-            ImageIcon imageIcon1 = new ImageIcon(imagePath1);
-            image1 = imageIcon1.getImage();
-            
+			String imagePath1 = System.getProperty("user.dir") + File.separator + "image" + File.separator
+					+ "logo1.png";
+			ImageIcon imageIcon1 = new ImageIcon(imagePath1);
+			image1 = imageIcon1.getImage();
 
-            // Loading the second image
-            String imagePath2 = System.getProperty("user.dir") + File.separator + "image" + File.separator + "logo2.png";
-            ImageIcon imageIcon2 = new ImageIcon(imagePath2);
-            image2 = imageIcon2.getImage();
-            
-            
-            label1 = new JLabel(imageIcon1);
-            label2 = new JLabel(imageIcon2);
-            
-            loadURI(label1, "https:www.codehows.com/");
-            loadURI(label2, "https:www.codehows.com/");
-            
-            //this.setLayout(new BorderLayout());
-            imagePane1 = new JPanel();
-            imagePane1.add(label1);
-            imagePane1.add(label2);
-            
-           
+			// Loading the second image
+			String imagePath2 = System.getProperty("user.dir") + File.separator + "image" + File.separator
+					+ "logo2.png";
+			ImageIcon imageIcon2 = new ImageIcon(imagePath2);
+			image2 = imageIcon2.getImage();
 
+			label1 = new JLabel(imageIcon1);
+			label2 = new JLabel(imageIcon2);
+
+			loadURI(label1, "https:www.codehows.com/");
+			loadURI(label2, "https:www.codehows.com/");
+
+			// this.setLayout(new BorderLayout());
+			imagePane1 = new JPanel();
+			imagePane1.add(label1);
+			imagePane1.add(label2);
 
 			// 이미지 로딩 검증 (선택적)
 			if (imageIcon1.getIconWidth() == -1 || imageIcon2.getIconWidth() == -1) {
@@ -243,62 +212,56 @@ public class CodeHows extends JPanel {
 		}
 	}
 
-	public JPanel MonthlyAttendanceLog(boolean isBtn) {
+	public JPanel MonthlyAttendanceLog() {
 
 		monthlyPanel = new JPanel(new BorderLayout());
 
 		// 테이블을 JScrollPane에 넣은 후, 패널에 추가
-		
-		monthlyPanel.add(getTitleLabel());
-		monthlyPanel.add(new JScrollPane(getJTable(true, null)));
-		if (isBtn) {
-			// 버튼을 담은 패널 생성
-			JPanel buttonPanel = new JPanel(new FlowLayout());
-			before = new JButton("<");
-			before.setFont(new Font("Arial", Font.PLAIN, 24));
-			// before.setFocusPainted(false);
-			before.setPreferredSize(new Dimension(80, 60));
-			before.setOpaque(false);
-			before.setContentAreaFilled(false);
-			before.setBorderPainted(false);
+		monthlyPanel.add(new JScrollPane(getJTable()));
+		// 버튼을 담은 패널 생성
+		JPanel buttonPanel = new JPanel(new FlowLayout());
+		before = new JButton("<");
+		before.setFont(new Font("Arial", Font.PLAIN, 24));
+		// before.setFocusPainted(false);
+		before.setPreferredSize(new Dimension(80, 60));
+		before.setOpaque(false);
+		before.setContentAreaFilled(false);
+		before.setBorderPainted(false);
 
-			before.addActionListener(e -> {
-				AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
-				attendanceStatusDTO.setUserId(user.getUserId());
-				thisMonth = thisMonth.minusMonths(1);
-				attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-				System.out.println(attendanceStatusDTO.toString());
-				updateToTable((DefaultTableModel) getJTable(true, null).getModel());
-			});
+		before.addActionListener(e -> {
+			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+			attendanceStatusDTO.setUserId(user.getUserId());
+			thisMonth = thisMonth.minusMonths(1);
+			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+			updateToTable((DefaultTableModel) jTable.getModel());
+		});
 
-			next = new JButton(">");
-			next.setFont(new Font("Arial", Font.PLAIN, 24));
-			// next.setFocusPainted(false);
-			next.setPreferredSize(new Dimension(80, 60));
+		next = new JButton(">");
+		next.setFont(new Font("Arial", Font.PLAIN, 24));
+		// next.setFocusPainted(false);
+		next.setPreferredSize(new Dimension(80, 60));
 
-			next.setOpaque(false);
-			next.setContentAreaFilled(false);
-			next.setBorderPainted(false);
-			next.addActionListener(e -> {
-				AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
-				attendanceStatusDTO.setUserId(user.getUserId());
-				thisMonth = thisMonth.plusMonths(1);
-				attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-				System.out.println(attendanceStatusDTO.toString());
-				updateToTable((DefaultTableModel) getJTable(true, null).getModel());
-			});
-			buttonPanel.add(before);
-			buttonPanel.add(next);
+		next.setOpaque(false);
+		next.setContentAreaFilled(false);
+		next.setBorderPainted(false);
+		next.addActionListener(e -> {
+			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+			attendanceStatusDTO.setUserId(user.getUserId());
+			thisMonth = thisMonth.plusMonths(1);
+			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+			updateToTable((DefaultTableModel) jTable.getModel());
+		});
+		buttonPanel.add(before);
+		buttonPanel.add(next);
 
-			// 패널을 Frame에 추가
-			monthlyPanel.add(buttonPanel, BorderLayout.SOUTH); // 패널을 Frame에 추가
-			monthlyPanel.add(buttonPanel, BorderLayout.SOUTH);
-		}
+		// 패널을 Frame에 추가
+		monthlyPanel.add(buttonPanel, BorderLayout.SOUTH); // 패널을 Frame에 추가
+		monthlyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		return monthlyPanel;
 	}
 
-	public JTable getJTable(Boolean test, String userId) {
+	public JTable getJTable(String userId) {
 		List<AttendanceStatusDTO> attendBoards;
 		jTable = new JTable();
 		DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
@@ -306,17 +269,56 @@ public class CodeHows extends JPanel {
 		tableModel.addColumn("출석시간");
 		tableModel.addColumn("퇴근시간");
 		tableModel.addColumn("결과");
-		if (test) {
-			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
-			attendanceStatusDTO.setUserId(user.getUserId());
-			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-			attendBoards = attendService.getAttendTime(attendanceStatusDTO);
-		} else {
-			AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
-			attendanceStatusDTO.setUserId(userId);
-			attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
-			attendBoards = attendService.getAttendTime(attendanceStatusDTO);
+		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+		attendanceStatusDTO.setUserId(userId);
+		attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+		attendBoards = attendService.getAttendTime(attendanceStatusDTO);
+		for (AttendanceStatusDTO board : attendBoards) {
+			Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(),
+					attendService.validaiton(board) };
+			tableModel.addRow(row);
 		}
+
+		// 각 셀의 레이아웃을 설정하는 Renderer
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				((JComponent) c).setBorder(eborder); // 각 셀에 테두리 설정
+				return c;
+			}
+		};
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+		// 각 셀에 Renderer 설정
+		for (int i = 0; i < jTable.getColumnCount(); i++) {
+			jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		}
+
+		// 헤더의 높낮이 조절
+		jTable.getTableHeader().setPreferredSize(new java.awt.Dimension(30, 30));
+
+		// 헤더에 테두리 추가
+		jTable.getTableHeader().setBorder(eborder);
+		jTable.setRowHeight(25);
+
+		((DefaultTableCellRenderer) jTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+		return jTable;
+	}
+
+	public JTable getJTable() {
+		List<AttendanceStatusDTO> attendBoards;
+		jTable = new JTable();
+		DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
+		tableModel.addColumn("일자");
+		tableModel.addColumn("출석시간");
+		tableModel.addColumn("퇴근시간");
+		tableModel.addColumn("결과");
+		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
+		attendanceStatusDTO.setUserId(user.getUserId());
+		attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
+		attendBoards = attendService.getAttendTime(attendanceStatusDTO);
 		for (AttendanceStatusDTO board : attendBoards) {
 			Object[] row = new Object[] { board.getYearMonthDay(), board.getStartTime(), board.getEndTime(),
 					attendService.validaiton(board) };
@@ -355,21 +357,17 @@ public class CodeHows extends JPanel {
 	public void updateToTable(DefaultTableModel tableModel) {
 		AttendanceStatusDTO attendanceStatusDTO = new AttendanceStatusDTO();
 		attendanceStatusDTO.setUserId(user.getUserId());
-
 		attendanceStatusDTO.setYearMonthDay(thisMonth.toString());
 		List<AttendanceStatusDTO> attendBoards = attendService.getAttendTime(attendanceStatusDTO);
-		DefaultTableModel tableModel2 = (DefaultTableModel) this.getJTable(true, null).getModel();
-		
-		tableModel2.setRowCount(0);
+		tableModel.setRowCount(0);
 
 		for (AttendanceStatusDTO board : attendBoards) {
 			Object[] row = new String[4];
 			row[0] = board.getYearMonthDay();
 			row[1] = board.getStartTime();
 			row[2] = board.getEndTime();
-			row[3] = "결과"; // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
-
-			tableModel2.addRow(row);
+			row[3] = attendService.validaiton(board); // '결과'는 해당 출근 데이터에 기반한 상태를 나타냅니다 (예: 정상, 지각 등). 필요에 따라 계산 로직 추가
+			tableModel.addRow(row);
 		}
 		this.revalidate();
 		this.repaint();
@@ -438,6 +436,7 @@ public class CodeHows extends JPanel {
 		combined = new JDialog();
 		combined.setSize(800, 600);
 		combined.setLayout(new BorderLayout());
+		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Point centerPoint = ge.getCenterPoint();
 		int X = centerPoint.x - combined.getWidth() / 2;
@@ -448,8 +447,8 @@ public class CodeHows extends JPanel {
 		excel.setBackground(Color.DARK_GRAY);
 		excel.setForeground(Color.white);
 		monthlyPanel1 = new JPanel(new BorderLayout());
-		monthlyPanel1.add(new JScrollPane(getJTable(false, userId)));
-		
+		monthlyPanel1.add(new JScrollPane(getJTable(userId)));
+
 		AttendStatus as = new AttendStatus(service.getUser(userId));
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));

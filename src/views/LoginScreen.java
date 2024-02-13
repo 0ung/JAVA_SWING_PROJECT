@@ -19,9 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import exception.InvalidIdPasswordExecption;
 import models.service.UserService;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginScreen extends JFrame {
 	String choice = null;
@@ -134,8 +138,7 @@ public class LoginScreen extends JFrame {
 						break;
 					}
 				} catch (NullPointerException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(jp2, e1.getCause());
+					JOptionPane.showMessageDialog(jp2, "입력이 없습니다. 확인 부탁바랍니다.");
 				} catch (InvalidIdPasswordExecption e1) {
 					JOptionPane.showMessageDialog(jp2, "아이디 or 비밀번호가 일치하지 않습니다.");
 				}
@@ -164,8 +167,4 @@ public class LoginScreen extends JFrame {
 		this.setLocation(leftTopX, leftTopY);
 	}
 
-	public static void main(String[] args) {
-		LoginScreen loginScreen = new LoginScreen();
-		loginScreen.setVisible(true);
-	}
 }
