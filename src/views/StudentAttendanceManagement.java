@@ -167,6 +167,13 @@ public class StudentAttendanceManagement extends JPanel {
 						dto.setUserId(userId);
 						dto.setEarlyleaveCnt(1);
 						break;
+					case "출석":
+						dto.setUserId(userId);
+						dto.setEarlyleaveCnt(0);
+						dto.setOutingCnt(0);
+						dto.setLateCnt(0);
+						dto.setAbsentCnt(0);
+						break;
 					default:
 						break;
 					}

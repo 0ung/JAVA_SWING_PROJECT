@@ -55,7 +55,7 @@ public class CodeHows extends JPanel {
 	public JPanel getCheckButton() {
 		if (startCheck == null) {
 			startCheck = new JPanel();
-			start = new JButton("출근");
+			start = new JButton("출석");
 			start.setPreferredSize(new Dimension(width / 3, height / 7));
 
 			start.setBorder(new RoundedBorder(20));
@@ -64,7 +64,7 @@ public class CodeHows extends JPanel {
 			start.setBackground(new Color(248, 240, 198));
 			startCheck.add(start);
 
-			end = new JButton("퇴근");
+			end = new JButton("퇴실");
 			end.setPreferredSize(new Dimension(width / 3, height / 7));
 			end.setBorder(new RoundedBorder(20));
 			end.setFont(new Font("맑은 고딕", getFont().BOLD, 20));
@@ -267,6 +267,8 @@ public class CodeHows extends JPanel {
 		}
 
 		jTable.getTableHeader().setPreferredSize(new java.awt.Dimension(30, 30));
+		jTable.getTableHeader().setBackground(new Color(237, 248, 221));
+
 		jTable.getTableHeader().setBorder(eborder);
 		jTable.setRowHeight(25);
 

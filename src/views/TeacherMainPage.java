@@ -92,7 +92,7 @@ public class TeacherMainPage extends JFrame {
 			ptitle3 = new JPanel(new FlowLayout());
 
 			titleLabel3 = new JLabel();
-			titleLabel3.setText(user.getClassName() + "의 로그인 권한 승인");
+			titleLabel3.setText("로그인 권한 승인");
 			titleLabel3.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			ptitle3.add(titleLabel3);
 
