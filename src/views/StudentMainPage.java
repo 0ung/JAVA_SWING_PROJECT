@@ -1,18 +1,22 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.dto.UserDTO;
 
 public class StudentMainPage extends JFrame {
-	private JPanel info, currentAttendance, calendar, importantNotice, codeHows;
+	private JPanel info, currentAttendance, calendar, importantNotice, codeHows, ptitle5;
+	private JLabel titleLabel5;
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private JFrame main = this;
 	private UserDTO user;
@@ -42,6 +46,18 @@ public class StudentMainPage extends JFrame {
 		this.add(jPanel);
 	}
 
+	public JPanel getTitleLabel5() {
+		if (ptitle5 == null) {
+			ptitle5 = new JPanel(new FlowLayout());
+			titleLabel5 = new JLabel();
+			titleLabel5.setText("중요 공지사항");
+			titleLabel5.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			ptitle5.add(titleLabel5);
+
+		}
+		return ptitle5;
+	}
+
 	public JPanel getInfo() {
 		if (info == null) {
 			info = new JPanel();
@@ -68,9 +84,10 @@ public class StudentMainPage extends JFrame {
 
 	public JPanel getImprotantNotice() {
 		if (importantNotice == null) {
-			importantNotice = new JPanel();
+			importantNotice = new JPanel(new BorderLayout());
 			Notice notice = new Notice(user);
-			importantNotice.add(notice.getNotice(1));
+			importantNotice.add(getTitleLabel5(), BorderLayout.NORTH);
+			importantNotice.add(notice.getNotice(1), BorderLayout.CENTER);
 		}
 		return importantNotice;
 	}

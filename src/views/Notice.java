@@ -29,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -63,7 +64,7 @@ public class Notice {
 		notice = new JPanel(new BorderLayout());
 		JScrollPane js = new JScrollPane(getTable(important));
 
-		js.setPreferredSize(new Dimension(width - 50, height - 100));
+		js.setPreferredSize(new Dimension(width - 50, height - 200));
 		JButton addButton = new JButton("공지사항 생성");
 		addButton.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		addButton.setBackground(new Color(237, 248, 221));
@@ -86,6 +87,7 @@ public class Notice {
 		notice.add(js);
 		CommonSetting.locationCenter(notice);
 		notice.add(addButton, BorderLayout.SOUTH);
+		notice.setBorder(BorderFactory.createEmptyBorder(10,0,30,20));
 		return notice;
 	}
 
