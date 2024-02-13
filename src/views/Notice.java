@@ -87,7 +87,7 @@ public class Notice {
 		notice.add(js);
 		CommonSetting.locationCenter(notice);
 		notice.add(addButton, BorderLayout.SOUTH);
-		notice.setBorder(BorderFactory.createEmptyBorder(10,0,30,20));
+		notice.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 20));
 		return notice;
 	}
 
@@ -240,9 +240,14 @@ public class Notice {
 				notice.setContent(contentTextArea.getText());
 				notice.setNoticeId(dto.getNoticeId());
 				noticeDAO.updateNoticeById(notice);
-				JOptionPane.showMessageDialog(detailNotice, "수정완료");
-				updateNoticeTable(1);
-				detailNotice.dispose();
+				try {
+					validationNotice(notice);
+					JOptionPane.showMessageDialog(detailNotice, "수정완료");
+					updateNoticeTable(1);
+					detailNotice.dispose();
+				}catch (NullPointerException e3) {
+					JOptionPane.showMessageDialog(detailNotice, "수정이 완료되지 않았습니다.");
+				}
 			});
 			deleteBtn.addActionListener(e -> {
 				NoticeDto notice = new NoticeDto();
@@ -319,11 +324,16 @@ public class Notice {
 				noticeDto.setTitle(titleTextField.getText());
 				noticeDto.setContent(contentTextArea.getText());
 				noticeDto.setImportant(statusComboBox.getSelectedIndex() == 0);
-				NoticeDAO dao = new NoticeDAO();
-				dao.insertNotice(noticeDto);
-				JOptionPane.showMessageDialog(createNotice, "공지가 성공적으로 저장되었습니다.");
-				updateNoticeTable(1);
-				createNotice.dispose();
+				try {
+					validationNotice(noticeDto);
+					NoticeDAO dao = new NoticeDAO();
+					dao.insertNotice(noticeDto);
+					JOptionPane.showMessageDialog(createNotice, "공지가 성공적으로 저장되었습니다.");
+					updateNoticeTable(1);
+					createNotice.dispose();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(createNotice, "공지가 저장되지 않았습니다.");
+				}
 			}
 		});
 
@@ -342,15 +352,21 @@ public class Notice {
 
 	}
 
+	public void validationNotice(NoticeDto dto) {
+		if (dto.getTitle().equals("") || dto.getTitle() == null)
+			throw new NullPointerException();
+		if (dto.getContent().equals("") || dto.getContent() == null)
+			throw new NullPointerException();
+	}
+
 	public void updateNoticeTable(int important) {
 		DefaultTableModel tableModel = (DefaultTableModel) noticeTable.getModel();
-		tableModel.setRowCount(0); 
+		tableModel.setRowCount(0);
 		NoticeDAO daoImpl = new NoticeDAO();
 		List<NoticeDto> list = daoImpl.readID(important);
 		for (int i = 0; i < list.size(); i++) {
 			map.put(i + 1, list.get(i).getNoticeId());
-			Object[] arr = { String.valueOf(i + 1), 
-					list.get(i).getTitle(), list.get(i).getUserName(), 
+			Object[] arr = { String.valueOf(i + 1), list.get(i).getTitle(), list.get(i).getUserName(),
 					list.get(i).getCreateTime().toString() };
 			tableModel.addRow(arr);
 		}
