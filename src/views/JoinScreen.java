@@ -33,7 +33,7 @@ public class JoinScreen extends JFrame {
 
 		JPanel signUpPanel = new JPanel(new BorderLayout());
 		JLabel title = new JLabel("회원가입", JLabel.CENTER);
-		title.setForeground(new Color(5, 0, 153));
+		title.setForeground(new Color(72,99,63));
 		title.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		signUpPanel.add(title, BorderLayout.NORTH);
 
@@ -59,10 +59,14 @@ public class JoinScreen extends JFrame {
 		join.setBorder(new RoundedBorder(10));
 		join.setForeground(Color.WHITE);
 		join.setBackground(Color.DARK_GRAY);
+		join.setBorder(new RoundedBorder(10));
+		join.setBackground(new Color(198, 232, 149));
 		JButton cancel = new JButton("취소");
 		cancel.setBorder(new RoundedBorder(10));
 		cancel.setBackground(Color.DARK_GRAY);
 		cancel.setForeground(Color.WHITE);
+		cancel.setBorder(new RoundedBorder(10));
+		cancel.setBackground(new Color(198, 232, 149));
 		buttonPanel.add(join);
 		buttonPanel.add(cancel);
 		signUpPanel.add(buttonPanel, BorderLayout.SOUTH);

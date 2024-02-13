@@ -19,9 +19,10 @@ import models.dto.UserDTO;
 
 public class TeacherMainPage extends JFrame {
 
-	private JPanel ptitle,ptitle2,ptitle3, ptitle4,classManage, registration, calendar, studentAttendance, studentManage, importantNotice;
+	private JPanel ptitle, ptitle2, ptitle3, ptitle4, ptitle5, classManage, registration, calendar, studentAttendance,
+			studentManage, importantNotice;
 	private JPanel panel1, panel2, panel3;
-	private JLabel titleLabel, titleLabel2, titleLabel3 , titleLabel4;
+	private JLabel titleLabel, titleLabel2, titleLabel3, titleLabel4, titleLabel5;
 	private UserDTO user;
 	private JFrame main = this;
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,11 +42,10 @@ public class TeacherMainPage extends JFrame {
 		panel3 = new JPanel();
 
 		panel1.setLayout(new GridLayout(2, 1));
-		
-		panel2.setLayout(new GridLayout(2, 1));
-		
-		panel3.setLayout(new GridLayout(2, 1));
 
+		panel2.setLayout(new GridLayout(2, 1));
+
+		panel3.setLayout(new GridLayout(2, 1));
 
 		panel1.add(getStudentManage());
 		panel1.add(getclassManage());
@@ -60,50 +60,50 @@ public class TeacherMainPage extends JFrame {
 		this.add(panel2);
 		this.add(panel3);
 	}
-	
+
 	public JPanel getTitleLabel() {
-		if(ptitle == null) {
+		if (ptitle == null) {
 			ptitle = new JPanel(new FlowLayout());
-			
+
 			titleLabel = new JLabel();
-			titleLabel.setText(user.getClassName()+ "의 학생 정보");
+			titleLabel.setText(user.getClassName() + "의 학생 정보");
 			titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			ptitle.add(titleLabel);
 
 		}
 		return ptitle;
 	}
-	
+
 	public JPanel getTitleLabel2() {
-		if(ptitle2 == null) {
+		if (ptitle2 == null) {
 			ptitle2 = new JPanel(new FlowLayout());
-			
+
 			titleLabel2 = new JLabel();
-			titleLabel2.setText(user.getClassName()+ "의 출결관리");
+			titleLabel2.setText(user.getClassName() + "의 출결관리");
 			titleLabel2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			ptitle2.add(titleLabel2);
 
 		}
 		return ptitle2;
 	}
-	
+
 	public JPanel getTitleLabel3() {
-		if(ptitle3 == null) {
+		if (ptitle3 == null) {
 			ptitle3 = new JPanel(new FlowLayout());
-			
+
 			titleLabel3 = new JLabel();
-			titleLabel3.setText(user.getClassName()+ "의 로그인 권한 승인");
+			titleLabel3.setText(user.getClassName() + "의 로그인 권한 승인");
 			titleLabel3.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			ptitle3.add(titleLabel3);
 
 		}
 		return ptitle3;
 	}
-	
+
 	public JPanel getTitleLabel4() {
-		if(ptitle4 == null) {
+		if (ptitle4 == null) {
 			ptitle4 = new JPanel(new FlowLayout());
-			
+
 			titleLabel4 = new JLabel();
 			titleLabel4.setText("반 관리");
 			titleLabel4.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -112,18 +112,27 @@ public class TeacherMainPage extends JFrame {
 		}
 		return ptitle4;
 	}
-	
-	
-	
+
+	public JPanel getTitleLabel5() {
+		if (ptitle5 == null) {
+			ptitle5 = new JPanel(new FlowLayout());
+			titleLabel5 = new JLabel();
+			titleLabel5.setText("중요 공지사항");
+			titleLabel5.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			ptitle5.add(titleLabel5);
+
+		}
+		return ptitle5;
+	}
+
 	public JPanel getStudentManage() {
 		if (studentManage == null) {
 
-			
 			studentManage = new JPanel();
 			CodeHows codeHows = new CodeHows(user);
 			studentManage.add(getTitleLabel());
 			studentManage.add(codeHows.getStudentMange());
-			
+
 		}
 		return studentManage;
 	}
@@ -141,7 +150,7 @@ public class TeacherMainPage extends JFrame {
 	public JPanel getCalendar() {
 		if (calendar == null) {
 			calendar = new JPanel();
-			calendar.add(new Calendars(main,user));
+			calendar.add(new Calendars(main, user));
 
 		}
 		return calendar;
@@ -151,8 +160,8 @@ public class TeacherMainPage extends JFrame {
 		if (classManage == null) {
 
 			classManage = new JPanel(new BorderLayout());
-			classManage.add(getTitleLabel4(),BorderLayout.NORTH); 
-			classManage.add(new ClassManage(user),BorderLayout.SOUTH);
+			classManage.add(getTitleLabel4(), BorderLayout.NORTH);
+			classManage.add(new ClassManage(user), BorderLayout.SOUTH);
 
 		}
 		return classManage;
@@ -171,9 +180,10 @@ public class TeacherMainPage extends JFrame {
 
 	public JPanel getImprotantNotice() {
 		if (importantNotice == null) {
-			importantNotice = new JPanel();
+			importantNotice = new JPanel(new BorderLayout());
 			Notice notice = new Notice(user);
-			importantNotice.add(notice.getNotice(1));
+			importantNotice.add(getTitleLabel5(), BorderLayout.NORTH);
+			importantNotice.add(notice.getNotice(1), BorderLayout.SOUTH);
 		}
 		return importantNotice;
 	}
