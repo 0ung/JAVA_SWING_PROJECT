@@ -1,4 +1,4 @@
-package views;
+  package views;
 
 import java.awt.BorderLayout;
 
@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,7 +36,7 @@ public class LoginScreen extends JFrame {
 		// title 컨테이너에 들어갈 컴포넌트를 만들어 보자.
 		JLabel login = new JLabel("로그인 화면");
 
-		login.setForeground(new Color(5, 0, 153));
+		login.setForeground(new Color(169, 198, 127));
 		login.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 
 		title.add(login);
@@ -71,15 +72,15 @@ public class LoginScreen extends JFrame {
 
 		JPanel loginPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton jLogin = new JButton("로그인");
-		jLogin.setForeground(Color.WHITE); 
+		jLogin.setForeground(Color.darkGray); 
 		jLogin.setBorder(new RoundedBorder(10));
-		jLogin.setBackground(Color.DARK_GRAY);
+		jLogin.setBackground(new Color(198, 232, 149));
 
 		JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton join = new JButton("회원가입");
-		join.setForeground(Color.WHITE); 
+		join.setForeground(Color.darkGray); 
 		join.setBorder(new RoundedBorder(10));
-		join.setBackground(Color.DARK_GRAY);
+		join.setBackground(new Color(198, 232, 149));
 
 		loginPanel.add(jLogin);
 		joinPanel.add(join);

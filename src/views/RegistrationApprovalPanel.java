@@ -47,7 +47,7 @@ public class RegistrationApprovalPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel tablePanel = new JPanel();
 		JScrollPane js = new JScrollPane(getStudent());
-		js.setPreferredSize(new Dimension(width-100, height-100));
+		js.setPreferredSize(new Dimension(width-100, height-140));
 		tablePanel.add(js);
 		
 		JPanel buttonPanel = new JPanel();
@@ -70,6 +70,7 @@ public class RegistrationApprovalPanel extends JPanel {
 			};
 
 			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
+			student.getTableHeader().setBackground(new Color(237, 248, 221));
 			model.addColumn("번호");
 			model.addColumn("아이디");
 			model.addColumn("이름");
@@ -129,11 +130,11 @@ public class RegistrationApprovalPanel extends JPanel {
 			JPanel jp = new JPanel();
 			approval = new JButton("전체확인");
 			approval.setPreferredSize(new Dimension(100, 40));
-			approval.setBorder(new RoundedBorder(20));
+			approval.setBorder(new RoundedBorder(10));
+			approval.setBackground(new Color(237, 248, 221));
 			jp.setOpaque(false);
 
 			jp.add(approval);
-			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e -> {
 				DefaultTableModel model = (DefaultTableModel) student.getModel();
 				int rowCount = model.getRowCount(); // 테이블의 행 수를 가져옴
