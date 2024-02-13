@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -33,16 +34,22 @@ public class RegistrationApprovalPanel extends JPanel {
 	private JTable student;
 	private String[] selectOptions = { "학생", "강사", "승인거부" };
 	private JButton approval;
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 	
 	public RegistrationApprovalPanel() {
 		drawUI();
 	}
 
 	private void drawUI() {
-		this.setSize(new Dimension(400, 500));
+		this.setSize(new Dimension(width, height));
 		this.setLayout(new BorderLayout());
 		JPanel tablePanel = new JPanel();
-		tablePanel.add(new JScrollPane(getStudent()));
+		JScrollPane js = new JScrollPane(getStudent());
+		js.setPreferredSize(new Dimension(width-100, height-140));
+		tablePanel.add(js);
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(getApproval());
 
@@ -54,6 +61,7 @@ public class RegistrationApprovalPanel extends JPanel {
 	private JTable getStudent() {
 		if (student == null) {
 			student = new JTable();
+			
 			DefaultTableModel model = new DefaultTableModel() {
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -62,6 +70,7 @@ public class RegistrationApprovalPanel extends JPanel {
 			};
 
 			student.getTableHeader().setPreferredSize(new Dimension(30, 30));
+			student.getTableHeader().setBackground(new Color(237, 248, 221));
 			model.addColumn("번호");
 			model.addColumn("아이디");
 			model.addColumn("이름");
@@ -120,12 +129,12 @@ public class RegistrationApprovalPanel extends JPanel {
 		if (approval == null) {
 			JPanel jp = new JPanel();
 			approval = new JButton("전체확인");
-			approval.setPreferredSize(new Dimension(100, 50));
-			approval.setBorder(new RoundedBorder(20));
+			approval.setPreferredSize(new Dimension(100, 40));
+			approval.setBorder(new RoundedBorder(10));
+			approval.setBackground(new Color(237, 248, 221));
 			jp.setOpaque(false);
 
 			jp.add(approval);
-			approval.setBackground(Color.WHITE);
 			approval.addActionListener(e -> {
 				DefaultTableModel model = (DefaultTableModel) student.getModel();
 				int rowCount = model.getRowCount(); // 테이블의 행 수를 가져옴
@@ -135,6 +144,9 @@ public class RegistrationApprovalPanel extends JPanel {
 					int authority = service.checkAuth(model.getValueAt(i, 4).toString()); // '권한' 열이 4번 인덱스라고 가정
 					userDTO.setUserId(userId);
 					userDTO.setAuthority(authority);
+					if(authority == 3) {
+						service.deleteUser(userDTO);
+					}
 					service.updateAuth(userDTO);
 				}
 				JOptionPane.showMessageDialog(this, "승인이 완료되었습니다.");

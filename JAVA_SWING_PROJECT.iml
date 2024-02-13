@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$USER_HOME$/Downloads/mysql-connector-j-8.3.0 (2)/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcprov-jdk15on-1.70.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xml-apis-1.4.01.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-anim-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-awt-util-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-constants-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-css-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-dom-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-ext-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-gvt-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-i18n-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-parser-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-shared-resources-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svg-dom-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-util-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-xml-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcpkix-jdk15on-1.70.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcutil-jdk15on-1.70.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/fontbox-2.0.26.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/graphics2d-0.40.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/pdfbox-2.0.26.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xml-apis-ext-1.3.04.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlgraphics-commons-2.6.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlsec-3.0.0.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-bridge-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-codec-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-script-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svggen-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svgrasterizer-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-transcoder-1.14.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-codec-1.15.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-collections4-4.4.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-compress-1.21.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-io-2.11.0.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-logging-1.2.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-math3-3.6.1.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/curvesapi-1.07.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/jakarta.activation-2.0.1.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/jakarta.xml.bind-api-3.0.1.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/log4j-api-2.18.0.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/slf4j-api-1.7.36.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/SparseBitSet-1.2.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlbeans-5.1.1.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-examples-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-excelant-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-javadoc-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-full-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-lite-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/apache-log4j-2.22.1-bin/log4j-core-2.22.1.jar!/" />
+    <libelement value="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/lombok.jar!/" />
+    <src_description expected_position="1">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="1" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="mysql-connector-j-8.3.0.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/mysql-connector-j-8.3.0 (2)/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bcprov-jdk15on-1.70.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcprov-jdk15on-1.70.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis-1.4.01.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xml-apis-1.4.01.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-anim-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-anim-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-awt-util-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-awt-util-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-constants-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-constants-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-css-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-css-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-dom-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-dom-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-ext-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-ext-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-gvt-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-gvt-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-i18n-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-i18n-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-parser-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-parser-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-shared-resources-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-shared-resources-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svg-dom-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svg-dom-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-util-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-util-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-xml-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-xml-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bcpkix-jdk15on-1.70.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcpkix-jdk15on-1.70.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bcutil-jdk15on-1.70.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/bcutil-jdk15on-1.70.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="fontbox-2.0.26.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/fontbox-2.0.26.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="graphics2d-0.40.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/graphics2d-0.40.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pdfbox-2.0.26.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/pdfbox-2.0.26.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis-ext-1.3.04.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xml-apis-ext-1.3.04.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlgraphics-commons-2.6.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlgraphics-commons-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlsec-3.0.0.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlsec-3.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-bridge-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-bridge-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-codec-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-codec-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-script-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-script-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svggen-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svggen-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svgrasterizer-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-svgrasterizer-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-transcoder-1.14.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/batik-transcoder-1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-codec-1.15.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-codec-1.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-collections4-4.4.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-collections4-4.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-compress-1.21.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-compress-1.21.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-io-2.11.0.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-io-2.11.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-logging-1.2.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-logging-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-math3-3.6.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/commons-math3-3.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="curvesapi-1.07.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/curvesapi-1.07.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jakarta.activation-2.0.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/jakarta.activation-2.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jakarta.xml.bind-api-3.0.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/jakarta.xml.bind-api-3.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j-api-2.18.0.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/log4j-api-2.18.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-api-1.7.36.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/slf4j-api-1.7.36.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="SparseBitSet-1.2.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/SparseBitSet-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlbeans-5.1.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/xmlbeans-5.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-examples-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-examples-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-excelant-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-excelant-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-javadoc-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-javadoc-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-ooxml-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-ooxml-full-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-full-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-ooxml-lite-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-lite-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-scratchpad-5.2.3.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j-core-2.22.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/apache-log4j-2.22.1-bin/log4j-core-2.22.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="junit5">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/junit/junit/3.8.1/junit-3.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lombok.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.3-20220909/poi-bin-5.2.3/lombok.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>

@@ -1,33 +1,32 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import models.dto.UserDTO;
 
 public class StudentMainPage extends JFrame {
 	private JPanel info, currentAttendance, monthLog, calendar, importantNotice, codeHows;
-	private StudentMainPage page = this;
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	private JFrame main = this;
 	private UserDTO user;
 
 	public StudentMainPage(UserDTO user) {
 		this.user = user;
-		this.setSize(new Dimension(1920, 1800));
+		this.setSize(screen);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(new GridLayout(1, 3));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel jPanel = new JPanel(new GridLayout(2, 1));
 		JPanel jPanel2 = new JPanel(new GridLayout(2, 1));
-		JPanel jPanel3 = new JPanel(new GridLayout(1, 1));
+		JPanel jPanel3 = new JPanel(new FlowLayout());
 		setBackground(Color.white);
 
 		jPanel2.add(getInfo());
@@ -41,9 +40,8 @@ public class StudentMainPage extends JFrame {
 		this.add(jPanel2);
 		this.add(jPanel3);
 		this.add(jPanel);
-
 	}
-
+	
 	public JPanel getInfo() {
 		if (info == null) {
 			info = new JPanel();
@@ -63,7 +61,7 @@ public class StudentMainPage extends JFrame {
 	public JPanel getcalendar() {
 		if (calendar == null) {
 			calendar = new JPanel();
-			calendar.add(new Calendars(main,user));
+			calendar.add(new Calendars(main, user));
 		}
 		return calendar;
 	}

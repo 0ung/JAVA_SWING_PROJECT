@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,6 +34,10 @@ public class Calendars extends JPanel {
 	private int lastDay;
 	private JFrame frame;
 	private UserDTO user;
+	
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screen.getWidth() / 3;
+	private int height = (int) screen.getHeight() / 2;
 
 	public Calendars(JFrame jFrame, UserDTO user) {
 		this.user = user;
@@ -69,9 +74,10 @@ public class Calendars extends JPanel {
 		});
 		getDateInfo();
 		setDateTitle();
+		createDay();
 		createDate();
 		printDate(keyYear, keyMonth);
-		setPreferredSize(new Dimension(600, 600)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
+		setPreferredSize(new Dimension(width,  height)); // JFrame에서 pack()을 호출할 경우를 대비해 선호 크기 설정
 		CommonSetting.locationCenter(this);
 	}
 
@@ -84,6 +90,13 @@ public class Calendars extends JPanel {
 	}
 
 	// 요일 생성
+	public void createDay() {
+		for (int i = 0; i < 7; i++) {
+			DateBox dayBox = new DateBox(dayAr[i], Color.gray, 100, 70, "", keyYear, keyMonth, 0);
+			pCenter.add(dayBox);
+		}
+	}
+
 	public void createDate() {
 		Calendar tempCal = (Calendar) cal.clone(); // 현재 캘린더 상태 복제
 		tempCal.set(Calendar.DAY_OF_MONTH, 1);
@@ -126,7 +139,6 @@ public class Calendars extends JPanel {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						Notice notice = new Notice(user);
-						System.out.println("년도" + db.getYear() + "달" + db.getMonth() + "일" + db.getDayInt());
 						notice.createNoticeDialog(db.getYear(), db.getMonth(), db.getDayInt(), 0).setVisible(true);
 					}
 				});
@@ -156,7 +168,7 @@ public class Calendars extends JPanel {
 		pCenter.removeAll(); // 기존 날짜 박스 제거
 		pCenter.revalidate(); // 레이아웃 매니저에게 패널의 레이아웃을 다시 계산하도록 지시
 		pCenter.repaint(); // 패널을 다시 그리도록 지시
-
+		createDay();
 		createDate(); // 변경된 달에 대한 새로운 날짜 박스 생성
 		printDate(keyYear, keyMonth); // 변경된 달에 대한 날짜 박스에 날짜 출력
 	}
