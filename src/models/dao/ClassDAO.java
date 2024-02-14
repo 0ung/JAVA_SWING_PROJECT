@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class ClassDAO extends CommonDAO {
-	public void insertClass(String className, String roomNum, String progress, String teacherName) {
+	public void insertClass(String className, String teacherName, String roomNum, String progress) {
 		// 데이터베이스 연결 및 SQL 쿼리 준비
 		connect();
 		String sql = "INSERT INTO class (className, teacherName, roomNum, progress ) VALUES (?, ?, ?, ?)";
